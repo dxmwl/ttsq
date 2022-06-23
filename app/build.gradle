@@ -10,7 +10,7 @@ android {
     defaultConfig {
 
         // 无痛修改包名：https://www.jianshu.com/p/17327e191d2e
-        applicationId 'com.hjq.demo'
+        applicationId 'com.easybug.mobile'
 
         // 仅保留中文语种的资源
         resConfigs 'zh'
@@ -200,6 +200,12 @@ dependencies {
     // 内存泄漏监测框架：https://github.com/square/leakcanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
     previewImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+
+    //轮播图 https://github.com/youth5201314/banner
+    implementation 'io.github.youth5201314:banner:2.2.2'
+
+    //常用工具类
+    implementation 'com.blankj:utilcodex:1.31.0'
 
     // 多语种：https://github.com/getActivity/MultiLanguages
     // 悬浮窗：https://github.com/getActivity/XToast

@@ -1,97 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.HomeFragment">
+    android:background="@color/white"
+    tools:context="com.easybuy.mobile.ui.fragment.HomeFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.hjq.bar.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@null" />
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:elevation="0px">
+        android:layout_marginHorizontal="@dimen/dp_40"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dp_10"
+        android:text="搜索您想要的商品"
+        android:textColor="#B6B6B6"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_bar"
+        app:shape_radius="@dimen/dp_15"
+        app:shape_shadowColor="#cccccc"
+        app:shape_shadowSize="@dimen/dp_2"
+        app:shape_solidColor="@color/white" />
 
-        <com.hjq.demo.widget.XCollapsingToolbarLayout
-            android:id="@+id/ctl_home_bar"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_view">
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_256"
-            app:contentScrim="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:scrimVisibleHeightTrigger="@dimen/dp_100">
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                app:srcCompat="@drawable/example_bg" />
+                android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/tb_home_title"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                app:layout_collapseMode="pin" >
-
-                <LinearLayout
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_height="@dimen/dp_122"
+                    android:layout_marginTop="@dimen/dp_20"
+                    app:banner_indicator_height="@dimen/dp_6"
+                    app:banner_indicator_normal_color="#BABABA"
+                    app:banner_indicator_normal_width="@dimen/dp_12"
+                    app:banner_indicator_radius="3dp"
+                    app:banner_indicator_selected_color="@color/white"
+                    app:banner_indicator_selected_width="@dimen/dp_12" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_home_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="广州"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_15" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/menu_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_18"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="5"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item_home_menu" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_home_hint"
-                        android:layout_width="0px"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dp_20"
-                        android:layout_weight="1"
-                        android:background="@drawable/home_search_bar_transparent_bg"
-                        android:gravity="center"
-                        android:paddingVertical="@dimen/dp_5"
-                        android:text="完善细节，追求完美"
-                        android:textColor="@color/white60"
-                        android:textSize="@dimen/sp_13" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:text="优选商品"
+                    android:textColor="#333"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_home_search"
-                        android:layout_width="@dimen/dp_24"
-                        android:layout_height="@dimen/dp_24"
-                        android:layout_marginEnd="@dimen/dp_10"
-                        app:srcCompat="@drawable/search_ic"
-                        app:tint="@color/white" />
-
-                </LinearLayout>
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.hjq.demo.widget.XCollapsingToolbarLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_home_tab"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:itemCount="2"
-            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/tab_item_design"
-            tools:spanCount="2" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <com.hjq.widget.layout.NestedViewPager
-        android:id="@+id/vp_home_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/goods_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

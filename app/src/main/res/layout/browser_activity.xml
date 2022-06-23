@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.BrowserActivity">
+    tools:context="com.easybuy.mobile.ui.activity.BrowserActivity">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         android:progressDrawable="@drawable/progress_gradient_bg"
         android:visibility="gone" />
 
-    <com.hjq.demo.widget.StatusLayout
+    <com.easybuy.mobile.widget.StatusLayout
         android:id="@+id/hl_browser_hint"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -35,13 +35,13 @@
             app:srlEnablePreviewInEditMode="false"
             app:srlPrimaryColor="#444444">
 
-            <com.hjq.demo.widget.BrowserView
+            <com.easybuy.mobile.widget.BrowserView
                 android:id="@+id/wv_browser_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-    </com.hjq.demo.widget.StatusLayout>
+    </com.easybuy.mobile.widget.StatusLayout>
 
 </LinearLayout>

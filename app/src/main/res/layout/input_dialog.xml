@@ -13,4 +13,4 @@
     android:singleLine="true"
     android:textColor="#333333"
     android:textSize="@dimen/sp_14"
-    tools:context=".ui.dialog.InputDialog" />
+    tools:context="com.easybuy.mobile.ui.dialog.InputDialog" />
