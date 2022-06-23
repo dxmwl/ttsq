@@ -9,6 +9,7 @@ import com.easybug.mobile.R
 import com.easybuy.mobile.app.AppAdapter
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.glide.GlideApp
+import com.easybuy.mobile.ui.activity.GoodsDetailActivity
 
 /**
  * @project : EasyBuy_Android
@@ -42,6 +43,10 @@ class HomeGoodsListAdapter(val mContext: Context) :
             yuanjia?.text = goodsBean.size
             monthlySales?.text = "月销量 ${goodsBean.volume}"
             yhqPrice?.text = "${goodsBean.coupon_info_money}元券"
+
+            getItemView().setOnClickListener {
+                GoodsDetailActivity.start(mContext, goodsBean.tao_id, goodsBean.code)
+            }
         }
     }
 }

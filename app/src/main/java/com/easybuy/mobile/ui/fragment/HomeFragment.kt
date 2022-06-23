@@ -43,7 +43,10 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     }
 
     override fun initView() {
-
+        banner?.let {
+            it.setBannerGalleryEffect(39, 16)
+            it.addBannerLifecycleObserver(this)
+        }
         menuList?.let {
             val arrayListOf = arrayListOf(
                 MenuDto(R.mipmap.launcher_ic, "淘宝"),
@@ -83,10 +86,6 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     override fun initData() {
         getBannerList()
         getGoodsList()
-        banner?.let {
-            it.setBannerGalleryEffect(39, 16)
-            it.addBannerLifecycleObserver(this)
-        }
     }
 
     /**

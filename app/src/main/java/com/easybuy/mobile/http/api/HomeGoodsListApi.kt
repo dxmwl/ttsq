@@ -47,6 +47,11 @@ class HomeGoodsListApi : IRequestApi {
     var baodan: String = ""
 
     inner class GoodsBean(
+
+        //折淘客编号，输入非折淘客商品编号，此参数无作用。code值可通过其它领券API接口结果获得。code值必须与tao_id值对应。
+        val code: String,
+        //商品ID
+        val tao_id: String,
         //商品主图
         val pict_url: String,
         //商品标题
@@ -59,7 +64,16 @@ class HomeGoodsListApi : IRequestApi {
         val volume: String,
         //优惠券金额
         val coupon_info_money: String,
+        //优惠券信息
+        val coupon_info: String,
         //店铺名称
-        val shop_title: String
+        val shop_title: String,
+        //店铺Logo
+        val shopIcon: String,
+        val score1: String,
+        val score2: String,
+        val score3: String,
+        //商品小图列表
+        val small_images: String
     )
 }

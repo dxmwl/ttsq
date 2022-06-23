@@ -13,6 +13,7 @@ import com.easybug.mobile.R
 import com.easybuy.mobile.app.AppAdapter
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.glide.GlideApp
+import com.easybuy.mobile.ui.activity.GoodsDetailActivity
 import com.easybuy.mobile.utils.FormatUtils
 
 /**
@@ -53,8 +54,12 @@ class GoodsListAdapter(val mContext: Context) :
             quanhoujia?.text = goodsBean.quanhou_jiage
             shop_name?.text = goodsBean.shop_title
             yuanjia?.text = goodsBean.size
-            FormatUtils.formatSales(monthlySales,goodsBean.volume)
+            FormatUtils.formatSales(monthlySales, goodsBean.volume)
             yhqPrice?.text = "${goodsBean.coupon_info_money}元券"
+
+            getItemView().setOnClickListener {
+                GoodsDetailActivity.start(mContext, goodsBean.tao_id, goodsBean.code)
+            }
         }
     }
 }
