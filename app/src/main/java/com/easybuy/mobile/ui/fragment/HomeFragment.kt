@@ -1,19 +1,23 @@
 package com.easybuy.mobile.ui.fragment
 
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.easybug.mobile.R
+import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.TitleBarFragment
 import com.easybuy.mobile.http.api.HomeBannerApi
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.http.model.MenuDto
 import com.easybuy.mobile.ui.activity.HomeActivity
+import com.easybuy.mobile.ui.activity.SearchActivity
 import com.easybuy.mobile.ui.adapter.BannerAdapter
 import com.easybuy.mobile.ui.adapter.HomeGoodsListAdapter
 import com.easybuy.mobile.ui.adapter.HomeMenuListAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
+import com.hjq.shape.view.ShapeTextView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.youth.banner.Banner
 
@@ -30,6 +34,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     private val menuList: RecyclerView? by lazy { findViewById(R.id.menu_list) }
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
+    private val search_view: ShapeTextView? by lazy { findViewById(R.id.search_view) }
 
     companion object {
 
@@ -43,6 +48,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     }
 
     override fun initView() {
+        setOnClickListener(search_view)
         banner?.let {
             it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
@@ -86,6 +92,16 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     override fun initData() {
         getBannerList()
         getGoodsList()
+    }
+
+    @SingleClick
+    override fun onClick(view: View) {
+        when (view) {
+            search_view -> {
+                startActivity(SearchActivity::class.java)
+            }
+            else -> {}
+        }
     }
 
     /**

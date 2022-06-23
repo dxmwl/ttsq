@@ -238,6 +238,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name="com.easybuy.mobile.ui.activity.GoodsListActivity" />
         <activity android:name="com.easybuy.mobile.ui.activity.GoodsDetailActivity" />
+        <activity android:name="com.easybuy.mobile.ui.activity.SearchResultActivity" />
+        <activity android:name="com.easybuy.mobile.ui.activity.SearchActivity" />
 
     </application>
 
