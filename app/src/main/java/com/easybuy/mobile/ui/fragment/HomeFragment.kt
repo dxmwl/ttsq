@@ -3,8 +3,8 @@ package com.easybuy.mobile.ui.fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.easybug.mobile.R
-import com.easybuy.mobile.app.Constants
 import com.easybuy.mobile.app.TitleBarFragment
+import com.easybuy.mobile.http.api.HomeBannerApi
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.http.model.MenuDto
@@ -26,7 +26,7 @@ import com.youth.banner.Banner
 class HomeFragment : TitleBarFragment<HomeActivity>() {
 
     private var homeGoodsListAdapter: HomeGoodsListAdapter? = null
-    private val banner: Banner<String, BannerAdapter>? by lazy { findViewById(R.id.banner) }
+    private val banner: Banner<HomeBannerApi.BannerBean, BannerAdapter>? by lazy { findViewById(R.id.banner) }
     private val menuList: RecyclerView? by lazy { findViewById(R.id.menu_list) }
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
@@ -70,6 +70,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
         }
 
         refresh?.setOnRefreshListener {
+            getBannerList()
             pageIndex = 1
             getGoodsList()
         }
@@ -80,19 +81,30 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     }
 
     override fun initData() {
+        getBannerList()
         getGoodsList()
         banner?.let {
-            val arrayListOf = arrayListOf(
-                Constants.TEST_IMG_URL,
-                Constants.TEST_IMG_URL,
-                Constants.TEST_IMG_URL,
-                Constants.TEST_IMG_URL,
-                Constants.TEST_IMG_URL
-            )
             it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
-            it.setAdapter(BannerAdapter(arrayListOf))
         }
+    }
+
+    /**
+     * 获取轮播图数据
+     */
+    private fun getBannerList() {
+        EasyHttp.get(this)
+            .api(HomeBannerApi())
+            .request(object :OnHttpListener<HttpData<ArrayList<HomeBannerApi.BannerBean>>>{
+                override fun onSucceed(result: HttpData<ArrayList<HomeBannerApi.BannerBean>>?) {
+                    banner?.setAdapter(BannerAdapter(result?.getData()))
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+
+            })
     }
 
     private var pageIndex = 1

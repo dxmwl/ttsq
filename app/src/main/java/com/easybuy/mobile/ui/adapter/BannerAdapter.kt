@@ -7,9 +7,12 @@ import com.blankj.utilcode.util.ConvertUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.easybuy.mobile.http.api.HomeBannerApi
 import com.easybuy.mobile.http.glide.GlideApp
-import com.youth.banner.adapter.BannerAdapter
+import com.easybuy.mobile.other.AppConfig
+import com.easybuy.mobile.ui.activity.GoodsListActivity
 import com.easybuy.mobile.ui.adapter.BannerAdapter.BannerViewHolder
+import com.youth.banner.adapter.BannerAdapter
 
 
 /**
@@ -18,8 +21,8 @@ import com.easybuy.mobile.ui.adapter.BannerAdapter.BannerViewHolder
  * @author : clb
  * @time : 2022/5/31
  */
-class BannerAdapter(val bannerList: ArrayList<String>) :
-    BannerAdapter<String, BannerViewHolder>(bannerList) {
+class BannerAdapter(bannerList: ArrayList<HomeBannerApi.BannerBean>?) :
+    BannerAdapter<HomeBannerApi.BannerBean, BannerViewHolder>(bannerList) {
 
     inner class BannerViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)
 
@@ -35,13 +38,25 @@ class BannerAdapter(val bannerList: ArrayList<String>) :
         return BannerViewHolder(imageView)
     }
 
-    override fun onBindView(holder: BannerViewHolder?, data: String?, position: Int, size: Int) {
+    override fun onBindView(
+        holder: BannerViewHolder?,
+        data: HomeBannerApi.BannerBean?,
+        position: Int,
+        size: Int
+    ) {
         holder?.let {
-            GlideApp.with(holder.itemView).load(bannerList[position]).transform(
+            GlideApp.with(holder.itemView).load(data?.pic).transform(
                 MultiTransformation(
                     CenterCrop(), RoundedCorners(ConvertUtils.dp2px(8F))
                 )
             ).into(holder.imageView)
+        }
+
+        holder?.imageView?.setOnClickListener {
+            data?.get_url?.let { it1 ->
+                val replace = it1.replace("{替换appkey}", AppConfig.getZtkAppKey())
+                GoodsListActivity.start(holder.itemView.context, replace, data.name)
+            }
         }
     }
 }

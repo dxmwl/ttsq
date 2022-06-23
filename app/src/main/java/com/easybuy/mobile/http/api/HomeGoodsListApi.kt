@@ -58,6 +58,8 @@ class HomeGoodsListApi : IRequestApi {
         //月销量
         val volume: String,
         //优惠券金额
-        val coupon_info_money: String
+        val coupon_info_money: String,
+        //店铺名称
+        val shop_title: String
     )
 }

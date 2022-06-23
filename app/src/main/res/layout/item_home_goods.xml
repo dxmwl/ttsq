@@ -91,7 +91,6 @@
                 android:paddingTop="2dp"
                 android:paddingEnd="7dp"
                 android:paddingBottom="2dp"
-                android:text="@{dto.couponmoney+@string/dw_quan}"
                 android:textColor="#fffc383e"
                 android:textSize="11sp"
                 tools:text="50元券" />
