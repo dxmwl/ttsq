@@ -64,6 +64,8 @@ class HomeGoodsListApi : IRequestApi {
         val volume: String,
         //优惠券金额
         val coupon_info_money: String,
+        val coupon_start_time: String,
+        val coupon_end_time: String,
         //优惠券信息
         val coupon_info: String,
         //店铺名称

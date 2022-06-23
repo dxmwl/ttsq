@@ -37,7 +37,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_margin="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="15dp"
                         android:background="@drawable/shape_banner_indector_bg"
                         android:paddingLeft="14dp"
                         android:paddingTop="2dp"
@@ -159,10 +162,12 @@
                             android:layout_weight="1" />
 
                         <LinearLayout
+                            android:orientation="vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:id="@+id/start_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#ffffffff"
@@ -170,12 +175,7 @@
                                 tools:text="2020.06.08" />
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="-"
-                                android:textColor="#ffffffff" />
-
-                            <TextView
+                                android:id="@+id/end_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#ffffffff"

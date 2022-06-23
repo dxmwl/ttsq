@@ -7,19 +7,25 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.Log
+import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.AppActivity
 import com.easybuy.mobile.http.api.GoodsDetailApi
 import com.easybuy.mobile.http.api.HomeGoodsListApi
+import com.easybuy.mobile.http.api.SameClassGoodsApi
 import com.easybuy.mobile.http.glide.GlideApp
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.ui.adapter.GoodsDetailBannerAdapter
+import com.easybuy.mobile.ui.adapter.HomeGoodsListAdapter
 import com.easybuy.mobile.utils.FormatUtils
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.youth.banner.Banner
+import com.youth.banner.listener.OnPageChangeListener
 
 /**
  * @project : EasyBuy_Android
@@ -44,6 +50,7 @@ class GoodsDetailActivity : AppActivity() {
         }
     }
 
+    private lateinit var goodsListAdapter: HomeGoodsListAdapter
     private val goods_price: TextView? by lazy { findViewById<TextView>(R.id.goods_price) }
     private val goods_title: TextView? by lazy { findViewById<TextView>(R.id.goods_title) }
     private val yuanjia: TextView? by lazy { findViewById<TextView>(R.id.yuanjia) }
@@ -54,13 +61,18 @@ class GoodsDetailActivity : AppActivity() {
     private val num_wlfw: TextView? by lazy { findViewById<TextView>(R.id.num_wlfw) }
     private val yh_str: TextView? by lazy { findViewById<TextView>(R.id.yh_str) }
     private val yhq_jine: TextView? by lazy { findViewById<TextView>(R.id.yhq_jine) }
+    private val start_time: TextView? by lazy { findViewById<TextView>(R.id.start_time) }
+    private val end_time: TextView? by lazy { findViewById<TextView>(R.id.end_time) }
+    private val banner_indector: TextView? by lazy { findViewById<TextView>(R.id.banner_indector) }
     private val yhje_str: TextView? by lazy { findViewById<TextView>(R.id.yhje_str) }
     private val tvLq: TextView? by lazy { findViewById<TextView>(R.id.tv_lq) }
     private val llYhq: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.ll_yhq) }
     private val llYh: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.ll_yh) }
     private val yhStr: TextView? by lazy { findViewById<TextView>(R.id.yh_str) }
     private val shop_logo: ImageView? by lazy { findViewById<ImageView>(R.id.shop_logo) }
+    private val iv_back2: ImageView? by lazy { findViewById<ImageView>(R.id.iv_back2) }
     private val xqtList: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.xqt_list) }
+    private val goodsList: RecyclerView? by lazy { findViewById<RecyclerView>(R.id.goods_list) }
     private val banner: Banner<String, GoodsDetailBannerAdapter>? by lazy { findViewById(R.id.goods_banner) }
 
     override fun getLayoutId(): Int {
@@ -68,9 +80,34 @@ class GoodsDetailActivity : AppActivity() {
     }
 
     override fun initView() {
+        setOnClickListener(iv_back2)
         banner?.let {
 //            it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
+            it.addOnPageChangeListener(object : OnPageChangeListener {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+                    banner_indector?.text = "${position + 1}/${bannerList}"
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+
+                }
+
+            })
+        }
+
+        goodsList?.let {
+            it.layoutManager = GridLayoutManager(this, 2)
+            goodsListAdapter = HomeGoodsListAdapter(this)
+            it.adapter = goodsListAdapter
         }
     }
 
@@ -84,6 +121,7 @@ class GoodsDetailActivity : AppActivity() {
             .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
                 override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
                     initGoodsInfo(result?.getData()?.get(0))
+                    getSameClassGoods(result?.getData()?.get(0)?.tao_id)
                 }
 
                 override fun onFail(e: Exception?) {
@@ -93,6 +131,37 @@ class GoodsDetailActivity : AppActivity() {
     }
 
     /**
+     * 获取相似商品
+     */
+    private fun getSameClassGoods(taoId: String?) {
+        EasyHttp.get(this)
+            .api(SameClassGoodsApi().apply { 
+                item_id = taoId.toString()
+            })
+            .request(object :OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>>{
+                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
+                    goodsListAdapter.addData(result?.getData())
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+            })
+    }
+
+    @SingleClick
+    override fun onClick(view: View) {
+        when (view) {
+            iv_back2 -> {
+                finish()
+            }
+            else -> {}
+        }
+    }
+
+    private var bannerList = 1
+
+    /**
      * 设置商品信息
      */
     private fun initGoodsInfo(goodsInfo: HomeGoodsListApi.GoodsBean?) {
@@ -100,6 +169,8 @@ class GoodsDetailActivity : AppActivity() {
         goods_price?.text = goodsInfo?.quanhou_jiage
         yh_str?.text = "省${goodsInfo?.coupon_info_money}元"
         yhq_jine?.text = goodsInfo?.coupon_info_money
+        start_time?.text = "${goodsInfo?.coupon_start_time}"
+        end_time?.text = "${goodsInfo?.coupon_end_time}"
         yhje_str?.text = goodsInfo?.coupon_info
         yuanjia?.text = goodsInfo?.size
         FormatUtils.formatSales(buy_num, goodsInfo?.volume)
@@ -126,6 +197,7 @@ class GoodsDetailActivity : AppActivity() {
                 return
             }
         }
+        bannerList = imgList.size
         banner?.setAdapter(GoodsDetailBannerAdapter(imgList))
 
         if (goodsInfo?.coupon_info_money == "0" || goodsInfo?.coupon_info_money == "0.0" || goodsInfo?.coupon_info_money == "0.00") {
