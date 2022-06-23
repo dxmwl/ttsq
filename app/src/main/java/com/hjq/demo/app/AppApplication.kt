@@ -125,13 +125,6 @@ class AppApplication : Application() {
                 .setHandler(RequestHandler(application))
                 // 设置请求重试次数
                 .setRetryCount(1)
-                .setInterceptor { api: IRequestApi, params: HttpParams, headers: HttpHeaders ->
-                    // 添加全局请求头
-                    headers.put("token", "66666666666")
-                    headers.put("deviceOaid", UmengClient.getDeviceOaid())
-                    headers.put("versionName", AppConfig.getVersionName())
-                    headers.put("versionCode", AppConfig.getVersionCode().toString())
-                }
                 .into()
 
             // 设置 Json 解析容错监听
