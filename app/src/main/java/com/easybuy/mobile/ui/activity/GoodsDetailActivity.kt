@@ -2,6 +2,7 @@ package com.easybuy.mobile.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,11 +10,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.AppUtils
 import com.bumptech.glide.Glide
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.Log
 import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.AppActivity
+import com.easybuy.mobile.http.api.GetLingquanUrlApi
 import com.easybuy.mobile.http.api.GoodsDetailApi
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.api.SameClassGoodsApi
@@ -72,6 +75,7 @@ class GoodsDetailActivity : AppActivity() {
     private val shop_logo: ImageView? by lazy { findViewById<ImageView>(R.id.shop_logo) }
     private val iv_back2: ImageView? by lazy { findViewById<ImageView>(R.id.iv_back2) }
     private val xqtList: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.xqt_list) }
+    private val ll_lq: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.ll_lq) }
     private val goodsList: RecyclerView? by lazy { findViewById<RecyclerView>(R.id.goods_list) }
     private val banner: Banner<String, GoodsDetailBannerAdapter>? by lazy { findViewById(R.id.goods_banner) }
 
@@ -80,7 +84,7 @@ class GoodsDetailActivity : AppActivity() {
     }
 
     override fun initView() {
-        setOnClickListener(iv_back2)
+        setOnClickListener(iv_back2, ll_lq)
         banner?.let {
 //            it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
@@ -135,10 +139,10 @@ class GoodsDetailActivity : AppActivity() {
      */
     private fun getSameClassGoods(taoId: String?) {
         EasyHttp.get(this)
-            .api(SameClassGoodsApi().apply { 
+            .api(SameClassGoodsApi().apply {
                 item_id = taoId.toString()
             })
-            .request(object :OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>>{
+            .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
                 override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
                     goodsListAdapter.addData(result?.getData())
                 }
@@ -155,8 +159,50 @@ class GoodsDetailActivity : AppActivity() {
             iv_back2 -> {
                 finish()
             }
+            ll_lq -> {
+                getLingquanUrl()
+            }
             else -> {}
         }
+    }
+
+    /**
+     * 获取领券地址
+     */
+    private fun getLingquanUrl() {
+        EasyHttp.get(this)
+            .api(GetLingquanUrlApi().apply {
+                num_iid = getString(GOODS_ID).toString()
+            })
+            .request(object :
+                OnHttpListener<HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlBean>>> {
+                override fun onSucceed(result: HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlBean>>?) {
+                    if (AppUtils.isAppInstalled("com.taobao.taobao")) {
+                        val intent = Intent()
+                        intent.setAction("Android.intent.action.VIEW");
+                        val uri = Uri.parse(
+                            result?.getData()?.get(0)?.coupon_click_url.toString()
+                        ); // 商品地址
+                        intent.setData(uri);
+                        intent.setClassName(
+                            "com.taobao.taobao",
+                            "com.taobao.browser.BrowserActivity"
+                        );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//在非activity类中调用startactivity方法必须添加标签
+                        startActivity(intent)
+                    } else {
+                        BrowserActivity.start(
+                            this@GoodsDetailActivity,
+                            result?.getData()?.get(0)?.coupon_click_url.toString()
+                        )
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+
+            })
     }
 
     private var bannerList = 1

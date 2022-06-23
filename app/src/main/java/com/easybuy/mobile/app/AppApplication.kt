@@ -128,6 +128,8 @@ class AppApplication : Application() {
                 // 设置请求重试次数
                 .setRetryCount(1)
                 .addParam("appkey", AppConfig.getZtkAppKey())
+                .addParam("sid", AppConfig.getZtkSqId())
+                .addParam("pid", AppConfig.getTblmPid())
                 .into()
 
             // 设置 Json 解析容错监听

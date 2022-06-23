@@ -41,6 +41,10 @@ ext {
     WX_APP_SECRET = "0c8c7cf831dd135a32b3e395ea459b5a"
     //折淘客APPKey
     ZTK_APP_KEY = "2506f1398595428eab9055197bf671e7"
+    //淘宝联盟PID
+    TBLM_PID = "mm_111203980_10278226_34170938"
+    //折淘客授权ID
+    ZTK_SQ_ID = "154994"
     switch(serverType) {
         case SERVER_TYPE_TEST:
         case SERVER_TYPE_PREVIEW:

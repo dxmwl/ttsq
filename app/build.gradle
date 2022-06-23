@@ -27,8 +27,12 @@ android {
         buildConfigField('String', 'BUGLY_ID', '"' + BUGLY_ID + '"')
         // 测试服务器的主机地址
         buildConfigField('String', 'HOST_URL', '"' + HOST_URL + '"')
-
+        //折淘客APPkey
         buildConfigField('String', 'ZTK_APP_KEY', '"' + ZTK_APP_KEY + '"')
+        //淘宝联盟Pid
+        buildConfigField('String', 'TBLM_PID', '"' + TBLM_PID + '"')
+        //折淘客授权ID
+        buildConfigField('String', 'ZTK_SQ_ID', '"' + ZTK_SQ_ID + '"')
     }
 
     // Apk 签名的那些事：https://www.jianshu.com/p/a1f8e5896aa2

@@ -71,4 +71,18 @@ object AppConfig {
     fun getZtkAppKey(): String {
         return BuildConfig.ZTK_APP_KEY
     }
+
+    /**
+     * 获取 淘宝联盟Pid
+     */
+    fun getTblmPid(): String {
+        return BuildConfig.TBLM_PID
+    }
+
+    /**
+     * 获取 折淘客AppKey
+     */
+    fun getZtkSqId(): String {
+        return BuildConfig.ZTK_SQ_ID
+    }
 }
