@@ -19,6 +19,6 @@ class RequestServer : IRequestServer {
 
     override fun getBodyType(): BodyType {
         // 以表单的形式提交参数
-        return BodyType.FORM
+        return BodyType.JSON
     }
 }

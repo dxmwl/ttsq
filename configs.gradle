@@ -39,22 +39,23 @@ ext {
     WX_APP_ID = "wxd35706cc9f46114c"
     // 微信 Secret
     WX_APP_SECRET = "0c8c7cf831dd135a32b3e395ea459b5a"
-
+    //折淘客APPKey
+    ZTK_APP_KEY = "2506f1398595428eab9055197bf671e7"
     switch(serverType) {
         case SERVER_TYPE_TEST:
         case SERVER_TYPE_PREVIEW:
             LOG_ENABLE = true
-            BUGLY_ID = "请自行替换 Bugly 上面的 AppID"
+            BUGLY_ID = "a53423d4a4"
             if (serverType == SERVER_TYPE_PREVIEW) {
-                HOST_URL = "https://www.pre.baidu.com/"
+                HOST_URL = "https://api.zhetaoke.com:10001/"
             } else {
-                HOST_URL = "https://www.test.baidu.com/"
+                HOST_URL = "https://api.zhetaoke.com:10001/"
             }
             break
         case SERVER_TYPE_PRODUCT:
             LOG_ENABLE = false
-            BUGLY_ID = "请自行替换 Bugly 上面的 AppID"
-            HOST_URL = "https://www.baidu.com/"
+            BUGLY_ID = "a53423d4a4"
+            HOST_URL = "https://api.zhetaoke.com:10001/"
             break
     }
 }

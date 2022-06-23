@@ -27,6 +27,8 @@ android {
         buildConfigField('String', 'BUGLY_ID', '"' + BUGLY_ID + '"')
         // 测试服务器的主机地址
         buildConfigField('String', 'HOST_URL', '"' + HOST_URL + '"')
+
+        buildConfigField('String', 'ZTK_APP_KEY', '"' + ZTK_APP_KEY + '"')
     }
 
     // Apk 签名的那些事：https://www.jianshu.com/p/a1f8e5896aa2

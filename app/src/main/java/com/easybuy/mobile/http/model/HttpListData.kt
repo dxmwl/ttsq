@@ -23,7 +23,7 @@ class HttpListData<T> : HttpData<ListBean<T?>?>() {
         private val totalNumber: Int = 0
 
         /** 数据 */
-        private val items: MutableList<T?>? = null
+        private val content: MutableList<T?>? = null
 
         /**
          * 判断是否是最后一页
@@ -45,7 +45,7 @@ class HttpListData<T> : HttpData<ListBean<T?>?>() {
         }
 
         fun getItems(): MutableList<T?>? {
-            return items
+            return content
         }
     }
 }

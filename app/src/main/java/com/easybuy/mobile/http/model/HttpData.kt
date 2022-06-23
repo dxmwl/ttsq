@@ -9,16 +9,16 @@ package com.easybuy.mobile.http.model
 open class HttpData<T> {
 
     /** 返回码 */
-    private val code: Int = 0
+    private val status: Int = 0
 
     /** 提示语 */
     private val msg: String? = null
 
     /** 数据 */
-    private val data: T? = null
+    private val content: T? = null
 
     fun getCode(): Int {
-        return code
+        return status
     }
 
     fun getMessage(): String? {
@@ -26,20 +26,20 @@ open class HttpData<T> {
     }
 
     fun getData(): T? {
-        return data
+        return content
     }
 
     /**
      * 是否请求成功
      */
     fun isRequestSucceed(): Boolean {
-        return code == 200
+        return status == 200
     }
 
     /**
      * 是否 Token 失效
      */
     fun isTokenFailure(): Boolean {
-        return code == 1001
+        return status == 1001
     }
 }

@@ -9,9 +9,6 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.google.gson.reflect.TypeToken
-import com.google.gson.stream.JsonToken
-import com.hjq.bar.TitleBar
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.Log
 import com.easybuy.mobile.http.glide.GlideApp
@@ -19,6 +16,9 @@ import com.easybuy.mobile.http.model.RequestHandler
 import com.easybuy.mobile.http.model.RequestServer
 import com.easybuy.mobile.manager.ActivityManager
 import com.easybuy.mobile.other.*
+import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.JsonToken
+import com.hjq.bar.TitleBar
 import com.hjq.gson.factory.GsonFactory
 import com.hjq.http.EasyConfig
 import com.hjq.toast.ToastUtils
@@ -66,11 +66,16 @@ class AppApplication : Application() {
             TitleBar.setDefaultStyle(TitleBarStyle())
 
             // 设置全局的 Header 构建器
-            SmartRefreshLayout.setDefaultRefreshHeaderCreator{ context: Context, layout: RefreshLayout ->
-                MaterialHeader(context).setColorSchemeColors(ContextCompat.getColor(context, R.color.common_accent_color))
+            SmartRefreshLayout.setDefaultRefreshHeaderCreator { context: Context, layout: RefreshLayout ->
+                MaterialHeader(context).setColorSchemeColors(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.common_accent_color
+                    )
+                )
             }
             // 设置全局的 Footer 构建器
-            SmartRefreshLayout.setDefaultRefreshFooterCreator{ context: Context, layout: RefreshLayout ->
+            SmartRefreshLayout.setDefaultRefreshFooterCreator { context: Context, layout: RefreshLayout ->
                 SmartBallPulseFooter(context)
             }
             // 设置全局初始化器
@@ -122,6 +127,7 @@ class AppApplication : Application() {
                 .setHandler(RequestHandler(application))
                 // 设置请求重试次数
                 .setRetryCount(1)
+                .addParam("appkey", AppConfig.getZtkAppKey())
                 .into()
 
             // 设置 Json 解析容错监听
@@ -136,9 +142,11 @@ class AppApplication : Application() {
             }
 
             // 注册网络状态变化监听
-            val connectivityManager: ConnectivityManager? = ContextCompat.getSystemService(application, ConnectivityManager::class.java)
+            val connectivityManager: ConnectivityManager? =
+                ContextCompat.getSystemService(application, ConnectivityManager::class.java)
             if (connectivityManager != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                connectivityManager.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
+                connectivityManager.registerDefaultNetworkCallback(object :
+                    ConnectivityManager.NetworkCallback() {
                     override fun onLost(network: Network) {
                         val topActivity: Activity? = ActivityManager.getInstance().getTopActivity()
                         if (topActivity !is LifecycleOwner) {

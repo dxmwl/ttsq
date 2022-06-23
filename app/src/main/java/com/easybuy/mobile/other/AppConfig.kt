@@ -64,4 +64,11 @@ object AppConfig {
     fun getHostUrl(): String {
         return BuildConfig.HOST_URL
     }
+
+    /**
+     * 获取 折淘客AppKey
+     */
+    fun getZtkAppKey(): String {
+        return BuildConfig.ZTK_APP_KEY
+    }
 }
