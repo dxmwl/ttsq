@@ -44,7 +44,7 @@ android {
 
         debug {
             // 给包名添加后缀
-            applicationIdSuffix '.debug'
+//            applicationIdSuffix '.debug'
             // 调试模式开关
             debuggable true
             jniDebuggable true
@@ -58,7 +58,7 @@ android {
             signingConfig signingConfigs.config
             // 添加清单占位符
             addManifestPlaceholders([
-                    'app_name'    :    '安卓技术中台 Debug 版'
+                    'app_name'    :    '易购宝 Debug 版'
             ])
             // 调试模式下只保留一种架构的 so 库，提升打包速度
             ndk {
@@ -71,7 +71,7 @@ android {
             applicationIdSuffix ''
             // 添加清单占位符
             addManifestPlaceholders([
-                    'app_name'    :    '安卓技术中台 Preview 版'
+                    'app_name'    :    '易购宝 Preview 版'
             ])
         }
 
