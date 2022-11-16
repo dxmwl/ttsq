@@ -76,6 +76,7 @@ class GoodsDetailActivity : AppActivity() {
     private val iv_back2: ImageView? by lazy { findViewById<ImageView>(R.id.iv_back2) }
     private val xqtList: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.xqt_list) }
     private val ll_lq: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.ll_lq) }
+    private val iv_lq: ImageView? by lazy { findViewById(R.id.iv_lq) }
     private val goodsList: RecyclerView? by lazy { findViewById<RecyclerView>(R.id.goods_list) }
     private val banner: Banner<String, GoodsDetailBannerAdapter>? by lazy { findViewById(R.id.goods_banner) }
 
@@ -84,7 +85,7 @@ class GoodsDetailActivity : AppActivity() {
     }
 
     override fun initView() {
-        setOnClickListener(iv_back2, ll_lq)
+        setOnClickListener(iv_back2, ll_lq,iv_lq)
         banner?.let {
 //            it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
@@ -159,7 +160,7 @@ class GoodsDetailActivity : AppActivity() {
             iv_back2 -> {
                 finish()
             }
-            ll_lq -> {
+            iv_lq,ll_lq -> {
                 getLingquanUrl()
             }
             else -> {}

@@ -127,7 +127,10 @@ class AppApplication : Application() {
                 .setHandler(RequestHandler(application))
                 // 设置请求重试次数
                 .setRetryCount(1)
+                //折淘客
                 .addParam("appkey", AppConfig.getZtkAppKey())
+                //好单库
+                .addParam("apikey", AppConfig.getHdkAppKey())
                 .addParam("sid", AppConfig.getZtkSqId())
                 .addParam("pid", AppConfig.getTblmPid())
                 .into()

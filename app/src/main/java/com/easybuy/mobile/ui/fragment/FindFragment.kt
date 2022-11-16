@@ -2,6 +2,8 @@ package com.easybuy.mobile.ui.fragment
 
 import android.view.View
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -9,8 +11,17 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.TitleBarFragment
+import com.easybuy.mobile.http.api.ClassApi
 import com.easybuy.mobile.http.glide.GlideApp
+import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.ui.activity.HomeActivity
+import com.easybuy.mobile.ui.activity.SearchActivity
+import com.easybuy.mobile.ui.adapter.IndustryListAdapter
+import com.easybuy.mobile.ui.adapter.ServiceCategoryListAdapter
+import com.hjq.base.BaseAdapter
+import com.hjq.http.EasyHttp
+import com.hjq.http.listener.OnHttpListener
+import com.hjq.shape.view.ShapeTextView
 import com.hjq.widget.view.CountdownView
 import com.hjq.widget.view.SwitchButton
 
@@ -21,7 +32,7 @@ import com.hjq.widget.view.SwitchButton
  *    desc   : 发现 Fragment
  */
 class FindFragment : TitleBarFragment<HomeActivity>(),
-    SwitchButton.OnCheckedChangeListener {
+    ServiceCategoryListAdapter.OnItemClickListener {
 
     companion object {
 
@@ -30,55 +41,102 @@ class FindFragment : TitleBarFragment<HomeActivity>(),
         }
     }
 
-    private val circleView: ImageView? by lazy { findViewById(R.id.iv_find_circle) }
-    private val cornerView: ImageView? by lazy { findViewById(R.id.iv_find_corner) }
-    private val switchButton: SwitchButton? by lazy { findViewById(R.id.sb_find_switch) }
-    private val countdownView: CountdownView? by lazy { findViewById(R.id.cv_find_countdown) }
+    private lateinit var serviceCategoryListAdapter: ServiceCategoryListAdapter
+    private val industryList: RecyclerView? by lazy { findViewById(R.id.industry_list) }
+    private val serviceList: RecyclerView? by lazy { findViewById(R.id.service_list) }
+    private val searchView: ShapeTextView? by lazy { findViewById(R.id.search_view) }
 
     override fun getLayoutId(): Int {
         return R.layout.find_fragment
     }
 
     override fun initView() {
-        setOnClickListener(countdownView)
-        switchButton?.setOnCheckedChangeListener(this)
+        setOnClickListener(searchView)
+        serviceList?.let {
+            it.layoutManager = LinearLayoutManager(context)
+            serviceCategoryListAdapter = ServiceCategoryListAdapter(this)
+            it.adapter = serviceCategoryListAdapter
+        }
     }
 
     override fun initData() {
-        circleView?.let {
-            // 显示圆形的 ImageView
-            GlideApp.with(this)
-                .load(R.drawable.update_app_top_bg)
-                .transform(MultiTransformation(CenterCrop(), CircleCrop()))
-                .into(it)
-        }
+        getClassData()
 
-        cornerView?.let {
-            // 显示圆角的 ImageView
-            GlideApp.with(this)
-                .load(R.drawable.update_app_top_bg)
-                .transform(MultiTransformation(CenterCrop(), RoundedCorners(resources.getDimension(R.dimen.dp_10).toInt())))
-                .into(it)
-        }
+    }
+
+    /**
+     * 获取分类数据
+     */
+    private fun getClassData() {
+        EasyHttp.get(this)
+            .api(ClassApi())
+            .request(object : OnHttpListener<HttpData<ArrayList<ClassApi.ClassInfo>>> {
+                override fun onSucceed(result: HttpData<ArrayList<ClassApi.ClassInfo>>?) {
+                    val classData = result?.getData()
+                    industryList?.let { it ->
+
+                        classData?.get(0)?.checked = true
+
+                        it.layoutManager = LinearLayoutManager(context)
+                        val industryListAdapter = context?.let { it1 -> IndustryListAdapter(it1) }
+                        industryListAdapter?.setOnItemClickListener(object :
+                            BaseAdapter.OnItemClickListener {
+                            override fun onItemClick(
+                                recyclerView: RecyclerView?,
+                                itemView: View?,
+                                position: Int
+                            ) {
+                                classData?.forEachIndexed { index, menuDto ->
+                                    menuDto.checked = false
+                                    industryListAdapter.notifyItemChanged(index)
+                                }
+                                classData?.get(position)?.checked = true
+                                industryListAdapter.notifyItemChanged(position)
+
+                                try {
+                                    serviceCategoryListAdapter.let {
+                                        classData?.get(position)?.data?.let {
+                                            serviceCategoryListAdapter.setData(it)
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        })
+                        it.adapter = industryListAdapter
+                        industryListAdapter?.setData(classData)
+
+                        serviceCategoryListAdapter.let {
+                            classData?.get(0)?.data?.let {
+                                serviceCategoryListAdapter.setData(it)
+                            }
+                        }
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+
+            })
     }
 
     @SingleClick
     override fun onClick(view: View) {
-        if (view === countdownView) {
-            toast(R.string.common_code_send_hint)
-            countdownView?.start()
+        when (view) {
+            searchView -> {
+                startActivity(SearchActivity::class.java)
+            }
+            else -> {}
         }
     }
 
     override fun isStatusBarEnabled(): Boolean {
-        // 使用沉浸式状态栏
-        return !super.isStatusBarEnabled()
+        return false
     }
 
-    /**
-     * [SwitchButton.OnCheckedChangeListener]
-     */
-    override fun onCheckedChanged(button: SwitchButton, checked: Boolean) {
-        toast(checked)
+    override fun onItemClick(classDataBean: ClassApi.Info) {
+//        getAttachActivity()?.let { SearchResultActivity.start(it, classDataBean.title) }
     }
 }

@@ -85,4 +85,18 @@ object AppConfig {
     fun getZtkSqId(): String {
         return BuildConfig.ZTK_SQ_ID
     }
+
+    /**
+     * 获取 好单库请求地址
+     */
+    fun getHakBaseUrl(): String {
+        return BuildConfig.hak_baseUrl
+    }
+
+    /**
+     * 获取 好单库请求key
+     */
+    fun getHdkAppKey(): String {
+        return BuildConfig.HDK_APP_KEY
+    }
 }

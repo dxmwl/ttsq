@@ -11,11 +11,21 @@ open class HttpData<T> {
     /** 返回码 */
     private val status: Int = 0
 
+    /**
+     * 返回码 好单库使用
+     */
+    private val code: Int = 0
+
     /** 提示语 */
     private val msg: String? = null
 
     /** 数据 */
     private val content: T? = null
+
+    /**
+     * 数据(好单库分类接口使用)
+     */
+    private val general_classify: T? = null
 
     fun getCode(): Int {
         return status
@@ -26,14 +36,18 @@ open class HttpData<T> {
     }
 
     fun getData(): T? {
-        return content
+        return if (content == null) {
+            general_classify
+        } else {
+            content
+        }
     }
 
     /**
      * 是否请求成功
      */
     fun isRequestSucceed(): Boolean {
-        return status == 200
+        return status == 200 || code == 1
     }
 
     /**
