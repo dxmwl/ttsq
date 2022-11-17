@@ -8,9 +8,10 @@ import android.widget.TextView
 import com.easybug.mobile.R
 import com.easybuy.mobile.app.AppAdapter
 import com.easybuy.mobile.http.api.ClassApi
+import com.easybuy.mobile.http.api.ZtkClassApi
 import com.hjq.shape.view.ShapeTextView
 
-class IndustryListAdapter(mContext: Context) : AppAdapter<ClassApi.ClassInfo>(mContext) {
+class HdkBigClassAdapter(mContext: Context) : AppAdapter<ClassApi.ClassInfo>(mContext) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
         return IndustryListViewHolder()
     }

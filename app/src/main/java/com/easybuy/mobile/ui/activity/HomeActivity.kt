@@ -11,13 +11,15 @@ import com.hjq.base.FragmentPagerAdapter
 import com.easybug.mobile.R
 import com.easybuy.mobile.app.AppActivity
 import com.easybuy.mobile.app.AppFragment
+import com.easybuy.mobile.app.AppHelper
+import com.easybuy.mobile.http.api.ZtkClassApi
+import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.manager.*
 import com.easybuy.mobile.other.DoubleClickHelper
 import com.easybuy.mobile.ui.adapter.NavigationAdapter
-import com.easybuy.mobile.ui.fragment.FindFragment
-import com.easybuy.mobile.ui.fragment.HomeFragment
-import com.easybuy.mobile.ui.fragment.MessageFragment
-import com.easybuy.mobile.ui.fragment.MineFragment
+import com.easybuy.mobile.ui.fragment.*
+import com.hjq.http.EasyHttp
+import com.hjq.http.listener.OnHttpListener
 
 /**
  *    author : Android 轮子哥
@@ -70,12 +72,14 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     override fun initData() {
         pagerAdapter = FragmentPagerAdapter<AppFragment<*>>(this).apply {
             addFragment(HomeFragment.newInstance())
-            addFragment(FindFragment.newInstance())
+            addFragment(ZtkClassFragment.newInstance())
             addFragment(MessageFragment.newInstance())
             addFragment(MineFragment.newInstance())
             viewPager?.adapter = this
         }
         onNewIntent(intent)
+
+        getClassData()
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -148,5 +152,47 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         viewPager?.adapter = null
         navigationView?.adapter = null
         navigationAdapter?.setOnNavigationListener(null)
+    }
+
+    /**
+     * 获取分类数据
+     */
+    private fun getClassData() {
+        EasyHttp.get(this)
+            .api(ZtkClassApi())
+            .request(object : OnHttpListener<HttpData<ArrayList<ZtkClassApi.ClassInfo>>> {
+                override fun onSucceed(result: HttpData<ArrayList<ZtkClassApi.ClassInfo>>?) {
+                    try {
+                        val classData = result?.getData()
+                        if (classData != null) {
+                            AppHelper.secondaryClassificationData = classData
+                        }
+                        val goodsClass = HashMap<String, ZtkClassApi.ClassInfo>()
+                        classData?.forEachIndexed { index, classInfo ->
+                            val classInfo2 = goodsClass[classInfo.cid]
+                            if (classInfo2 == null) {
+                                goodsClass[classInfo.cid] =
+                                    ZtkClassApi.ClassInfo(
+                                        cid = classInfo.cid,
+                                        name = classInfo.name
+                                    )
+                            }
+                            classInfo2?.childs?.add(classInfo)
+                        }
+                        val goodsClassList = ArrayList<ZtkClassApi.ClassInfo>()
+                        goodsClass.forEach {
+                            goodsClassList.add(it.value)
+                        }
+                        AppHelper.classData = goodsClassList
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+            }
+            )
     }
 }

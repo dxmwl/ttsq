@@ -27,6 +27,11 @@ open class HttpData<T> {
      */
     private val general_classify: T? = null
 
+    /**
+     * 数据(折淘客分类接口使用)
+     */
+    private val type: T? = null
+
     fun getCode(): Int {
         return status
     }
@@ -36,10 +41,12 @@ open class HttpData<T> {
     }
 
     fun getData(): T? {
-        return if (content == null) {
+        return if (content != null) {
+            content
+        } else if (general_classify != null) {
             general_classify
         } else {
-            content
+            type
         }
     }
 

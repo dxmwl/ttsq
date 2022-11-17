@@ -18,7 +18,7 @@
         tools:text="创意设计" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/service_list"
+        android:id="@+id/two_class_list"
         android:layout_width="match_parent"
         tools:itemCount="15"
         android:layout_marginTop="@dimen/dp_17"
@@ -27,6 +27,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_service_item"
+        tools:listitem="@layout/item_three_class"
         android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_57"
+        android:layout_marginTop="@dimen/dp_46"
+        android:drawableStart="@drawable/icon_search"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/dp_19"
+        android:paddingVertical="@dimen/dp_13"
+        android:text="搜索10万+热门商品"
+        android:textColor="#FFD4D4D4"
+        android:textSize="@dimen/sp_12"
+        app:shape_radius="@dimen/dp_30"
+        app:shape_shadowColor="#D8D8D8"
+        app:shape_shadowSize="6dp"
+        app:shape_solidColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/big_class"
+            android:layout_width="@dimen/dp_68"
+            android:layout_height="match_parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/two_class_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

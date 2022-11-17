@@ -18,7 +18,7 @@
         android:gravity="center"
         android:paddingHorizontal="@dimen/dp_19"
         android:paddingVertical="@dimen/dp_13"
-        android:text="搜索服务/云客/需求"
+        android:text="搜索10万+热门商品"
         android:textColor="#FFD4D4D4"
         android:textSize="@dimen/sp_12"
         app:shape_radius="@dimen/dp_30"
@@ -31,12 +31,12 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/industry_list"
+            android:id="@+id/big_class"
             android:layout_width="@dimen/dp_68"
             android:layout_height="match_parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/service_list"
+            android:id="@+id/two_class_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

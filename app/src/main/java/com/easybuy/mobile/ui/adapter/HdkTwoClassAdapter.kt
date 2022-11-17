@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.easybug.mobile.R
 import com.easybuy.mobile.app.AppAdapter
 import com.easybuy.mobile.http.api.ClassApi
+import com.easybuy.mobile.http.api.ZtkClassApi
 import com.easybuy.mobile.http.glide.GlideApp
 import com.easybuy.mobile.widget.SpacesItemDecoration
 
@@ -20,32 +21,32 @@ import com.easybuy.mobile.widget.SpacesItemDecoration
  * @author : clb
  * @time : 2022/5/31
  */
-class ServiceCategoryListAdapter(val listener: OnItemClickListener) :
-    RecyclerView.Adapter<ServiceCategoryListAdapter.ServiceCategoryViewHolder>() {
+class HdkTwoClassAdapter(val listener: OnItemClickListener) :
+    RecyclerView.Adapter<HdkTwoClassAdapter.TwoClassViewHolder>() {
 
     private var listData = ArrayList<ClassApi.Data>()
 
-    inner class ServiceCategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class TwoClassViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView14: TextView? by lazy { itemView.findViewById(R.id.textView14) }
-        val serviceList: RecyclerView? by lazy { itemView.findViewById(R.id.service_list) }
+        val serviceList: RecyclerView? by lazy { itemView.findViewById(R.id.two_class_list) }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceCategoryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TwoClassViewHolder {
         val view =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_service_category, parent, false)
-        return ServiceCategoryViewHolder(view)
+                .inflate(R.layout.item_two_class, parent, false)
+        return TwoClassViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ServiceCategoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TwoClassViewHolder, position: Int) {
         holder.setIsRecyclable(false)
         val serviceClassDto = listData[position]
-        holder.textView14?.text = serviceClassDto.next_name
+//        holder.textView14?.text = serviceClassDto.next_name
         holder.serviceList?.let {
             it.layoutManager = GridLayoutManager(holder.itemView.context, 2)
-            val serviceCategoryAdapter = ServiceCategoryAdapter(holder.itemView.context, listener)
-            it.adapter = serviceCategoryAdapter
-            serviceCategoryAdapter.setData(serviceClassDto.info.toMutableList())
+            val threeClassAdapter = ThreeClassAdapter(holder.itemView.context, listener)
+            it.adapter = threeClassAdapter
+            threeClassAdapter.setData(serviceClassDto.info)
             it.addItemDecoration(SpacesItemDecoration(15))
         }
     }
@@ -65,14 +66,14 @@ class ServiceCategoryListAdapter(val listener: OnItemClickListener) :
         fun onItemClick(classDataBean: ClassApi.Info)
     }
 
-    inner class ServiceCategoryAdapter(
+    inner class ThreeClassAdapter(
         val mContext: Context,
-        val listener: ServiceCategoryListAdapter.OnItemClickListener?
+        val listener: HdkTwoClassAdapter.OnItemClickListener?
     ) :
         AppAdapter<ClassApi.Info>(mContext) {
 
 
-        inner class ViewHolder : AppViewHolder(R.layout.item_service_item) {
+        inner class ViewHolder : AppViewHolder(R.layout.item_three_class) {
             private val serviceTitle: TextView? by lazy { findViewById(R.id.textView15) }
             private val tvNumber: TextView? by lazy { findViewById(R.id.tv_number) }
             private val serviceIcon: ImageView? by lazy { findViewById(R.id.imageView2) }

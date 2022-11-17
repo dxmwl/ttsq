@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.AppActivity
+import com.gyf.immersionbar.ImmersionBar
 
 class SearchActivity : AppActivity() {
 
@@ -41,6 +42,12 @@ class SearchActivity : AppActivity() {
             }
             else -> {}
         }
+    }
+
+    override fun createStatusBarConfig(): ImmersionBar {
+        return super.createStatusBarConfig() // 指定导航栏背景颜色
+            .navigationBarColor(R.color.white) // 不要把整个布局顶上去
+            .keyboardEnable(true)
     }
 
 }

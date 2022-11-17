@@ -1,29 +1,23 @@
 package com.easybuy.mobile.ui.fragment
 
 import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.TitleBarFragment
 import com.easybuy.mobile.http.api.ClassApi
-import com.easybuy.mobile.http.glide.GlideApp
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.ui.activity.HomeActivity
 import com.easybuy.mobile.ui.activity.SearchActivity
-import com.easybuy.mobile.ui.adapter.IndustryListAdapter
-import com.easybuy.mobile.ui.adapter.ServiceCategoryListAdapter
+import com.easybuy.mobile.ui.adapter.BigClassAdapter
+import com.easybuy.mobile.ui.adapter.HdkBigClassAdapter
+import com.easybuy.mobile.ui.adapter.HdkTwoClassAdapter
+import com.easybuy.mobile.ui.adapter.TwoClassAdapter
 import com.hjq.base.BaseAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.hjq.shape.view.ShapeTextView
-import com.hjq.widget.view.CountdownView
-import com.hjq.widget.view.SwitchButton
 
 /**
  *    author : Android 轮子哥
@@ -31,31 +25,31 @@ import com.hjq.widget.view.SwitchButton
  *    time   : 2018/10/18
  *    desc   : 发现 Fragment
  */
-class FindFragment : TitleBarFragment<HomeActivity>(),
-    ServiceCategoryListAdapter.OnItemClickListener {
+class ClassFragment : TitleBarFragment<HomeActivity>(),
+    HdkTwoClassAdapter.OnItemClickListener {
 
     companion object {
 
-        fun newInstance(): FindFragment {
-            return FindFragment()
+        fun newInstance(): ClassFragment {
+            return ClassFragment()
         }
     }
 
-    private lateinit var serviceCategoryListAdapter: ServiceCategoryListAdapter
-    private val industryList: RecyclerView? by lazy { findViewById(R.id.industry_list) }
-    private val serviceList: RecyclerView? by lazy { findViewById(R.id.service_list) }
+    private lateinit var twoClassAdapter: HdkTwoClassAdapter
+    private val bigClass: RecyclerView? by lazy { findViewById(R.id.big_class) }
+    private val twoClassList: RecyclerView? by lazy { findViewById(R.id.two_class_list) }
     private val searchView: ShapeTextView? by lazy { findViewById(R.id.search_view) }
 
     override fun getLayoutId(): Int {
-        return R.layout.find_fragment
+        return R.layout.class_fragment
     }
 
     override fun initView() {
         setOnClickListener(searchView)
-        serviceList?.let {
+        twoClassList?.let {
             it.layoutManager = LinearLayoutManager(context)
-            serviceCategoryListAdapter = ServiceCategoryListAdapter(this)
-            it.adapter = serviceCategoryListAdapter
+            twoClassAdapter = HdkTwoClassAdapter(this)
+            it.adapter = twoClassAdapter
         }
     }
 
@@ -73,13 +67,13 @@ class FindFragment : TitleBarFragment<HomeActivity>(),
             .request(object : OnHttpListener<HttpData<ArrayList<ClassApi.ClassInfo>>> {
                 override fun onSucceed(result: HttpData<ArrayList<ClassApi.ClassInfo>>?) {
                     val classData = result?.getData()
-                    industryList?.let { it ->
+                    bigClass?.let { it ->
 
                         classData?.get(0)?.checked = true
 
                         it.layoutManager = LinearLayoutManager(context)
-                        val industryListAdapter = context?.let { it1 -> IndustryListAdapter(it1) }
-                        industryListAdapter?.setOnItemClickListener(object :
+                        val bigClassAdapter = context?.let { it1 -> HdkBigClassAdapter(it1) }
+                        bigClassAdapter?.setOnItemClickListener(object :
                             BaseAdapter.OnItemClickListener {
                             override fun onItemClick(
                                 recyclerView: RecyclerView?,
@@ -88,15 +82,15 @@ class FindFragment : TitleBarFragment<HomeActivity>(),
                             ) {
                                 classData?.forEachIndexed { index, menuDto ->
                                     menuDto.checked = false
-                                    industryListAdapter.notifyItemChanged(index)
+                                    bigClassAdapter.notifyItemChanged(index)
                                 }
                                 classData?.get(position)?.checked = true
-                                industryListAdapter.notifyItemChanged(position)
+                                bigClassAdapter.notifyItemChanged(position)
 
                                 try {
-                                    serviceCategoryListAdapter.let {
+                                    twoClassAdapter.let {
                                         classData?.get(position)?.data?.let {
-                                            serviceCategoryListAdapter.setData(it)
+                                            twoClassAdapter.setData(it)
                                         }
                                     }
                                 } catch (e: Exception) {
@@ -104,12 +98,12 @@ class FindFragment : TitleBarFragment<HomeActivity>(),
                                 }
                             }
                         })
-                        it.adapter = industryListAdapter
-                        industryListAdapter?.setData(classData)
+                        it.adapter = bigClassAdapter
+                        bigClassAdapter?.setData(classData)
 
-                        serviceCategoryListAdapter.let {
+                        twoClassAdapter.let {
                             classData?.get(0)?.data?.let {
-                                serviceCategoryListAdapter.setData(it)
+                                twoClassAdapter.setData(it)
                             }
                         }
                     }

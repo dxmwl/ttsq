@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.hjq.bar.TitleBar
+        android:id="@+id/titleBar6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:leftIcon="@null" />
     <LinearLayout
+        android:background="@color/white"
         android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="44dp"
@@ -52,7 +59,7 @@
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,4 +76,4 @@
             tools:listitem="@layout/item_home_goods" />
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,8 +1,14 @@
 package com.easybuy.mobile.ui.activity
 
+import android.text.TextWatcher
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.easybug.mobile.R
+import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.AppActivity
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.api.SearchGoodsApi
@@ -20,18 +26,26 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
  */
 class SearchResultActivity:AppActivity() {
     private var pageIndex: Int = 1
-    private var keyword: String? = ""
+    private var keyword: String = ""
 
     private var homeGoodsListAdapter: HomeGoodsListAdapter? = null
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
+    private val input_keyword: EditText? by lazy { findViewById(R.id.input_keyword) }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_search_result
     }
 
     override fun initView() {
-        keyword = intent.getStringExtra("KEYWORD")
+        setOnClickListener(R.id.btn_search)
+        keyword = intent.getStringExtra("KEYWORD").toString()
+        input_keyword?.setText(keyword)
+        input_keyword?.setSelection(keyword.length)
+
+        input_keyword?.addTextChangedListener {
+            keyword = it?.toString().toString()
+        }
 
         goodsList?.let {
             it.layoutManager = GridLayoutManager(this, 2)
@@ -57,7 +71,7 @@ class SearchResultActivity:AppActivity() {
     private fun searchGoods() {
         EasyHttp.get(this)
             .api(SearchGoodsApi().apply {
-                q = keyword.toString()
+                q = keyword
                 page = pageIndex
             })
             .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
@@ -76,5 +90,17 @@ class SearchResultActivity:AppActivity() {
                     toast(e?.message)
                 }
             })
+    }
+
+    @SingleClick
+    override fun onClick(view: View) {
+        super.onClick(view)
+        when (view.id) {
+            R.id.btn_search -> {
+                pageIndex = 1
+                searchGoods()
+            }
+            else -> {}
+        }
     }
 }
