@@ -80,7 +80,7 @@ object AppConfig {
     }
 
     /**
-     * 获取 折淘客AppKey
+     * 获取 折淘客SqId
      */
     fun getZtkSqId(): String {
         return BuildConfig.ZTK_SQ_ID

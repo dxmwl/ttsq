@@ -73,7 +73,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         pagerAdapter = FragmentPagerAdapter<AppFragment<*>>(this).apply {
             addFragment(HomeFragment.newInstance())
             addFragment(ZtkClassFragment.newInstance())
-            addFragment(MessageFragment.newInstance())
+            addFragment(YqbkFragment.newInstance())
             addFragment(MineFragment.newInstance())
             viewPager?.adapter = this
         }
