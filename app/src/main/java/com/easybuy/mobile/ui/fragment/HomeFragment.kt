@@ -10,11 +10,14 @@ import com.easybuy.mobile.http.api.HomeBannerApi
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.http.model.MenuDto
+import com.easybuy.mobile.other.AppConfig
+import com.easybuy.mobile.ui.activity.BrowserActivity
 import com.easybuy.mobile.ui.activity.HomeActivity
 import com.easybuy.mobile.ui.activity.SearchActivity
 import com.easybuy.mobile.ui.adapter.BannerAdapter
 import com.easybuy.mobile.ui.adapter.HomeGoodsListAdapter
 import com.easybuy.mobile.ui.adapter.HomeMenuListAdapter
+import com.hjq.base.BaseAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.hjq.shape.view.ShapeTextView
@@ -55,19 +58,35 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
         }
         menuList?.let {
             val arrayListOf = arrayListOf(
-                MenuDto(R.mipmap.launcher_ic, "淘宝"),
-                MenuDto(R.mipmap.launcher_ic, "天猫"),
-                MenuDto(R.mipmap.launcher_ic, "聚划算"),
-                MenuDto(R.mipmap.launcher_ic, "抖音"),
-                MenuDto(R.mipmap.launcher_ic, "天猫超市"),
-                MenuDto(R.mipmap.launcher_ic, "省钱宝"),
-                MenuDto(R.mipmap.launcher_ic, "9.9包邮"),
-                MenuDto(R.mipmap.launcher_ic, "19.9包邮"),
-                MenuDto(R.mipmap.launcher_ic, "热销商品"),
-                MenuDto(R.mipmap.launcher_ic, "全部")
+                MenuDto(id="1", resId = R.mipmap.launcher_ic, title = "淘宝"),
+                MenuDto(id="2", resId = R.mipmap.launcher_ic, title ="天猫"),
+                MenuDto(id="3", resId = R.mipmap.launcher_ic, title ="聚划算"),
+                MenuDto(id="4", resId = R.mipmap.launcher_ic, title ="抖音"),
+                MenuDto(id="5", resId = R.mipmap.launcher_ic, title ="天猫超市"),
+                MenuDto(id="6", resId = R.mipmap.launcher_ic, title ="省钱宝"),
+                MenuDto(id="7", resId = R.mipmap.launcher_ic, title ="9.9包邮"),
+                MenuDto(id="8", resId = R.mipmap.launcher_ic, title ="19.9包邮"),
+                MenuDto(id="9", resId = R.mipmap.launcher_ic, title ="热销商品"),
+                MenuDto(id="-1", resId = R.mipmap.launcher_ic, title ="全部")
             )
             it.layoutManager = GridLayoutManager(context, 5)
             val homeMenuListAdapter = context?.let { it1 -> HomeMenuListAdapter(it1) }
+            homeMenuListAdapter?.setOnItemClickListener(object :BaseAdapter.OnItemClickListener{
+                override fun onItemClick(
+                    recyclerView: RecyclerView?,
+                    itemView: View?,
+                    position: Int
+                ) {
+                    val menuDto = arrayListOf[position]
+                    when (menuDto.id) {
+                        "7" -> {
+                            BrowserActivity.start(requireContext(),AppConfig.getJiukuaijiuUrl())
+                        }
+                        else -> {}
+                    }
+                }
+
+            })
             it.adapter = homeMenuListAdapter
             homeMenuListAdapter?.setData(arrayListOf)
         }

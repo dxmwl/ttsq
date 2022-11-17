@@ -99,4 +99,11 @@ object AppConfig {
     fun getHdkAppKey(): String {
         return BuildConfig.HDK_APP_KEY
     }
+
+    /**
+     * 9块9包邮链接
+     */
+    fun getJiukuaijiuUrl(): String {
+        return "http://cms.xeemm.com:10000/jiudianjiu.aspx?id=27660&sid=${getZtkSqId()}&relationId="
+    }
 }
