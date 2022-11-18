@@ -1,9 +1,7 @@
 package com.easybuy.mobile.ui.activity
 
-import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +23,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
  * @author : clb
  * @time : 2022/6/23
  */
-class SearchResultActivity:AppActivity() {
+class SearchResultActivity : AppActivity() {
     private var pageIndex: Int = 1
     private var keyword: String = ""
 
@@ -39,7 +37,7 @@ class SearchResultActivity:AppActivity() {
     }
 
     override fun initView() {
-        setOnClickListener(R.id.btn_search)
+        setOnClickListener(R.id.btn_search, R.id.iv_back)
         keyword = intent.getStringExtra("KEYWORD").toString()
         input_keyword?.setText(keyword)
         input_keyword?.setSelection(keyword.length)
@@ -98,6 +96,9 @@ class SearchResultActivity:AppActivity() {
     override fun onClick(view: View) {
         super.onClick(view)
         when (view.id) {
+            R.id.iv_back -> {
+                finish()
+            }
             R.id.btn_search -> {
                 pageIndex = 1
                 searchGoods()

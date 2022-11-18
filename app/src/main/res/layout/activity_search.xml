@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -26,23 +27,23 @@
             android:src="@drawable/icon_back_left" />
 
         <EditText
-            android:singleLine="true"
             android:id="@+id/input_keyword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_weight="1"
-            android:imeOptions="actionSearch"
             android:background="@drawable/shape_search_bg"
             android:drawableStart="@drawable/icon_home_search"
             android:drawablePadding="7dp"
             android:hint="搜过关键字,查询10万+商品"
+            android:imeOptions="actionSearch"
             android:lines="1"
             android:paddingLeft="12dp"
             android:paddingTop="7dp"
             android:paddingRight="12dp"
             android:paddingBottom="7dp"
+            android:singleLine="true"
             android:textColorHint="#666666"
             android:textSize="12sp" />
 
@@ -55,45 +56,65 @@
             android:textSize="15sp" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="19dp"
-        android:text="热门搜索"
-        android:textColor="#ff333333"
-        android:textSize="16sp" />
-
-    <com.easybuy.mobile.widget.FlowLayout
-        android:id="@+id/hot_search_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="19dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="历史搜索"
-            android:textColor="#ff333333"
-            android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="19dp"
+                android:text="热门搜索"
+                android:textColor="#ff333333"
+                android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/icon_del_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_del" />
-    </LinearLayout>
+            <com.easybuy.mobile.widget.FlowLayout
+                android:id="@+id/hot_search_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
 
-    <com.easybuy.mobile.widget.FlowLayout
-        android:id="@+id/search_history_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="19dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="历史搜索"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/icon_del_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_del" />
+            </LinearLayout>
+
+            <com.easybuy.mobile.widget.FlowLayout
+                android:id="@+id/search_history_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/match_character_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone"
+            tools:listitem="@layout/item_keyword_match" />
+
+    </RelativeLayout>
 </LinearLayout>

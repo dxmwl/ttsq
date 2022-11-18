@@ -32,6 +32,11 @@ open class HttpData<T> {
      */
     private val type: T? = null
 
+    /**
+     * 数据(折淘客联想词接口使用)
+     */
+    private val result: T? = null
+
     fun getCode(): Int {
         return status
     }
@@ -45,6 +50,8 @@ open class HttpData<T> {
             content
         } else if (general_classify != null) {
             general_classify
+        } else if (result != null) {
+            result
         } else {
             type
         }
@@ -54,7 +61,7 @@ open class HttpData<T> {
      * 是否请求成功
      */
     fun isRequestSucceed(): Boolean {
-        return status == 200 || code == 1
+        return status == 200 || code == 1 || (status == 0 && code == 0)
     }
 
     /**

@@ -8,36 +8,96 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.AppActivity
 import com.easybuy.mobile.app.AppHelper
 import com.easybuy.mobile.http.api.HotSearchApi
+import com.easybuy.mobile.http.api.LianxiangApi
 import com.easybuy.mobile.http.model.HttpData
+import com.easybuy.mobile.ui.adapter.LianxiangciAdapter
 import com.easybuy.mobile.ui.dialog.MessageDialog
 import com.easybuy.mobile.widget.FlowLayout
 import com.gyf.immersionbar.ImmersionBar
+import com.hjq.base.BaseAdapter
 import com.hjq.base.BaseDialog
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
-import java.lang.Exception
 
 class SearchActivity : AppActivity() {
 
+    private lateinit var lianxiangciAdapter: LianxiangciAdapter
     private val btn_search: TextView? by lazy { findViewById(R.id.btn_search) }
     private val input_keyword: EditText? by lazy { findViewById(R.id.input_keyword) }
     private val search_history_layout: FlowLayout? by lazy { findViewById(R.id.search_history_layout) }
     private val hot_search_layout: FlowLayout? by lazy { findViewById(R.id.hot_search_layout) }
     private val icon_del_history: ImageView? by lazy { findViewById(R.id.icon_del_history) }
+    private val match_character_list: RecyclerView? by lazy { findViewById(R.id.match_character_list) }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_search
     }
 
     override fun initView() {
-        setOnClickListener(btn_search,icon_del_history)
+        setOnClickListener(btn_search, icon_del_history)
+
+        input_keyword?.addTextChangedListener {
+            if (it.isNullOrEmpty()) {
+                match_character_list?.visibility = View.GONE
+            } else {
+                getLianxiang(it.toString())
+            }
+        }
+
+        match_character_list?.also {
+            it.layoutManager = LinearLayoutManager(this)
+            lianxiangciAdapter = LianxiangciAdapter(this)
+            lianxiangciAdapter.setOnItemClickListener(object : BaseAdapter.OnItemClickListener {
+                override fun onItemClick(
+                    recyclerView: RecyclerView?,
+                    itemView: View?,
+                    position: Int
+                ) {
+                    val intent = Intent(this@SearchActivity, SearchResultActivity::class.java)
+                    intent.putExtra("KEYWORD", lianxiangciAdapter.getItem(position)[0])
+                    startActivity(intent)
+                }
+            })
+            it.adapter = lianxiangciAdapter
+        }
+    }
+
+    /**
+     * 获取联想词
+     */
+    private fun getLianxiang(toString: String) {
+        EasyHttp.get(this)
+            .api(LianxiangApi().apply {
+                content = EncodeUtils.urlEncode(toString)
+            })
+            .request(object : OnHttpListener<HttpData<ArrayList<LianxiangApi.LianxiangDto>>> {
+                override fun onSucceed(result: HttpData<ArrayList<LianxiangApi.LianxiangDto>>?) {
+                    result?.getData()?.let {
+                        if (it.isEmpty()) {
+                            match_character_list?.visibility = View.GONE
+                        } else {
+                            match_character_list?.visibility = View.VISIBLE
+                            lianxiangciAdapter.setData(it)
+                        }
+                    }
+                }
+
+                override fun onFail(e: Exception?) {
+                    toast(e?.message)
+                }
+
+            })
     }
 
     override fun initData() {
@@ -69,11 +129,11 @@ class SearchActivity : AppActivity() {
     @SingleClick
     override fun onClick(view: View) {
         when (view) {
-            icon_del_history->{
+            icon_del_history -> {
                 MessageDialog.Builder(this)
                     .setMessage("确定要清空所有的搜索记录吗?")
                     .setConfirm("清空")
-                    .setListener(object :MessageDialog.OnListener{
+                    .setListener(object : MessageDialog.OnListener {
                         override fun onConfirm(dialog: BaseDialog?) {
                             AppHelper.clearHistorySearch()
                             onResume()
