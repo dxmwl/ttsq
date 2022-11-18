@@ -14,6 +14,7 @@ import com.easybuy.mobile.other.AppConfig
 import com.easybuy.mobile.ui.activity.BrowserActivity
 import com.easybuy.mobile.ui.activity.HomeActivity
 import com.easybuy.mobile.ui.activity.SearchActivity
+import com.easybuy.mobile.ui.activity.ShengqianbaoActivity
 import com.easybuy.mobile.ui.adapter.BannerAdapter
 import com.easybuy.mobile.ui.adapter.HomeGoodsListAdapter
 import com.easybuy.mobile.ui.adapter.HomeMenuListAdapter
@@ -58,20 +59,20 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
         }
         menuList?.let {
             val arrayListOf = arrayListOf(
-                MenuDto(id="1", resId = R.mipmap.launcher_ic, title = "淘宝"),
-                MenuDto(id="2", resId = R.mipmap.launcher_ic, title ="天猫"),
-                MenuDto(id="3", resId = R.mipmap.launcher_ic, title ="聚划算"),
-                MenuDto(id="4", resId = R.mipmap.launcher_ic, title ="抖音"),
-                MenuDto(id="5", resId = R.mipmap.launcher_ic, title ="天猫超市"),
-                MenuDto(id="6", resId = R.mipmap.launcher_ic, title ="省钱宝"),
-                MenuDto(id="7", resId = R.mipmap.launcher_ic, title ="9.9包邮"),
-                MenuDto(id="8", resId = R.mipmap.launcher_ic, title ="19.9包邮"),
-                MenuDto(id="9", resId = R.mipmap.launcher_ic, title ="热销商品"),
-                MenuDto(id="-1", resId = R.mipmap.launcher_ic, title ="全部")
+                MenuDto(id = "1", resId = R.mipmap.launcher_ic, title = "淘宝"),
+                MenuDto(id = "2", resId = R.mipmap.launcher_ic, title = "天猫"),
+                MenuDto(id = "3", resId = R.mipmap.launcher_ic, title = "聚划算"),
+                MenuDto(id = "4", resId = R.mipmap.launcher_ic, title = "抖音"),
+                MenuDto(id = "5", resId = R.mipmap.launcher_ic, title = "天猫超市"),
+                MenuDto(id = "6", resId = R.mipmap.launcher_ic, title = "省钱宝"),
+                MenuDto(id = "7", resId = R.mipmap.launcher_ic, title = "9.9包邮"),
+                MenuDto(id = "8", resId = R.mipmap.launcher_ic, title = "19.9包邮"),
+                MenuDto(id = "9", resId = R.mipmap.launcher_ic, title = "热销商品"),
+                MenuDto(id = "-1", resId = R.mipmap.launcher_ic, title = "全部")
             )
             it.layoutManager = GridLayoutManager(context, 5)
             val homeMenuListAdapter = context?.let { it1 -> HomeMenuListAdapter(it1) }
-            homeMenuListAdapter?.setOnItemClickListener(object :BaseAdapter.OnItemClickListener{
+            homeMenuListAdapter?.setOnItemClickListener(object : BaseAdapter.OnItemClickListener {
                 override fun onItemClick(
                     recyclerView: RecyclerView?,
                     itemView: View?,
@@ -79,8 +80,11 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
                 ) {
                     val menuDto = arrayListOf[position]
                     when (menuDto.id) {
+                        "6" -> {
+                            startActivity(ShengqianbaoActivity::class.java)
+                        }
                         "7" -> {
-                            BrowserActivity.start(requireContext(),AppConfig.getJiukuaijiuUrl())
+                            BrowserActivity.start(requireContext(), AppConfig.getJiukuaijiuUrl())
                         }
                         else -> {}
                     }
@@ -129,7 +133,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     private fun getBannerList() {
         EasyHttp.get(this)
             .api(HomeBannerApi())
-            .request(object :OnHttpListener<HttpData<ArrayList<HomeBannerApi.BannerBean>>>{
+            .request(object : OnHttpListener<HttpData<ArrayList<HomeBannerApi.BannerBean>>> {
                 override fun onSucceed(result: HttpData<ArrayList<HomeBannerApi.BannerBean>>?) {
                     banner?.setAdapter(BannerAdapter(result?.getData()))
                 }
@@ -137,7 +141,6 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
                 override fun onFail(e: java.lang.Exception?) {
                     toast(e?.message)
                 }
-
             })
     }
 

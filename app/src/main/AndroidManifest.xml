@@ -240,6 +240,7 @@
         <activity android:name="com.easybuy.mobile.ui.activity.GoodsDetailActivity" />
         <activity android:name="com.easybuy.mobile.ui.activity.SearchResultActivity" />
         <activity android:name="com.easybuy.mobile.ui.activity.SearchActivity" />
+        <activity android:name="com.easybuy.mobile.ui.activity.ShengqianbaoActivity" />
 
     </application>
 

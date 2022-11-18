@@ -21,7 +21,7 @@ class HomeBannerApi : IRequestApi {
     /**
      * 每页数据条数（默认每页20条），可自定义1-50之间
      */
-    var page_size: Int = 5
+    var page_size: Int = 10
 
     inner class BannerBean(
         val name: String,
