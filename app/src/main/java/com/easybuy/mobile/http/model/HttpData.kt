@@ -33,9 +33,19 @@ open class HttpData<T> {
     private val type: T? = null
 
     /**
+     * 数据(折淘客淘口令创建接口使用)
+     */
+    private val model: T? = null
+
+    /**
      * 数据(折淘客联想词接口使用)
      */
     private val result: T? = null
+
+    /**
+     * 数据(折淘客二维码发图接口使用)
+     */
+    private val pic_url: T? = null
 
     fun getCode(): Int {
         return status
@@ -48,10 +58,14 @@ open class HttpData<T> {
     fun getData(): T? {
         return if (content != null) {
             content
+        } else if (pic_url != null) {
+            pic_url
         } else if (general_classify != null) {
             general_classify
         } else if (result != null) {
             result
+        } else if (model != null) {
+            model
         } else {
             type
         }
