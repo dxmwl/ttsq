@@ -54,4 +54,46 @@
             android:textColor="#FC383E"
             android:textSize="15sp" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="19dp"
+        android:text="热门搜索"
+        android:textColor="#ff333333"
+        android:textSize="16sp" />
+
+    <com.easybuy.mobile.widget.FlowLayout
+        android:id="@+id/hot_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="19dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="历史搜索"
+            android:textColor="#ff333333"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/icon_del_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_del" />
+    </LinearLayout>
+
+    <com.easybuy.mobile.widget.FlowLayout
+        android:id="@+id/search_history_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
 </LinearLayout>

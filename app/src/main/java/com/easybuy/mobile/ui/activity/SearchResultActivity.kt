@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.AppActivity
+import com.easybuy.mobile.app.AppHelper
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.api.SearchGoodsApi
 import com.easybuy.mobile.http.model.HttpData
@@ -69,6 +70,7 @@ class SearchResultActivity:AppActivity() {
     }
 
     private fun searchGoods() {
+        AppHelper.saveSearchHistory(keyword)
         EasyHttp.get(this)
             .api(SearchGoodsApi().apply {
                 q = keyword

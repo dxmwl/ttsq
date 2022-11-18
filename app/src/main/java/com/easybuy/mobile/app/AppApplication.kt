@@ -41,6 +41,7 @@ class AppApplication : Application() {
     @Log("启动耗时")
     override fun onCreate() {
         super.onCreate()
+        _context = this
         initSdk(this)
     }
 
@@ -165,6 +166,12 @@ class AppApplication : Application() {
                     }
                 })
             }
+        }
+
+        private lateinit var _context:Application
+
+        fun getApp(): Application {
+            return _context
         }
     }
 }
