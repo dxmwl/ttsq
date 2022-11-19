@@ -58,16 +58,16 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
         }
         menuList?.let {
             val arrayListOf = arrayListOf(
-                MenuDto(id="1", resId = R.mipmap.launcher_ic, title = "淘宝"),
-                MenuDto(id="2", resId = R.mipmap.launcher_ic, title ="天猫"),
-                MenuDto(id="3", resId = R.mipmap.launcher_ic, title ="聚划算"),
-                MenuDto(id="4", resId = R.mipmap.launcher_ic, title ="抖音"),
-                MenuDto(id="5", resId = R.mipmap.launcher_ic, title ="天猫超市"),
-                MenuDto(id="6", resId = R.mipmap.launcher_ic, title ="省钱宝"),
-                MenuDto(id="7", resId = R.mipmap.launcher_ic, title ="9.9包邮"),
-                MenuDto(id="8", resId = R.mipmap.launcher_ic, title ="19.9包邮"),
-                MenuDto(id="9", resId = R.mipmap.launcher_ic, title ="热销商品"),
-                MenuDto(id="-1", resId = R.mipmap.launcher_ic, title ="全部")
+                MenuDto(id="1", resId = R.mipmap.ic_launcher, title = "淘宝"),
+                MenuDto(id="2", resId = R.mipmap.ic_launcher, title ="天猫"),
+                MenuDto(id="3", resId = R.mipmap.ic_launcher, title ="聚划算"),
+                MenuDto(id="4", resId = R.mipmap.ic_launcher, title ="抖音"),
+                MenuDto(id="5", resId = R.mipmap.ic_launcher, title ="天猫超市"),
+                MenuDto(id="6", resId = R.mipmap.ic_launcher, title ="省钱宝"),
+                MenuDto(id="7", resId = R.mipmap.ic_launcher, title ="9.9包邮"),
+                MenuDto(id="8", resId = R.mipmap.ic_launcher, title ="19.9包邮"),
+                MenuDto(id="9", resId = R.mipmap.ic_launcher, title ="热销商品"),
+                MenuDto(id="-1", resId = R.mipmap.ic_launcher, title ="全部")
             )
             it.layoutManager = GridLayoutManager(context, 5)
             val homeMenuListAdapter = context?.let { it1 -> HomeMenuListAdapter(it1) }
