@@ -2,12 +2,15 @@ package com.easybuy.mobile.ui.fragment
 
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.TitleBarFragment
 import com.easybuy.mobile.http.api.HomeBannerApi
 import com.easybuy.mobile.http.api.HomeGoodsListApi
+import com.easybuy.mobile.http.api.QuantianBangdanApi
+import com.easybuy.mobile.http.api.ShishiBangdanApi
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.http.model.MenuDto
 import com.easybuy.mobile.other.AppConfig
@@ -18,6 +21,7 @@ import com.easybuy.mobile.ui.activity.ShengqianbaoActivity
 import com.easybuy.mobile.ui.adapter.BannerAdapter
 import com.easybuy.mobile.ui.adapter.HomeGoodsListAdapter
 import com.easybuy.mobile.ui.adapter.HomeMenuListAdapter
+import com.easybuy.mobile.ui.adapter.SearchGoodsListAdapter
 import com.hjq.base.BaseAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
@@ -33,10 +37,14 @@ import com.youth.banner.Banner
  */
 class HomeFragment : TitleBarFragment<HomeActivity>() {
 
-    private var homeGoodsListAdapter: HomeGoodsListAdapter? = null
+    private var homeGoodsListAdapter: SearchGoodsListAdapter? = null
+    private var homeGoodsListAdapterShishi: HomeGoodsListAdapter? = null
+    private var homeGoodsListAdapterQuantian: HomeGoodsListAdapter? = null
     private val banner: Banner<HomeBannerApi.BannerBean, BannerAdapter>? by lazy { findViewById(R.id.banner) }
     private val menuList: RecyclerView? by lazy { findViewById(R.id.menu_list) }
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
+    private val goods_list_shishi: RecyclerView? by lazy { findViewById(R.id.goods_list_shishi) }
+    private val goods_list_quantian: RecyclerView? by lazy { findViewById(R.id.goods_list_quantian) }
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
     private val search_view: ShapeTextView? by lazy { findViewById(R.id.search_view) }
 
@@ -97,8 +105,19 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
 
         goodsList?.let {
             it.layoutManager = GridLayoutManager(context, 2)
-            homeGoodsListAdapter = context?.let { it1 -> HomeGoodsListAdapter(it1) }
+            homeGoodsListAdapter = context?.let { it1 -> SearchGoodsListAdapter(it1) }
             it.adapter = homeGoodsListAdapter
+        }
+
+        goods_list_shishi?.let {
+            it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+            homeGoodsListAdapterShishi= context?.let { it1 -> HomeGoodsListAdapter(it1) }
+            it.adapter = homeGoodsListAdapterShishi
+        }
+        goods_list_quantian?.let {
+            it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+            homeGoodsListAdapterQuantian= context?.let { it1 -> HomeGoodsListAdapter(it1) }
+            it.adapter = homeGoodsListAdapterQuantian
         }
 
         refresh?.setOnRefreshListener {
@@ -115,6 +134,36 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     override fun initData() {
         getBannerList()
         getGoodsList()
+        getGoodsListShishi()
+        getGoodsListQuantian()
+    }
+    private fun getGoodsListQuantian() {
+        EasyHttp.get(this)
+            .api(QuantianBangdanApi())
+            .request(object :OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>>{
+                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
+                    homeGoodsListAdapterQuantian?.setData(result?.getData())
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+
+            })
+    }
+    private fun getGoodsListShishi() {
+        EasyHttp.get(this)
+            .api(ShishiBangdanApi())
+            .request(object :OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>>{
+                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
+                    homeGoodsListAdapterShishi?.setData(result?.getData())
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+
+            })
     }
 
     @SingleClick

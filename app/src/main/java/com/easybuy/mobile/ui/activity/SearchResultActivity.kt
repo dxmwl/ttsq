@@ -12,7 +12,7 @@ import com.easybuy.mobile.app.AppHelper
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.api.SearchGoodsApi
 import com.easybuy.mobile.http.model.HttpData
-import com.easybuy.mobile.ui.adapter.HomeGoodsListAdapter
+import com.easybuy.mobile.ui.adapter.SearchGoodsListAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -27,7 +27,7 @@ class SearchResultActivity : AppActivity() {
     private var pageIndex: Int = 1
     private var keyword: String = ""
 
-    private var homeGoodsListAdapter: HomeGoodsListAdapter? = null
+    private var homeGoodsListAdapter: SearchGoodsListAdapter? = null
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
     private val input_keyword: EditText? by lazy { findViewById(R.id.input_keyword) }
@@ -48,7 +48,7 @@ class SearchResultActivity : AppActivity() {
 
         goodsList?.let {
             it.layoutManager = GridLayoutManager(this, 2)
-            homeGoodsListAdapter = HomeGoodsListAdapter(this)
+            homeGoodsListAdapter = SearchGoodsListAdapter(this)
             it.adapter = homeGoodsListAdapter
         }
 

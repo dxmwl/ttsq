@@ -23,7 +23,7 @@ import com.easybuy.mobile.http.api.SameClassGoodsApi
 import com.easybuy.mobile.http.glide.GlideApp
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.ui.adapter.GoodsDetailBannerAdapter
-import com.easybuy.mobile.ui.adapter.HomeGoodsListAdapter
+import com.easybuy.mobile.ui.adapter.SearchGoodsListAdapter
 import com.easybuy.mobile.utils.FormatUtils
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
@@ -53,7 +53,7 @@ class GoodsDetailActivity : AppActivity() {
         }
     }
 
-    private lateinit var goodsListAdapter: HomeGoodsListAdapter
+    private lateinit var goodsListAdapter: SearchGoodsListAdapter
     private val goods_price: TextView? by lazy { findViewById<TextView>(R.id.goods_price) }
     private val goods_title: TextView? by lazy { findViewById<TextView>(R.id.goods_title) }
     private val yuanjia: TextView? by lazy { findViewById<TextView>(R.id.yuanjia) }
@@ -111,7 +111,7 @@ class GoodsDetailActivity : AppActivity() {
 
         goodsList?.let {
             it.layoutManager = GridLayoutManager(this, 2)
-            goodsListAdapter = HomeGoodsListAdapter(this)
+            goodsListAdapter = SearchGoodsListAdapter(this)
             it.adapter = goodsListAdapter
         }
     }
