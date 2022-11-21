@@ -100,7 +100,7 @@ class ShengqianbaoActivity : AppActivity() {
                         textView2?.text = it.tao_title
                         youhuiquan?.text = "-${it.coupon_info_money}"
                         shiji_pay?.text = it.quanhou_jiage
-                        go_buy?.text = "立即购买省¥\n${it.coupon_info_money}"
+                        go_buy?.text = "立即购买省\n¥${it.coupon_info_money}"
                     }
                 }
 
