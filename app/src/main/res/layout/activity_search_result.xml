@@ -56,11 +56,56 @@
             android:textSize="15sp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dp_6">
+
+        <TextView
+            android:id="@+id/sort_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="综合排序"
+            android:textColor="#FF666666"
+            android:textSize="@dimen/sp_12"
+            app:drawableEndCompat="@drawable/icon_down_more" />
+
+        <TextView
+            android:id="@+id/class_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:visibility="gone"
+            android:text="分类"
+            android:textColor="#FF666666"
+            android:textSize="@dimen/sp_12"
+            app:drawableEndCompat="@drawable/icon_down_more" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <com.hjq.shape.view.ShapeCheckBox
+            android:id="@+id/is_youquan"
+            android:paddingStart="@dimen/dp_5"
+            android:textColor="#838383"
+            android:textSize="@dimen/sp_12"
+            android:text="是否有券"
+            android:checked="true"
+            app:shape_buttonCheckedDrawable="@drawable/checkbox_checked_ic"
+            app:shape_buttonDisabledDrawable="@drawable/checkbox_disable_ic"
+            app:shape_buttonDrawable="@drawable/compound_normal_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,10 +115,9 @@
             android:id="@+id/goods_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_10"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
-            tools:listitem="@layout/item_home_goods" />
+            tools:listitem="@layout/item_goods" />
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </LinearLayout>

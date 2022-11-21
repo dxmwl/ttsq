@@ -2,6 +2,7 @@ package com.easybuy.mobile.ui.activity
 
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,9 +13,13 @@ import com.easybuy.mobile.app.AppHelper
 import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.api.SearchGoodsApi
 import com.easybuy.mobile.http.model.HttpData
+import com.easybuy.mobile.http.model.MenuDto
 import com.easybuy.mobile.ui.adapter.SearchGoodsListAdapter
+import com.easybuy.mobile.ui.popup.ZongheShadowPopupView
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
+import com.hjq.shape.view.ShapeCheckBox
+import com.lxj.xpopup.XPopup
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 /**
@@ -31,13 +36,18 @@ class SearchResultActivity : AppActivity() {
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
     private val input_keyword: EditText? by lazy { findViewById(R.id.input_keyword) }
+    private val sort_view: TextView? by lazy { findViewById(R.id.sort_view) }
+    private val is_youquan: ShapeCheckBox? by lazy { findViewById(R.id.is_youquan) }
+    private var zonghePopupView: ZongheShadowPopupView? = null
+    private var isYouquan: Int = 1
+    private var paixu: String = "new"
 
     override fun getLayoutId(): Int {
         return R.layout.activity_search_result
     }
 
     override fun initView() {
-        setOnClickListener(R.id.btn_search, R.id.iv_back)
+        setOnClickListener(R.id.btn_search, R.id.iv_back, R.id.sort_view)
         keyword = intent.getStringExtra("KEYWORD").toString()
         input_keyword?.setText(keyword)
         input_keyword?.setSelection(keyword.length)
@@ -60,6 +70,15 @@ class SearchResultActivity : AppActivity() {
             pageIndex++
             searchGoods()
         }
+        is_youquan?.setOnCheckedChangeListener { buttonView, isChecked ->
+            isYouquan = if (isChecked) {
+                1
+            } else {
+                0
+            }
+            pageIndex = 1
+            searchGoods()
+        }
     }
 
     override fun initData() {
@@ -73,6 +92,8 @@ class SearchResultActivity : AppActivity() {
             .api(SearchGoodsApi().apply {
                 q = keyword
                 page = pageIndex
+                youquan = isYouquan
+                sort = paixu
             })
             .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
                 override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
@@ -103,7 +124,46 @@ class SearchResultActivity : AppActivity() {
                 pageIndex = 1
                 searchGoods()
             }
+            R.id.sort_view -> {
+                showPartShadow(view)
+            }
             else -> {}
         }
+    }
+
+    private fun showPartShadow(v: View) {
+        if (zonghePopupView == null) {
+            val listData = arrayListOf(
+                MenuDto(title = "综合排序", checked = true, value = "new"),
+                MenuDto(title = "总销量从小到大排序", checked = false, value = "total_sale_num_asc"),
+                MenuDto(title = "总销量从大到小排序", checked = false, value = "total_sale_num_desc"),
+                MenuDto(title = "月销量从小到大排序", checked = false, value = "sale_num_asc"),
+                MenuDto(title = "月销量从大到小排序", checked = false, value = "sale_num_desc"),
+                MenuDto(title = "价格从小到大排序", checked = false, value = "price_asc"),
+                MenuDto(title = "价格从大到小排序", checked = false, value = "price_desc"),
+            )
+            val zongheShadowPopupView = ZongheShadowPopupView(
+                this,
+                listData
+            )
+            zongheShadowPopupView.setListener(object : ZongheShadowPopupView.OnListener<MenuDto> {
+                override fun onSelected(
+                    popupWindow: ZongheShadowPopupView?,
+                    position: Int,
+                    data: MenuDto
+                ) {
+                    paixu = data.value.toString()
+                    pageIndex = 1
+                    searchGoods()
+                }
+            })
+            zonghePopupView = XPopup.Builder(this)
+                .atView(v)
+                .hasStatusBarShadow(false)
+                .asCustom(
+                    zongheShadowPopupView
+                ) as ZongheShadowPopupView
+        }
+        zonghePopupView?.show()
     }
 }
