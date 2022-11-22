@@ -38,6 +38,7 @@ class SearchActivity : AppActivity() {
     private val search_history_layout: FlowLayout? by lazy { findViewById(R.id.search_history_layout) }
     private val hot_search_layout: FlowLayout? by lazy { findViewById(R.id.hot_search_layout) }
     private val icon_del_history: ImageView? by lazy { findViewById(R.id.icon_del_history) }
+    private val iv_back: ImageView? by lazy { findViewById(R.id.iv_back) }
     private val match_character_list: RecyclerView? by lazy { findViewById(R.id.match_character_list) }
 
     override fun getLayoutId(): Int {
@@ -45,7 +46,7 @@ class SearchActivity : AppActivity() {
     }
 
     override fun initView() {
-        setOnClickListener(btn_search, icon_del_history)
+        setOnClickListener(btn_search, icon_del_history, iv_back)
 
         input_keyword?.addTextChangedListener {
             if (it.isNullOrEmpty()) {
@@ -150,6 +151,9 @@ class SearchActivity : AppActivity() {
                 val intent = Intent(this, SearchResultActivity::class.java)
                 intent.putExtra("KEYWORD", keyword)
                 startActivity(intent)
+            }
+            iv_back -> {
+                finish()
             }
             else -> {}
         }

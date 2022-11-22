@@ -16,6 +16,7 @@ import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.http.model.MenuDto
 import com.easybuy.mobile.ui.adapter.SearchGoodsListAdapter
 import com.easybuy.mobile.ui.popup.ZongheShadowPopupView
+import com.google.android.material.tabs.TabLayout
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.hjq.shape.view.ShapeCheckBox
@@ -38,6 +39,7 @@ class SearchResultActivity : AppActivity() {
     private val input_keyword: EditText? by lazy { findViewById(R.id.input_keyword) }
     private val sort_view: TextView? by lazy { findViewById(R.id.sort_view) }
     private val is_youquan: ShapeCheckBox? by lazy { findViewById(R.id.is_youquan) }
+    private val goods_sort: TabLayout? by lazy { findViewById(R.id.goods_sort) }
     private var zonghePopupView: ZongheShadowPopupView? = null
     private var isYouquan: Int = 1
     private var paixu: String = "new"
@@ -55,6 +57,31 @@ class SearchResultActivity : AppActivity() {
         input_keyword?.addTextChangedListener {
             keyword = it?.toString().toString()
         }
+        val listData = arrayListOf(
+            MenuDto(title = "综合", checked = true, value = "new"),
+            MenuDto(title = "销量", checked = false, value = "sale_num_desc"),
+            MenuDto(title = "价格", checked = false, value = "price_asc"),
+            MenuDto(title = "优惠", checked = false, value = "commission_rate_desc"),
+        )
+        listData.forEach {
+            goods_sort?.newTab()?.setText(it.title)?.let { it1 -> goods_sort?.addTab(it1) }
+        }
+        goods_sort?.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                paixu = listData[tab?.position!!].value.toString()
+                pageIndex = 1
+                searchGoods()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                
+            }
+
+        })
 
         goodsList?.let {
             it.layoutManager = GridLayoutManager(this, 2)
@@ -125,45 +152,45 @@ class SearchResultActivity : AppActivity() {
                 searchGoods()
             }
             R.id.sort_view -> {
-                showPartShadow(view)
+//                showPartShadow(view)
             }
             else -> {}
         }
     }
-
-    private fun showPartShadow(v: View) {
-        if (zonghePopupView == null) {
-            val listData = arrayListOf(
-                MenuDto(title = "综合排序", checked = true, value = "new"),
-                MenuDto(title = "总销量从小到大排序", checked = false, value = "total_sale_num_asc"),
-                MenuDto(title = "总销量从大到小排序", checked = false, value = "total_sale_num_desc"),
-                MenuDto(title = "月销量从小到大排序", checked = false, value = "sale_num_asc"),
-                MenuDto(title = "月销量从大到小排序", checked = false, value = "sale_num_desc"),
-                MenuDto(title = "价格从小到大排序", checked = false, value = "price_asc"),
-                MenuDto(title = "价格从大到小排序", checked = false, value = "price_desc"),
-            )
-            val zongheShadowPopupView = ZongheShadowPopupView(
-                this,
-                listData
-            )
-            zongheShadowPopupView.setListener(object : ZongheShadowPopupView.OnListener<MenuDto> {
-                override fun onSelected(
-                    popupWindow: ZongheShadowPopupView?,
-                    position: Int,
-                    data: MenuDto
-                ) {
-                    paixu = data.value.toString()
-                    pageIndex = 1
-                    searchGoods()
-                }
-            })
-            zonghePopupView = XPopup.Builder(this)
-                .atView(v)
-                .hasStatusBarShadow(false)
-                .asCustom(
-                    zongheShadowPopupView
-                ) as ZongheShadowPopupView
-        }
-        zonghePopupView?.show()
-    }
+//
+//    private fun showPartShadow(v: View) {
+//        if (zonghePopupView == null) {
+//            val listData = arrayListOf(
+//                MenuDto(title = "综合排序", checked = true, value = "new"),
+//                MenuDto(title = "总销量从小到大排序", checked = false, value = "total_sale_num_asc"),
+//                MenuDto(title = "总销量从大到小排序", checked = false, value = "total_sale_num_desc"),
+//                MenuDto(title = "月销量从小到大排序", checked = false, value = "sale_num_asc"),
+//                MenuDto(title = "月销量从大到小排序", checked = false, value = "sale_num_desc"),
+//                MenuDto(title = "价格从小到大排序", checked = false, value = "price_asc"),
+//                MenuDto(title = "价格从大到小排序", checked = false, value = "price_desc"),
+//            )
+//            val zongheShadowPopupView = ZongheShadowPopupView(
+//                this,
+//                listData
+//            )
+//            zongheShadowPopupView.setListener(object : ZongheShadowPopupView.OnListener<MenuDto> {
+//                override fun onSelected(
+//                    popupWindow: ZongheShadowPopupView?,
+//                    position: Int,
+//                    data: MenuDto
+//                ) {
+//                    paixu = data.value.toString()
+//                    pageIndex = 1
+//                    searchGoods()
+//                }
+//            })
+//            zonghePopupView = XPopup.Builder(this)
+//                .atView(v)
+//                .hasStatusBarShadow(false)
+//                .asCustom(
+//                    zongheShadowPopupView
+//                ) as ZongheShadowPopupView
+//        }
+//        zonghePopupView?.show()
+//    }
 }
