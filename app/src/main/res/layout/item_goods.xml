@@ -59,8 +59,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#fffc383e"
                     android:textSize="18sp"
-                    tools:text="299" />
-
+                    tools:text="299" />>
                 <TextView
                     android:id="@+id/yuanjia"
                     android:layout_width="wrap_content"

@@ -47,6 +47,11 @@ open class HttpData<T> {
      */
     private val pic_url: T? = null
 
+    /**
+     * 数据(折淘客猜你喜欢接口使用)
+     */
+    private val tbk_dg_optimus_material_response: T? = null
+
     fun getCode(): Int {
         return status
     }
@@ -66,6 +71,8 @@ open class HttpData<T> {
             result
         } else if (model != null) {
             model
+        } else if (tbk_dg_optimus_material_response != null) {
+            tbk_dg_optimus_material_response
         } else {
             type
         }

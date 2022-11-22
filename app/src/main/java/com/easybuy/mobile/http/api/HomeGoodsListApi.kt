@@ -1,6 +1,7 @@
 package com.easybuy.mobile.http.api
 
 import com.hjq.http.config.IRequestApi
+import java.math.BigDecimal
 
 /**
  * @project : EasyBuy_Android
@@ -52,6 +53,7 @@ class HomeGoodsListApi : IRequestApi {
         val code: String,
         //商品ID
         val tao_id: String,
+        val item_id: String,
         //商品主图
         val pict_url: String,
         //商品标题
@@ -60,10 +62,12 @@ class HomeGoodsListApi : IRequestApi {
         val quanhou_jiage: String,
         //商品原价
         val size: String,
+        val zk_final_price: BigDecimal,
         //月销量
         val volume: String,
         //优惠券金额
         val coupon_info_money: String,
+        val coupon_amount: BigDecimal,
         val coupon_start_time: String,
         val coupon_end_time: String,
         //优惠券信息

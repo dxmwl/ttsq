@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Paint
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
@@ -70,6 +71,7 @@ class YqbkListAdapter(val mContext: Context) : AppAdapter<YqbkApi.YqbkGoodsInfo>
             send_time?.text = goodsInfo.date_time
             quanhoujia?.text = "券后价￥${goodsInfo.quanhou_jiage}"
             yuanjia?.text = "${goodsInfo.size}"
+            yuanjia?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
             goods_price?.text = "${goodsInfo.quanhou_jiage}"
             tv_sheng?.text = "立省${goodsInfo.coupon_info_money}"
 

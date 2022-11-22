@@ -2,6 +2,7 @@ package com.easybuy.mobile.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Paint
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
@@ -220,6 +221,7 @@ class GoodsDetailActivity : AppActivity() {
         end_time?.text = "${goodsInfo?.coupon_end_time}"
         yhje_str?.text = goodsInfo?.coupon_info
         yuanjia?.text = goodsInfo?.size
+        yuanjia?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
         FormatUtils.formatSales(buy_num, goodsInfo?.volume)
         shop_logo?.let { GlideApp.with(this).load(goodsInfo?.shopIcon).into(it) }
         shop_name?.text = goodsInfo?.shop_title

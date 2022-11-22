@@ -30,7 +30,7 @@ ext {
     println "GradleLog ServerTypeOutput " + serverType
 
     // 友盟 AppKey
-    UMENG_APP_KEY = "5cb16d93570df399fd0014e2"
+    UMENG_APP_KEY = "637c3cf088ccdf4b7e6b55b5"
     // QQ AppId
     QQ_APP_ID = "101828096"
     // QQ Secret
@@ -53,7 +53,7 @@ ext {
         case SERVER_TYPE_TEST:
         case SERVER_TYPE_PREVIEW:
             LOG_ENABLE = true
-            BUGLY_ID = "a53423d4a4"
+            BUGLY_ID = "24cb022ae5"
             if (serverType == SERVER_TYPE_PREVIEW) {
                 HOST_URL = "https://api.zhetaoke.com:10001/"
             } else {
@@ -62,7 +62,7 @@ ext {
             break
         case SERVER_TYPE_PRODUCT:
             LOG_ENABLE = false
-            BUGLY_ID = "a53423d4a4"
+            BUGLY_ID = "24cb022ae5"
             HOST_URL = "https://api.zhetaoke.com:10001/"
             break
     }

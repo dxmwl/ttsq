@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
             <com.hjq.widget.layout.SettingBar
+                android:visibility="gone"
                 android:id="@+id/sb_setting_language"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,6 +32,7 @@
                 tools:bar_rightHint="@string/setting_language_simple" />
 
             <com.hjq.widget.layout.SettingBar
+                android:visibility="gone"
                 android:id="@+id/sb_setting_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,6 +55,7 @@
             </com.hjq.widget.layout.SettingBar>
 
             <com.hjq.widget.layout.SettingBar
+                android:visibility="gone"
                 android:id="@+id/sb_setting_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,6 +65,7 @@
                 tools:bar_rightText="181****1413" />
 
             <com.hjq.widget.layout.SettingBar
+                android:visibility="gone"
                 android:id="@+id/sb_setting_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,6 +80,12 @@
                 android:layout_marginTop="@dimen/dp_15"
                 app:bar_leftText="@string/setting_agreement"
                 app:bar_rightDrawable="@drawable/arrows_right_ic" />
+            <com.hjq.widget.layout.SettingBar
+                android:id="@+id/user_xieyi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bar_leftText="用户协议"
+                app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
             <com.hjq.widget.layout.SettingBar
                 android:id="@+id/sb_setting_about"
@@ -85,6 +95,7 @@
                 app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
             <com.hjq.widget.layout.SettingBar
+                android:visibility="gone"
                 android:id="@+id/sb_setting_auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,6 +119,7 @@
                 app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
             <com.hjq.widget.layout.SettingBar
+                android:visibility="gone"
                 android:id="@+id/sb_setting_exit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
