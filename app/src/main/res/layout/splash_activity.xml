@@ -8,6 +8,12 @@
     android:orientation="vertical"
     tools:context="com.easybuy.mobile.ui.activity.SplashActivity">
 
+    <ImageView
+        android:src="@drawable/splash_img"
+        android:id="@+id/splash_img"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lav_splash_lottie"
         android:layout_width="wrap_content"
@@ -16,6 +22,7 @@
         android:layout_marginBottom="@dimen/dp_40"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
+        android:visibility="gone"
         app:lottie_rawRes="@raw/welcome" />
 
     <com.hjq.widget.view.SlantedTextView

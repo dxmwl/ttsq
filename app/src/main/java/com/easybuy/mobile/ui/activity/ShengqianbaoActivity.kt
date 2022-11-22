@@ -85,7 +85,7 @@ class ShengqianbaoActivity : AppActivity() {
 
     private fun getYouhuiInfo() {
         if (inputTklStr.isBlank()) {
-            toast("请商品链接到输入框")
+            toast("请将商品链接到输入框")
             return
         }
         EasyHttp.get(this)

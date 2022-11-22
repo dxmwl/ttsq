@@ -1,16 +1,15 @@
 package com.easybuy.mobile.ui.activity
 
-import android.animation.*
 import android.content.Intent
-import android.view.*
+import android.view.View
 import com.airbnb.lottie.LottieAnimationView
-import com.gyf.immersionbar.BarHide
-import com.gyf.immersionbar.ImmersionBar
 import com.easybug.mobile.R
 import com.easybuy.mobile.app.AppActivity
 import com.easybuy.mobile.http.api.UserInfoApi
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.other.AppConfig
+import com.gyf.immersionbar.BarHide
+import com.gyf.immersionbar.ImmersionBar
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.HttpCallback
 import com.hjq.widget.view.SlantedTextView
@@ -33,13 +32,17 @@ class SplashActivity : AppActivity() {
 
     override fun initView() {
         // 设置动画监听
-        lottieView?.addAnimatorListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
-                lottieView?.removeAnimatorListener(this)
-                HomeActivity.start(this@SplashActivity)
-                finish()
-            }
-        })
+//        lottieView?.addAnimatorListener(object : AnimatorListenerAdapter() {
+//            override fun onAnimationEnd(animation: Animator?) {
+//                lottieView?.removeAnimatorListener(this)
+//                HomeActivity.start(this@SplashActivity)
+//                finish()
+//            }
+//        })
+        postDelayed({
+            HomeActivity.start(this@SplashActivity)
+            finish()
+        }, 5000)
     }
 
     override fun initData() {
@@ -84,7 +87,8 @@ class SplashActivity : AppActivity() {
             val intent: Intent? = intent
             // 如果当前 Activity 是通过桌面图标启动进入的
             if (((intent != null) && intent.hasCategory(Intent.CATEGORY_LAUNCHER)
-                        && (Intent.ACTION_MAIN == intent.action))) {
+                        && (Intent.ACTION_MAIN == intent.action))
+            ) {
                 // 对当前 Activity 执行销毁操作，避免重复实例化入口
                 finish()
                 return
