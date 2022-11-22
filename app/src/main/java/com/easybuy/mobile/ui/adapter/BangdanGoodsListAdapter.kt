@@ -17,13 +17,13 @@ import com.easybuy.mobile.ui.activity.GoodsDetailActivity
  * @author : clb
  * @time : 2022/6/23
  */
-class SearchGoodsListAdapter(val mContext: Context) :
+class BangdanGoodsListAdapter(val mContext: Context) :
     AppAdapter<HomeGoodsListApi.GoodsBean>(mContext) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
         return ViewHolder()
     }
 
-    inner class ViewHolder : AppViewHolder(R.layout.item_goods) {
+    inner class ViewHolder : AppViewHolder(R.layout.item_bangdan_goods) {
 
         private val goodsImg = findViewById<ImageView>(R.id.goods_img)
         private val goodsName = findViewById<TextView>(R.id.goods_name)
@@ -63,9 +63,9 @@ class SearchGoodsListAdapter(val mContext: Context) :
             monthlySales?.text = "月销量 ${goodsBean.volume}"
             val couponInfoMoney = goodsBean.coupon_info_money
             if (couponInfoMoney.isNullOrBlank()) {
-                yhqPrice?.text = "${goodsBean.coupon_amount}元券"
+                yhqPrice?.text = "立省${goodsBean.coupon_amount}元"
             } else {
-                yhqPrice?.text = "${couponInfoMoney}元券"
+                yhqPrice?.text = "立省${couponInfoMoney}元"
             }
             getItemView().setOnClickListener {
                 val taoId = goodsBean.tao_id

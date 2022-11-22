@@ -112,7 +112,7 @@
                     android:textSize="16sp"
                     tools:text="安踏不急男鞋2020年夏季新款官网男生休安踏不急男鞋2020年夏季新款官网男生休" />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/ll_yhq"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -122,6 +122,10 @@
                     android:visibility="gone">
 
                     <TextView
+                        android:id="@+id/textView"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="￥"
@@ -129,6 +133,8 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        app:layout_constraintBottom_toBottomOf="@id/textView"
+                        app:layout_constraintStart_toEndOf="@id/textView"
                         android:id="@+id/yhq_jine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -136,60 +142,48 @@
                         android:textSize="30sp"
                         tools:text="45" />
 
-                    <View
-                        android:layout_width="0.5dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="9dp"
-                        android:layout_marginRight="9dp"
-                        android:background="#FFFFFF" />
-
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        app:layout_constraintTop_toBottomOf="@id/textView"
+                        app:layout_constraintStart_toStartOf="@id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/start_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffffff"
+                            android:textSize="12sp"
+                            tools:text="2020.06.08" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="优惠券"
-                            android:textColor="#ffffffff"
-                            android:textSize="16sp" />
+                            android:text=" - "
+                            android:textColor="#ffffffff" />
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <LinearLayout
-                            android:orientation="vertical"
+                        <TextView
+                            android:id="@+id/end_time"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/start_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#ffffffff"
-                                android:textSize="12sp"
-                                tools:text="2020.06.08" />
-
-                            <TextView
-                                android:id="@+id/end_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#ffffffff"
-                                android:textSize="12sp"
-                                tools:text="2020.06.26" />
-                        </LinearLayout>
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffffff"
+                            android:textSize="12sp"
+                            tools:text="2020.06.26" />
                     </LinearLayout>
 
-                    <ImageView
+
+                    <TextView
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textSize="@dimen/sp_18"
+                        android:text="立即领券"
                         android:id="@+id/iv_lq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/icon_ljlq" />
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_yh"

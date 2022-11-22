@@ -12,6 +12,7 @@ import com.easybuy.mobile.http.api.ShishiBangdanApi
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.ui.activity.HomeActivity
 import com.easybuy.mobile.ui.activity.SettingActivity
+import com.easybuy.mobile.ui.adapter.BangdanGoodsListAdapter
 import com.easybuy.mobile.ui.adapter.HomeGoodsListAdapter
 import com.easybuy.mobile.ui.adapter.SearchGoodsListAdapter
 import com.hjq.http.EasyHttp
@@ -34,8 +35,8 @@ class MineFragment : TitleBarFragment<HomeActivity>() {
     }
 
     private var homeGoodsListAdapter: SearchGoodsListAdapter? = null
-    private var homeGoodsListAdapterShishi: HomeGoodsListAdapter? = null
-    private var homeGoodsListAdapterQuantian: HomeGoodsListAdapter? = null
+    private var homeGoodsListAdapterShishi: BangdanGoodsListAdapter? = null
+    private var homeGoodsListAdapterQuantian: BangdanGoodsListAdapter? = null
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
     private val goods_list_shishi: RecyclerView? by lazy { findViewById(R.id.goods_list_shishi) }
     private val goods_list_quantian: RecyclerView? by lazy { findViewById(R.id.goods_list_quantian) }
@@ -54,12 +55,12 @@ class MineFragment : TitleBarFragment<HomeActivity>() {
 
         goods_list_shishi?.let {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            homeGoodsListAdapterShishi = context?.let { it1 -> HomeGoodsListAdapter(it1) }
+            homeGoodsListAdapterShishi = context?.let { it1 -> BangdanGoodsListAdapter(it1) }
             it.adapter = homeGoodsListAdapterShishi
         }
         goods_list_quantian?.let {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            homeGoodsListAdapterQuantian = context?.let { it1 -> HomeGoodsListAdapter(it1) }
+            homeGoodsListAdapterQuantian = context?.let { it1 -> BangdanGoodsListAdapter(it1) }
             it.adapter = homeGoodsListAdapterQuantian
         }
 

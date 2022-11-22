@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPreviewActivity
 import cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -27,10 +28,12 @@ import com.easybuy.mobile.http.api.YqbkApi
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.ui.activity.BrowserActivity
 import com.easybuy.mobile.ui.activity.GoodsDetailActivity
+import com.easybuy.mobile.ui.dialog.ShareDialog
 import com.hjq.http.EasyHttp
 import com.hjq.http.lifecycle.ApplicationLifecycle
 import com.hjq.http.listener.OnHttpListener
 import com.hjq.toast.ToastUtils
+import com.umeng.socialize.media.UMWeb
 
 
 class YqbkListAdapter(val mContext: Context) : AppAdapter<YqbkApi.YqbkGoodsInfo>(mContext) {
@@ -163,8 +166,12 @@ class YqbkListAdapter(val mContext: Context) : AppAdapter<YqbkApi.YqbkGoodsInfo>
             .request(object :
                 OnHttpListener<HttpData<String>> {
                 override fun onSucceed(result: HttpData<String>?) {
-                    //TODO 分享逻辑未做
-                    ToastUtils.show("图片已生成,分享到微信:${result?.getData()}")
+                    ShareDialog.Builder(ActivityUtils.getTopActivity())
+                        .setShareLink(
+                            UMWeb(result?.getData())
+                        )
+                        .show()
+//                    ToastUtils.show("图片已生成,分享到微信:${result?.getData()}")
                 }
 
                 override fun onFail(e: java.lang.Exception?) {

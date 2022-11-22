@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.AppUtils
@@ -25,9 +26,11 @@ import com.easybuy.mobile.http.glide.GlideApp
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.ui.adapter.GoodsDetailBannerAdapter
 import com.easybuy.mobile.ui.adapter.SearchGoodsListAdapter
+import com.easybuy.mobile.ui.dialog.ShareDialog
 import com.easybuy.mobile.utils.FormatUtils
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
+import com.umeng.socialize.media.UMWeb
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnPageChangeListener
 
@@ -70,14 +73,15 @@ class GoodsDetailActivity : AppActivity() {
     private val banner_indector: TextView? by lazy { findViewById<TextView>(R.id.banner_indector) }
     private val yhje_str: TextView? by lazy { findViewById<TextView>(R.id.yhje_str) }
     private val tvLq: TextView? by lazy { findViewById<TextView>(R.id.tv_lq) }
-    private val llYhq: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.ll_yhq) }
+    private val llYhq: ConstraintLayout? by lazy { findViewById<ConstraintLayout>(R.id.ll_yhq) }
     private val llYh: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.ll_yh) }
     private val yhStr: TextView? by lazy { findViewById<TextView>(R.id.yh_str) }
     private val shop_logo: ImageView? by lazy { findViewById<ImageView>(R.id.shop_logo) }
     private val iv_back2: ImageView? by lazy { findViewById<ImageView>(R.id.iv_back2) }
     private val xqtList: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.xqt_list) }
     private val ll_lq: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.ll_lq) }
-    private val iv_lq: ImageView? by lazy { findViewById(R.id.iv_lq) }
+    private val iv_lq: TextView? by lazy { findViewById(R.id.iv_lq) }
+    private val ll_share: LinearLayout? by lazy { findViewById(R.id.ll_share) }
     private val goodsList: RecyclerView? by lazy { findViewById<RecyclerView>(R.id.goods_list) }
     private val banner: Banner<String, GoodsDetailBannerAdapter>? by lazy { findViewById(R.id.goods_banner) }
 
@@ -86,7 +90,7 @@ class GoodsDetailActivity : AppActivity() {
     }
 
     override fun initView() {
-        setOnClickListener(iv_back2, ll_lq,iv_lq)
+        setOnClickListener(iv_back2, ll_lq, iv_lq, ll_share)
         banner?.let {
 //            it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
@@ -161,8 +165,11 @@ class GoodsDetailActivity : AppActivity() {
             iv_back2 -> {
                 finish()
             }
-            iv_lq,ll_lq -> {
+            iv_lq, ll_lq -> {
                 getLingquanUrl()
+            }
+            ll_share -> {
+                getLingquanUrl(needShare = true)
             }
             else -> {}
         }
@@ -171,7 +178,7 @@ class GoodsDetailActivity : AppActivity() {
     /**
      * 获取领券地址
      */
-    private fun getLingquanUrl() {
+    private fun getLingquanUrl(needShare: Boolean = false) {
         EasyHttp.get(this)
             .api(GetLingquanUrlApi().apply {
                 num_iid = getString(GOODS_ID).toString()
@@ -179,6 +186,17 @@ class GoodsDetailActivity : AppActivity() {
             .request(object :
                 OnHttpListener<HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlBean>>> {
                 override fun onSucceed(result: HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlBean>>?) {
+                    if (needShare) {
+                        ShareDialog.Builder(this@GoodsDetailActivity)
+                            .setShareLink(
+                                UMWeb(
+                                    result?.getData()?.get(0)?.coupon_click_url.toString()
+                                )
+                            )
+                            .show()
+                        return
+                    }
+
                     if (AppUtils.isAppInstalled("com.taobao.taobao")) {
                         val intent = Intent()
                         intent.setAction("Android.intent.action.VIEW");
