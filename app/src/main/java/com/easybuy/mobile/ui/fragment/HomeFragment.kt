@@ -1,39 +1,29 @@
 package com.easybuy.mobile.ui.fragment
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.content.Intent
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.EncryptUtils
-import com.blankj.utilcode.util.PhoneUtils
 import com.easybug.mobile.R
 import com.easybuy.mobile.aop.SingleClick
 import com.easybuy.mobile.app.TitleBarFragment
-import com.easybuy.mobile.http.api.*
+import com.easybuy.mobile.http.api.HomeBannerApi
+import com.easybuy.mobile.http.api.HomeCainixihuanApi
+import com.easybuy.mobile.http.api.HomeGoodsListApi
 import com.easybuy.mobile.http.model.HttpData
 import com.easybuy.mobile.http.model.MenuDto
 import com.easybuy.mobile.other.AppConfig
-import com.easybuy.mobile.ui.activity.BrowserActivity
-import com.easybuy.mobile.ui.activity.HomeActivity
-import com.easybuy.mobile.ui.activity.SearchActivity
-import com.easybuy.mobile.ui.activity.ShengqianbaoActivity
+import com.easybuy.mobile.ui.activity.*
 import com.easybuy.mobile.ui.adapter.BannerAdapter
-import com.easybuy.mobile.ui.adapter.HomeGoodsListAdapter
 import com.easybuy.mobile.ui.adapter.HomeMenuListAdapter
 import com.easybuy.mobile.ui.adapter.SearchGoodsListAdapter
-import com.easybuy.mobile.ui.dialog.MessageDialog
 import com.hjq.base.BaseAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.hjq.shape.view.ShapeTextView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.umeng.commonsdk.UMConfigure
-import com.umeng.commonsdk.listener.OnGetOaidListener
 import com.youth.banner.Banner
 
 /**
@@ -72,16 +62,26 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
         }
         menuList?.let {
             val arrayListOf = arrayListOf(
-                MenuDto(id = "1", resId = R.mipmap.ic_launcher, title = "淘宝"),
-                MenuDto(id = "2", resId = R.mipmap.ic_launcher, title = "天猫"),
-                MenuDto(id = "3", resId = R.mipmap.ic_launcher, title = "聚划算"),
-                MenuDto(id = "4", resId = R.mipmap.ic_launcher, title = "抖音"),
-                MenuDto(id = "5", resId = R.mipmap.ic_launcher, title = "天猫超市"),
+                MenuDto(id = "1", resId = R.drawable.icon_nvzhuang, title = "女装"),
+                MenuDto(id = "2", resId = R.drawable.icon_nanzhuang, title = "男装"),
+                MenuDto(id = "3", resId = R.drawable.icon_shenghuo, title = "生活用品"),
+                MenuDto(id = "4", resId = R.drawable.icon_neiyi, title = "内衣"),
+                MenuDto(id = "5", resId = R.drawable.icon_shipin, title = "食品"),
                 MenuDto(id = "6", resId = R.mipmap.ic_launcher, title = "省钱宝"),
-                MenuDto(id = "7", resId = R.mipmap.ic_launcher, title = "9.9包邮"),
-                MenuDto(id = "8", resId = R.mipmap.ic_launcher, title = "19.9包邮"),
-                MenuDto(id = "9", resId = R.mipmap.ic_launcher, title = "热销商品"),
-                MenuDto(id = "-1", resId = R.mipmap.ic_launcher, title = "全部")
+                MenuDto(
+                    id = "7",
+                    resId = R.mipmap.ic_launcher,
+                    title = "9.9包邮",
+                    value = "http://cms.xeemm.com:10000/jiudianjiu.aspx?id=27660&sid=${AppConfig.getZtkSqId()}&relationId="
+                ),
+                MenuDto(
+                    id = "8",
+                    resId = R.mipmap.ic_launcher,
+                    title = "每日精选",
+                    value = "http://cms.xeemm.com:10000/jingxuan.aspx?id=27660&sid=${AppConfig.getZtkSqId()}&relationId="
+                ),
+                MenuDto(id = "9", resId = R.drawable.icon_xiezi, title = "鞋品"),
+                MenuDto(id = "10", resId = R.drawable.icon_shuma, title = "数码")
             )
             it.layoutManager = GridLayoutManager(context, 5)
             val homeMenuListAdapter = context?.let { it1 -> HomeMenuListAdapter(it1) }
@@ -93,11 +93,16 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
                 ) {
                     val menuDto = arrayListOf[position]
                     when (menuDto.id) {
+                        "1", "2", "3", "4", "5", "9", "10" -> {
+                            val intent = Intent(requireContext(), SearchResultActivity::class.java)
+                            intent.putExtra("KEYWORD", menuDto.title)
+                            startActivity(intent)
+                        }
                         "6" -> {
                             startActivity(ShengqianbaoActivity::class.java)
                         }
-                        "7" -> {
-                            BrowserActivity.start(requireContext(), AppConfig.getJiukuaijiuUrl())
+                        "8", "7" -> {
+                            BrowserActivity.start(requireContext(), menuDto.value.toString())
                         }
                         else -> {}
                     }
@@ -167,7 +172,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
      */
     private fun getGoodsList() {
         UMConfigure.getOaid(requireContext()) { oaidStr ->
-            if (oaidStr.isNullOrBlank()){
+            if (oaidStr.isNullOrBlank()) {
                 //获取不到的话,则获取优选商品
                 getYouxuanGoods()
                 return@getOaid
@@ -203,7 +208,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
             .api(HomeGoodsListApi().apply {
                 page = pageIndex
             })
-            .request(object : OnHttpListener<HttpData<java.util.ArrayList<HomeGoodsListApi.GoodsBean>>> {
+            .request(object :
+                OnHttpListener<HttpData<java.util.ArrayList<HomeGoodsListApi.GoodsBean>>> {
                 override fun onSucceed(result: HttpData<java.util.ArrayList<HomeGoodsListApi.GoodsBean>>?) {
                     refresh?.finishRefresh()
                     refresh?.finishLoadMore()

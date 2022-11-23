@@ -4,7 +4,7 @@ import com.easybug.mobile.R
 
 data class MenuDto(
     val id: String = "",
-    val resId: Int? = R.mipmap.launcher_ic,
+    val resId: Any? = R.mipmap.launcher_ic,
     val title: String? = "",
     val value: String? = "",
     var checked:Boolean = false

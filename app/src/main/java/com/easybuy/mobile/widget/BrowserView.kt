@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
@@ -33,6 +34,7 @@ import com.hjq.permissions.XXPermissions
 import com.hjq.widget.layout.NestedScrollWebView
 import timber.log.Timber
 import java.io.File
+import java.net.URISyntaxException
 import java.util.*
 
 /**
@@ -218,8 +220,28 @@ class BrowserView  @JvmOverloads constructor(
             when (scheme) {
                 "http", "https" -> view.loadUrl(url)
                 "tel" -> dialing(view, url)
+                else->{
+                    jumpApp(view,url)
+                }
             }
             return true
+        }
+
+        private fun jumpApp(view: WebView, url: String) {
+            val intent: Intent
+            try {
+                intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                intent.addCategory("android.intent.category.BROWSABLE")
+                intent.component = null
+                intent.selector = null
+                val resolves: List<ResolveInfo> =
+                    view.context.packageManager.queryIntentActivities(intent, 0)
+                if (resolves.isNotEmpty()) {
+                    view.context.startActivity(intent)
+                }
+            } catch (e: URISyntaxException) {
+                e.printStackTrace()
+            }
         }
 
         /**
