@@ -67,16 +67,16 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
                 MenuDto(id = "3", resId = R.drawable.icon_shenghuo, title = "生活用品"),
                 MenuDto(id = "4", resId = R.drawable.icon_neiyi, title = "内衣"),
                 MenuDto(id = "5", resId = R.drawable.icon_shipin, title = "食品"),
-                MenuDto(id = "6", resId = R.mipmap.ic_launcher, title = "省钱宝"),
+                MenuDto(id = "6", resId = R.drawable.icon_shengqianbao, title = "省钱宝"),
                 MenuDto(
                     id = "7",
-                    resId = R.mipmap.ic_launcher,
+                    resId = R.drawable.icon_baoyou,
                     title = "9.9包邮",
                     value = "http://cms.xeemm.com:10000/jiudianjiu.aspx?id=27660&sid=${AppConfig.getZtkSqId()}&relationId="
                 ),
                 MenuDto(
                     id = "8",
-                    resId = R.mipmap.ic_launcher,
+                    resId = R.drawable.icon_jingxuan,
                     title = "每日精选",
                     value = "http://cms.xeemm.com:10000/jingxuan.aspx?id=27660&sid=${AppConfig.getZtkSqId()}&relationId="
                 ),
