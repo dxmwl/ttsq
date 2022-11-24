@@ -29,6 +29,8 @@ android {
         buildConfigField('String', 'HOST_URL', '"' + HOST_URL + '"')
         //折淘客APPkey
         buildConfigField('String', 'ZTK_APP_KEY', '"' + ZTK_APP_KEY + '"')
+        //大淘客APPkey
+        buildConfigField('String', 'DTK_APP_KEY', '"' + DTK_APP_KEY + '"')
         //好单库APPkey
         buildConfigField('String', 'HDK_APP_KEY', '"' + HDK_APP_KEY + '"')
         //淘宝联盟Pid
@@ -68,7 +70,7 @@ android {
             signingConfig signingConfigs.config
             // 添加清单占位符
             addManifestPlaceholders([
-                    'app_name'    :    '易购宝 Debug 版'
+                    'app_name'    :    '省钱君 Debug 版'
             ])
             // 调试模式下只保留一种架构的 so 库，提升打包速度
             ndk {
@@ -81,7 +83,7 @@ android {
             applicationIdSuffix ''
             // 添加清单占位符
             addManifestPlaceholders([
-                    'app_name'    :    '易购宝 Preview 版'
+                    'app_name'    :    '省钱君 Preview 版'
             ])
         }
 

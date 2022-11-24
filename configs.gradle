@@ -30,7 +30,7 @@ ext {
     println "GradleLog ServerTypeOutput " + serverType
 
     // 友盟 AppKey
-    UMENG_APP_KEY = "637c3cf088ccdf4b7e6b55b5"
+    UMENG_APP_KEY = "637f23b088ccdf4b7e6df4e4"
     // QQ AppId
     QQ_APP_ID = "101828096"
     // QQ Secret
@@ -39,6 +39,8 @@ ext {
     WX_APP_ID = "wxd35706cc9f46114c"
     // 微信 Secret
     WX_APP_SECRET = "0c8c7cf831dd135a32b3e395ea459b5a"
+    //大淘客APPKey
+    DTK_APP_KEY = "62b9044c4e85e"
     //折淘客APPKey
     ZTK_APP_KEY = "2506f1398595428eab9055197bf671e7"
     //好单库APpKey
@@ -53,7 +55,7 @@ ext {
         case SERVER_TYPE_TEST:
         case SERVER_TYPE_PREVIEW:
             LOG_ENABLE = true
-            BUGLY_ID = "24cb022ae5"
+            BUGLY_ID = "15063721cb"
             if (serverType == SERVER_TYPE_PREVIEW) {
                 HOST_URL = "https://api.zhetaoke.com:10001/"
             } else {
@@ -62,7 +64,7 @@ ext {
             break
         case SERVER_TYPE_PRODUCT:
             LOG_ENABLE = false
-            BUGLY_ID = "24cb022ae5"
+            BUGLY_ID = "15063721cb"
             HOST_URL = "https://api.zhetaoke.com:10001/"
             break
     }

@@ -1,6 +1,7 @@
 package com.shengqianjun.mobile.other
 
 import com.shengqianjun.mobile.BuildConfig
+
 /**
  *    author : Android 轮子哥
  *    github : https://github.com/getActivity/AndroidProject-Kotlin
@@ -70,6 +71,13 @@ object AppConfig {
      */
     fun getZtkAppKey(): String {
         return BuildConfig.ZTK_APP_KEY
+    }
+
+    /**
+     * 获取 大淘客AppKey
+     */
+    fun getDtkAppKey(): String {
+        return BuildConfig.DTK_APP_KEY
     }
 
     /**
