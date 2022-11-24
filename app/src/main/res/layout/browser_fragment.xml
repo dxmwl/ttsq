@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.easybuy.mobile.widget.StatusLayout
+<com.shengqianjun.mobile.widget.StatusLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/hl_browser_hint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.easybuy.mobile.ui.fragment.BrowserFragment">
+    tools:context="com.shengqianjun.mobile.ui.fragment.BrowserFragment">
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/sl_browser_refresh"
@@ -17,11 +17,11 @@
         app:srlEnablePreviewInEditMode="false"
         app:srlPrimaryColor="#444444">
 
-        <com.easybuy.mobile.widget.BrowserView
+        <com.shengqianjun.mobile.widget.BrowserView
             android:id="@+id/wv_browser_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-</com.easybuy.mobile.widget.StatusLayout>
+</com.shengqianjun.mobile.widget.StatusLayout>

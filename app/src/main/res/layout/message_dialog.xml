@@ -10,5 +10,5 @@
     android:lineSpacingExtra="@dimen/dp_4"
     android:textColor="#333333"
     android:textSize="@dimen/sp_14"
-    tools:context="com.easybuy.mobile.ui.dialog.MessageDialog"
+    tools:context="com.shengqianjun.mobile.ui.dialog.MessageDialog"
     tools:text="内容" />

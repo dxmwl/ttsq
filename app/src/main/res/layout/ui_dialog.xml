@@ -8,7 +8,7 @@
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/dialog_ui_round_size"
     app:cardElevation="0px"
-    tools:context="com.easybuy.mobile.ui.dialog.CommonDialog">
+    tools:context="com.shengqianjun.mobile.ui.dialog.CommonDialog">
 
     <LinearLayout
         android:id="@+id/ll_ui_container"

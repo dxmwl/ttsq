@@ -5,25 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.easybuy.mobile.ui.activity.StatusActivity">
+    tools:context="com.shengqianjun.mobile.ui.activity.StatusActivity">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="界面状态案例" />
 
-    <com.easybuy.mobile.widget.StatusLayout
+    <com.shengqianjun.mobile.widget.StatusLayout
         android:id="@+id/hl_status_hint"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <fragment
-            android:name="com.easybuy.mobile.ui.fragment.StatusFragment"
+            android:name="com.shengqianjun.mobile.ui.fragment.StatusFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="MissingId"
             tools:layout="@layout/status_fragment" />
 
-    </com.easybuy.mobile.widget.StatusLayout>
+    </com.shengqianjun.mobile.widget.StatusLayout>
 
 </LinearLayout>

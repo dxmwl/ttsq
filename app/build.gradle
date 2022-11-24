@@ -10,7 +10,7 @@ android {
     defaultConfig {
 
         // 无痛修改包名：https://www.jianshu.com/p/17327e191d2e
-        applicationId 'com.easybug.mobile'
+        applicationId 'com.shengqianjun.mobile'
 
         // 仅保留中文语种的资源
         resConfigs 'zh'

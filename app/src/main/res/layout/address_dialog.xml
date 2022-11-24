@@ -10,7 +10,7 @@
     app:shape_solidColor="@color/white"
     app:shape_topLeftRadius="@dimen/dp_20"
     app:shape_topRightRadius="@dimen/dp_20"
-    tools:context="com.easybuy.mobile.ui.dialog.AddressDialog">
+    tools:context="com.shengqianjun.mobile.ui.dialog.AddressDialog">
 
     <FrameLayout
         android:layout_width="match_parent"

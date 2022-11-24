@@ -6,6 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="horizontal"
-    tools:context="com.easybuy.mobile.ui.dialog.CopyDialog">
+    tools:context="com.shengqianjun.mobile.ui.dialog.CopyDialog">
 
 </LinearLayout>
