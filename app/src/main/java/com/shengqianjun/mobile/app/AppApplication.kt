@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.blankj.utilcode.util.EncryptUtils
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.aop.Log
 import com.shengqianjun.mobile.http.glide.GlideApp
@@ -128,7 +129,7 @@ class AppApplication : Application() {
                 .setHandler(RequestHandler(application))
                 // 设置请求重试次数
                 .setRetryCount(1)
-                .addParam("appkey", AppConfig.getDtkAppKey())
+                .addParam("APIKEY", AppConfig.getHdkAppKey())
                 .into()
 
             // 设置 Json 解析容错监听

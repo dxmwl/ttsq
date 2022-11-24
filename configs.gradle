@@ -44,7 +44,7 @@ ext {
     //折淘客APPKey
     ZTK_APP_KEY = "2506f1398595428eab9055197bf671e7"
     //好单库APpKey
-    HDK_APP_KEY = "91574A6F2EB3"
+    HDK_APP_KEY = "6A1C5D434A43"
     //淘宝联盟PID
     TBLM_PID = "mm_111203980_10278226_34170938"
     //折淘客授权ID
@@ -57,15 +57,15 @@ ext {
             LOG_ENABLE = true
             BUGLY_ID = "15063721cb"
             if (serverType == SERVER_TYPE_PREVIEW) {
-                HOST_URL = "https://api.zhetaoke.com:10001/"
+                HOST_URL = "http://v2.api.haodanku.com/"
             } else {
-                HOST_URL = "https://api.zhetaoke.com:10001/"
+                HOST_URL = "http://v2.api.haodanku.com/"
             }
             break
         case SERVER_TYPE_PRODUCT:
             LOG_ENABLE = false
             BUGLY_ID = "15063721cb"
-            HOST_URL = "https://api.zhetaoke.com:10001/"
+            HOST_URL = "http://v2.api.haodanku.com/"
             break
     }
 }
