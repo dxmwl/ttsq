@@ -3,6 +3,7 @@ package com.shengqianjun.mobile.ui.fragment
 import android.view.View
 import android.widget.ImageView
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.hjq.base.FragmentPagerAdapter
 import com.hjq.shape.layout.ShapeRelativeLayout
@@ -44,6 +45,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
 
     override fun initView() {
         setOnClickListener(search_view, shengqianbao, btn_shengqian)
+
+        btn_shengqian?.let { Glide.with(this).load(R.drawable.shengqiangonglue_img).into(it) }
 
         postDelayed(Runnable {
             home_tab?.setupWithViewPager(home_vp)

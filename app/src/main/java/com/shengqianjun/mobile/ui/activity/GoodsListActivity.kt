@@ -4,17 +4,16 @@ import android.content.Context
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
+import com.hjq.http.EasyHttp
+import com.hjq.http.listener.OnHttpListener
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.aop.Log
 import com.shengqianjun.mobile.app.AppActivity
 import com.shengqianjun.mobile.http.api.GoodsListApi
-import com.shengqianjun.mobile.http.api.HomeGoodsListApi
 import com.shengqianjun.mobile.http.model.HttpData
 import com.shengqianjun.mobile.ui.adapter.GoodsListAdapter
-import com.shengqianjun.mobile.utils.StringUtils
-import com.hjq.http.EasyHttp
-import com.hjq.http.listener.OnHttpListener
-import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 
 /**
@@ -42,6 +41,7 @@ class GoodsListActivity : AppActivity() {
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
     private lateinit var homeGoodsListAdapter: GoodsListAdapter
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
+    private val home_tab: TabLayout? by lazy { findViewById(R.id.home_tab) }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_goods_list
@@ -63,6 +63,22 @@ class GoodsListActivity : AppActivity() {
             pageIndex++
             getGoodsList()
         }
+
+
+        home_tab?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                homeGoodsListAdapter.setData(goodsInfoDto[tab?.position!!].item)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
     }
 
     private var pageIndex = 1
@@ -71,15 +87,27 @@ class GoodsListActivity : AppActivity() {
         getGoodsList()
     }
 
+    private var goodsInfoDto: ArrayList<GoodsListApi.Block> = ArrayList()
+
     private fun getGoodsList() {
-        val urlPath = getString(URL_PATH)!!
         EasyHttp.get(this)
-            .api(GoodsListApi(StringUtils.changeParamForKey(urlPath, "page", "$pageIndex")))
-            .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
-                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
+            .api(GoodsListApi().apply {
+                id = getString(URL_PATH).toString()
+            })
+            .request(object : OnHttpListener<HttpData<GoodsListApi.HuodongGoodsDto>> {
+                override fun onSucceed(result: HttpData<GoodsListApi.HuodongGoodsDto>?) {
                     refresh?.finishRefresh()
                     refresh?.finishLoadMore()
-                    homeGoodsListAdapter.addData(result?.getData())
+                    result?.getData()?.let { it ->
+                        goodsInfoDto = it.block
+                        goodsInfoDto.forEach { it1 ->
+                            val tab = home_tab?.newTab()?.setText(it1.name)
+                            if (tab != null) {
+                                home_tab?.addTab(tab)
+                            }
+                        }
+                        homeGoodsListAdapter.setData(goodsInfoDto[0].item)
+                    }
                 }
 
                 override fun onFail(e: Exception?) {

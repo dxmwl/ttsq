@@ -3,6 +3,7 @@ package com.shengqianjun.mobile.ui.fragment
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.hjq.base.BaseAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener

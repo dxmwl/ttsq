@@ -10,25 +10,22 @@ import com.hjq.http.config.IRequestApi
  */
 class HomeBannerApi : IRequestApi {
     override fun getApi(): String {
-        return "api/api_lunbo.ashx"
+        return "get_index_activity_data"
     }
 
     /**
      * 	分页获取数据,第几页
      */
-    var page: Int = 1
+//    var page: Int = 1
 
     /**
      * 每页数据条数（默认每页20条），可自定义1-50之间
      */
     var page_size: Int = 10
 
-    inner class BannerBean(
-        val name: String,
-        //图片
-        val pic: String,
-        //跳转链接
-        val get_url: String
-
+    data class BannerBean(
+        val activity_id: String,
+        val activity_title: String,
+        val image: String,
     )
 }

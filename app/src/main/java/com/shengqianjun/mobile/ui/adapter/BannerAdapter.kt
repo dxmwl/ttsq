@@ -45,7 +45,7 @@ class BannerAdapter(bannerList: ArrayList<HomeBannerApi.BannerBean>?) :
         size: Int
     ) {
         holder?.let {
-            GlideApp.with(holder.itemView).load(data?.pic).transform(
+            GlideApp.with(holder.itemView).load(data?.image).transform(
                 MultiTransformation(
                     CenterCrop(), RoundedCorners(ConvertUtils.dp2px(8F))
                 )
@@ -53,10 +53,7 @@ class BannerAdapter(bannerList: ArrayList<HomeBannerApi.BannerBean>?) :
         }
 
         holder?.imageView?.setOnClickListener {
-            data?.get_url?.let { it1 ->
-                val replace = ""
-                GoodsListActivity.start(holder.itemView.context, replace, data.name)
-            }
+            GoodsListActivity.start(holder.itemView.context, data?.activity_id, data?.activity_title)
         }
     }
 }
