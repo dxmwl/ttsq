@@ -129,7 +129,7 @@ class AppApplication : Application() {
                 .setHandler(RequestHandler(application))
                 // 设置请求重试次数
                 .setRetryCount(1)
-                .addParam("APIKEY", AppConfig.getHdkAppKey())
+                .addParam("apikey", AppConfig.getHdkAppKey())
                 .into()
 
             // 设置 Json 解析容错监听

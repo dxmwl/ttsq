@@ -1,25 +1,29 @@
 package com.shengqianjun.mobile.ui.activity
 
 import android.app.Activity
-import android.content.*
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.gyf.immersionbar.ImmersionBar
 import com.hjq.base.FragmentPagerAdapter
+import com.hjq.http.EasyHttp
+import com.hjq.http.listener.OnHttpListener
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.app.AppActivity
 import com.shengqianjun.mobile.app.AppFragment
 import com.shengqianjun.mobile.app.AppHelper
-import com.shengqianjun.mobile.http.api.ZtkClassApi
+import com.shengqianjun.mobile.http.api.HdkClassApi
 import com.shengqianjun.mobile.http.model.HttpData
-import com.shengqianjun.mobile.manager.*
+import com.shengqianjun.mobile.manager.ActivityManager
 import com.shengqianjun.mobile.other.DoubleClickHelper
 import com.shengqianjun.mobile.ui.adapter.NavigationAdapter
-import com.shengqianjun.mobile.ui.fragment.*
-import com.hjq.http.EasyHttp
-import com.hjq.http.listener.OnHttpListener
+import com.shengqianjun.mobile.ui.fragment.HomeFragment
+import com.shengqianjun.mobile.ui.fragment.MineFragment
+import com.shengqianjun.mobile.ui.fragment.YqbkFragment
+import com.shengqianjun.mobile.ui.fragment.ZtkClassFragment
 
 /**
  *    author : Android 轮子哥
@@ -35,7 +39,10 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         private const val INTENT_KEY_IN_FRAGMENT_CLASS: String = "fragmentClass"
 
         @JvmOverloads
-        fun start(context: Context, fragmentClass: Class<out AppFragment<*>?>? = HomeFragment::class.java) {
+        fun start(
+            context: Context,
+            fragmentClass: Class<out AppFragment<*>?>? = HomeFragment::class.java
+        ) {
             val intent = Intent(context, HomeActivity::class.java)
             intent.putExtra(INTENT_KEY_IN_FRAGMENT_CLASS, fragmentClass)
             if (context !is Activity) {
@@ -56,14 +63,30 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
     override fun initView() {
         navigationAdapter = NavigationAdapter(this).apply {
-            addItem(NavigationAdapter.MenuItem(getString(R.string.home_nav_index),
-                ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_home_selector)))
-            addItem(NavigationAdapter.MenuItem(getString(R.string.home_nav_found),
-                ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_found_selector)))
-            addItem(NavigationAdapter.MenuItem(getString(R.string.home_nav_message),
-                ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_message_selector)))
-            addItem(NavigationAdapter.MenuItem(getString(R.string.home_nav_me),
-                ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_me_selector)))
+            addItem(
+                NavigationAdapter.MenuItem(
+                    getString(R.string.home_nav_index),
+                    ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_home_selector)
+                )
+            )
+            addItem(
+                NavigationAdapter.MenuItem(
+                    getString(R.string.home_nav_found),
+                    ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_found_selector)
+                )
+            )
+            addItem(
+                NavigationAdapter.MenuItem(
+                    getString(R.string.home_nav_message),
+                    ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_message_selector)
+                )
+            )
+            addItem(
+                NavigationAdapter.MenuItem(
+                    getString(R.string.home_nav_me),
+                    ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_me_selector)
+                )
+            )
             setOnNavigationListener(this@HomeActivity)
             navigationView?.adapter = this
         }
@@ -159,31 +182,13 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
      */
     private fun getClassData() {
         EasyHttp.get(this)
-            .api(ZtkClassApi())
-            .request(object : OnHttpListener<HttpData<ArrayList<ZtkClassApi.ClassInfo>>> {
-                override fun onSucceed(result: HttpData<ArrayList<ZtkClassApi.ClassInfo>>?) {
+            .api(HdkClassApi())
+            .request(object : OnHttpListener<HttpData<ArrayList<HdkClassApi.ClassInfo>>> {
+                override fun onSucceed(result: HttpData<ArrayList<HdkClassApi.ClassInfo>>?) {
                     try {
-                        val classData = result?.getData()
-                        if (classData != null) {
-                            AppHelper.secondaryClassificationData = classData
+                        result?.getData()?.let {
+                            AppHelper.classData = it
                         }
-                        val goodsClass = HashMap<String, ZtkClassApi.ClassInfo>()
-                        classData?.forEachIndexed { index, classInfo ->
-                            val classInfo2 = goodsClass[classInfo.cid]
-                            if (classInfo2 == null) {
-                                goodsClass[classInfo.cid] =
-                                    ZtkClassApi.ClassInfo(
-                                        cid = classInfo.cid,
-                                        name = classInfo.name
-                                    )
-                            }
-                            classInfo2?.childs?.add(classInfo)
-                        }
-                        val goodsClassList = ArrayList<ZtkClassApi.ClassInfo>()
-                        goodsClass.forEach {
-                            goodsClassList.add(it.value)
-                        }
-                        AppHelper.classData = goodsClassList
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

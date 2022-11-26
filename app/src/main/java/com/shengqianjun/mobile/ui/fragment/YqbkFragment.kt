@@ -52,7 +52,7 @@ class YqbkFragment : TitleBarFragment<HomeActivity>() {
         val fragmentList = arrayListOf<Fragment>()
         val titleList = arrayOfNulls<String>(classData.size)
         classData.forEachIndexed { index, s ->
-            titleList[index] = s.name
+            titleList[index] = s.main_name
             fragmentList.add(YqbkListFragment(s.cid))
         }
 

@@ -9,7 +9,7 @@ import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.aop.SingleClick
 import com.shengqianjun.mobile.app.AppHelper
 import com.shengqianjun.mobile.app.TitleBarFragment
-import com.shengqianjun.mobile.http.api.ZtkClassApi
+import com.shengqianjun.mobile.http.api.HdkClassApi
 import com.shengqianjun.mobile.ui.activity.HomeActivity
 import com.shengqianjun.mobile.ui.activity.SearchActivity
 import com.shengqianjun.mobile.ui.activity.SearchResultActivity
@@ -25,8 +25,7 @@ import java.util.ArrayList
  *    time   : 2018/10/18
  *    desc   : 商品分类 Fragment
  */
-class ZtkClassFragment : TitleBarFragment<HomeActivity>(),
-    TwoClassAdapter.ThreeClassAdapter.OnItemClickListener {
+class ZtkClassFragment : TitleBarFragment<HomeActivity>(), TwoClassAdapter.ThreeClassAdapter.OnItemClickListener {
 
     companion object {
 
@@ -35,7 +34,7 @@ class ZtkClassFragment : TitleBarFragment<HomeActivity>(),
         }
     }
 
-    private lateinit var twoClassAdapter: TwoClassAdapter.ThreeClassAdapter
+    private lateinit var twoClassAdapter: TwoClassAdapter
     private val bigClass: RecyclerView? by lazy { findViewById(R.id.big_class) }
     private val twoClassList: RecyclerView? by lazy { findViewById(R.id.two_class_list) }
     private val searchView: ShapeTextView? by lazy { findViewById(R.id.search_view) }
@@ -47,8 +46,8 @@ class ZtkClassFragment : TitleBarFragment<HomeActivity>(),
     override fun initView() {
         setOnClickListener(searchView)
         twoClassList?.let {
-            it.layoutManager = GridLayoutManager(context, 2)
-            twoClassAdapter = TwoClassAdapter.ThreeClassAdapter(requireContext(), this)
+            it.layoutManager = LinearLayoutManager(context)
+            twoClassAdapter = TwoClassAdapter(this)
             it.adapter = twoClassAdapter
         }
     }
@@ -86,17 +85,17 @@ class ZtkClassFragment : TitleBarFragment<HomeActivity>(),
                     classInfo.checked = true
                     bigClassAdapter.notifyItemChanged(position)
 
-                    getTwoClassData(classInfo.childs)
+                    getTwoClassData(classInfo.data)
                 }
             })
             it.adapter = bigClassAdapter
             bigClassAdapter?.setData(classData)
 
-            getTwoClassData(classData[0].childs)
+            getTwoClassData(classData[0].data)
         }
     }
 
-    private fun getTwoClassData(childs: ArrayList<ZtkClassApi.ClassInfo>) {
+    private fun getTwoClassData(childs: ArrayList<HdkClassApi.Data>) {
         twoClassAdapter.setData(childs)
     }
 
@@ -114,11 +113,9 @@ class ZtkClassFragment : TitleBarFragment<HomeActivity>(),
         return false
     }
 
-    override fun onItemClick(classDataBean: ZtkClassApi.ClassInfo) {
+    override fun onItemClick(classDataBean: HdkClassApi.Info) {
         val intent = Intent(getAttachActivity(), SearchResultActivity::class.java)
-        intent.putExtra("KEYWORD", classDataBean.q)
+        intent.putExtra("KEYWORD", classDataBean.son_name)
         startActivity(intent)
     }
-
-
 }

@@ -27,16 +27,10 @@ android {
         buildConfigField('String', 'BUGLY_ID', '"' + BUGLY_ID + '"')
         // 测试服务器的主机地址
         buildConfigField('String', 'HOST_URL', '"' + HOST_URL + '"')
-        //折淘客APPkey
-        buildConfigField('String', 'ZTK_APP_KEY', '"' + ZTK_APP_KEY + '"')
-        //大淘客APPkey
-        buildConfigField('String', 'DTK_APP_KEY', '"' + DTK_APP_KEY + '"')
         //好单库APPkey
         buildConfigField('String', 'HDK_APP_KEY', '"' + HDK_APP_KEY + '"')
         //淘宝联盟Pid
         buildConfigField('String', 'TBLM_PID', '"' + TBLM_PID + '"')
-        //折淘客授权ID
-        buildConfigField('String', 'ZTK_SQ_ID', '"' + ZTK_SQ_ID + '"')
         //好单库请求地址
         buildConfigField('String', 'hak_baseUrl', '"' + hak_baseUrl + '"')
     }

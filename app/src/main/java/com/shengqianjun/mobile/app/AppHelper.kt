@@ -3,7 +3,7 @@ package com.shengqianjun.mobile.app
 import android.content.Context
 import android.text.TextUtils
 import androidx.core.content.edit
-import com.shengqianjun.mobile.http.api.ZtkClassApi
+import com.shengqianjun.mobile.http.api.HdkClassApi
 
 /**
  * APP辅助类
@@ -11,9 +11,7 @@ import com.shengqianjun.mobile.http.api.ZtkClassApi
 object AppHelper {
 
     //APP分类数据
-    var classData = ArrayList<ZtkClassApi.ClassInfo>()
-    //APP二级分类数据
-    var secondaryClassificationData = ArrayList<ZtkClassApi.ClassInfo>()
+    var classData = ArrayList<HdkClassApi.ClassInfo>()
 
     private const val RECENT_SEARCH = "RECENT_SEARCH"
     private const val SEARCH_HISTORY = "SEARCH_HISTORY"
@@ -22,7 +20,7 @@ object AppHelper {
      * 保存历史搜索记录
      */
     fun saveSearchHistory(keyword: String) {
-        if (keyword.isBlank()){
+        if (keyword.isBlank()) {
             return
         }
         val sp = AppApplication.getApp().getSharedPreferences(RECENT_SEARCH, Context.MODE_PRIVATE)

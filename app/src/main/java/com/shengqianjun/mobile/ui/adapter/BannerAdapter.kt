@@ -54,7 +54,7 @@ class BannerAdapter(bannerList: ArrayList<HomeBannerApi.BannerBean>?) :
 
         holder?.imageView?.setOnClickListener {
             data?.get_url?.let { it1 ->
-                val replace = it1.replace("{替换appkey}", AppConfig.getZtkAppKey())
+                val replace = ""
                 GoodsListActivity.start(holder.itemView.context, replace, data.name)
             }
         }

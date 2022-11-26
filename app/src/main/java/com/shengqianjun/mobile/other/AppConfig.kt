@@ -67,31 +67,10 @@ object AppConfig {
     }
 
     /**
-     * 获取 折淘客AppKey
-     */
-    fun getZtkAppKey(): String {
-        return BuildConfig.ZTK_APP_KEY
-    }
-
-    /**
-     * 获取 大淘客AppKey
-     */
-    fun getDtkAppKey(): String {
-        return BuildConfig.DTK_APP_KEY
-    }
-
-    /**
      * 获取 淘宝联盟Pid
      */
     fun getTblmPid(): String {
         return BuildConfig.TBLM_PID
-    }
-
-    /**
-     * 获取 折淘客SqId
-     */
-    fun getZtkSqId(): String {
-        return BuildConfig.ZTK_SQ_ID
     }
 
     /**
@@ -106,12 +85,5 @@ object AppConfig {
      */
     fun getHdkAppKey(): String {
         return BuildConfig.HDK_APP_KEY
-    }
-
-    /**
-     * 9块9包邮链接
-     */
-    fun getJiukuaijiuUrl(): String {
-        return "http://cms.xeemm.com:10000/jiudianjiu.aspx?id=27660&sid=${getZtkSqId()}&relationId="
     }
 }

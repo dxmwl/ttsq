@@ -39,16 +39,10 @@ ext {
     WX_APP_ID = "wxd35706cc9f46114c"
     // 微信 Secret
     WX_APP_SECRET = "0c8c7cf831dd135a32b3e395ea459b5a"
-    //大淘客APPKey
-    DTK_APP_KEY = "62b9044c4e85e"
-    //折淘客APPKey
-    ZTK_APP_KEY = "2506f1398595428eab9055197bf671e7"
     //好单库APpKey
     HDK_APP_KEY = "6A1C5D434A43"
     //淘宝联盟PID
     TBLM_PID = "mm_111203980_10278226_34170938"
-    //折淘客授权ID
-    ZTK_SQ_ID = "154994"
     //好单库请求地址
     hak_baseUrl = "http://v2.api.haodanku.com/"
     switch(serverType) {
