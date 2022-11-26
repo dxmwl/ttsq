@@ -102,6 +102,7 @@
             app:tabSelectedTextColor="@color/red" />
 
         <ImageView
+            android:id="@+id/all_class"
             android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

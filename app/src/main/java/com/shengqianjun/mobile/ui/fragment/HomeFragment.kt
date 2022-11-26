@@ -12,10 +12,11 @@ import com.shengqianjun.mobile.aop.SingleClick
 import com.shengqianjun.mobile.app.AppFragment
 import com.shengqianjun.mobile.app.AppHelper
 import com.shengqianjun.mobile.app.TitleBarFragment
-import com.shengqianjun.mobile.ui.activity.BrowserActivity
-import com.shengqianjun.mobile.ui.activity.HomeActivity
-import com.shengqianjun.mobile.ui.activity.SearchActivity
-import com.shengqianjun.mobile.ui.activity.ShengqianbaoActivity
+import com.shengqianjun.mobile.eventbus.RefreshClass
+import com.shengqianjun.mobile.ui.activity.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  *    author : Android 轮子哥
@@ -29,6 +30,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     private val search_view: ShapeRelativeLayout? by lazy { findViewById(R.id.search_view) }
     private val shengqianbao: ImageView? by lazy { findViewById(R.id.shengqianbao) }
     private val btn_shengqian: ImageView? by lazy { findViewById(R.id.btn_shengqian) }
+    private val all_class: ImageView? by lazy { findViewById(R.id.all_class) }
     private val home_tab: TabLayout? by lazy { findViewById(R.id.home_tab) }
     private val home_vp: ViewPager? by lazy { findViewById(R.id.home_vp) }
 
@@ -44,22 +46,14 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     }
 
     override fun initView() {
-        setOnClickListener(search_view, shengqianbao, btn_shengqian)
+        val eventBus = EventBus.getDefault()
+        if (eventBus.isRegistered(this).not()) {
+            eventBus.register(this)
+        }
+
+        setOnClickListener(search_view, shengqianbao, btn_shengqian, all_class)
 
         btn_shengqian?.let { Glide.with(this).load(R.drawable.shengqiangonglue_img).into(it) }
-
-        postDelayed(Runnable {
-            home_tab?.setupWithViewPager(home_vp)
-            val homeFragmentAdapter = FragmentPagerAdapter<AppFragment<*>>(this)
-            homeFragmentAdapter.addFragment(RecommendFragment.newInstance(), "推荐")
-            AppHelper.classData.forEach {
-                homeFragmentAdapter.addFragment(
-                    HomeClassGoodsFragment.newInstance(it.data, it.cid),
-                    it.main_name
-                )
-            }
-            home_vp?.adapter = homeFragmentAdapter
-        }, 1000)
     }
 
     override fun initData() {
@@ -81,6 +75,9 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
                     "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2#/save-money"
                 )
             }
+            all_class -> {
+                startActivity(AllClassActivity::class.java)
+            }
             else -> {}
         }
     }
@@ -88,5 +85,27 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     override fun isStatusBarEnabled(): Boolean {
         // 使用沉浸式状态栏
         return !super.isStatusBarEnabled()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshClass(refreshClass: RefreshClass){
+        home_tab?.setupWithViewPager(home_vp)
+        val homeFragmentAdapter = FragmentPagerAdapter<AppFragment<*>>(this)
+        homeFragmentAdapter.addFragment(RecommendFragment.newInstance(), "推荐")
+        AppHelper.classData.forEach {
+            homeFragmentAdapter.addFragment(
+                HomeClassGoodsFragment.newInstance(it.data, it.cid),
+                it.main_name
+            )
+        }
+        home_vp?.adapter = homeFragmentAdapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val eventBus = EventBus.getDefault()
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this)
+        }
     }
 }

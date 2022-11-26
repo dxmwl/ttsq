@@ -15,15 +15,14 @@ import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.app.AppActivity
 import com.shengqianjun.mobile.app.AppFragment
 import com.shengqianjun.mobile.app.AppHelper
+import com.shengqianjun.mobile.eventbus.RefreshClass
 import com.shengqianjun.mobile.http.api.ClassApi
 import com.shengqianjun.mobile.http.model.HttpData
 import com.shengqianjun.mobile.manager.ActivityManager
 import com.shengqianjun.mobile.other.DoubleClickHelper
 import com.shengqianjun.mobile.ui.adapter.NavigationAdapter
-import com.shengqianjun.mobile.ui.fragment.HomeFragment
-import com.shengqianjun.mobile.ui.fragment.MineFragment
-import com.shengqianjun.mobile.ui.fragment.YqbkFragment
-import com.shengqianjun.mobile.ui.fragment.ZtkClassFragment
+import com.shengqianjun.mobile.ui.fragment.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  *    author : Android 轮子哥
@@ -95,7 +94,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     override fun initData() {
         pagerAdapter = FragmentPagerAdapter<AppFragment<*>>(this).apply {
             addFragment(HomeFragment.newInstance())
-            addFragment(ZtkClassFragment.newInstance())
+            addFragment(BangdanFragment.newInstance())
             addFragment(YqbkFragment.newInstance())
             addFragment(MineFragment.newInstance())
             viewPager?.adapter = this
@@ -188,6 +187,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
                     try {
                         result?.getData()?.let {
                             AppHelper.classData = it
+                            EventBus.getDefault().post(RefreshClass())
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
