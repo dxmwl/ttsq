@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.app.AppAdapter
-import com.shengqianjun.mobile.http.api.HdkClassApi
 import com.hjq.shape.view.ShapeTextView
+import com.shengqianjun.mobile.http.api.ClassApi
 
-class BigClassAdapter(mContext: Context) : AppAdapter<HdkClassApi.ClassInfo>(mContext) {
+class BigClassAdapter(mContext: Context) : AppAdapter<ClassApi.ClassInfo>(mContext) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
         return IndustryListViewHolder()
     }

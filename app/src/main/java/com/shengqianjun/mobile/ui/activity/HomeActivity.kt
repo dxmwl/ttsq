@@ -15,7 +15,7 @@ import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.app.AppActivity
 import com.shengqianjun.mobile.app.AppFragment
 import com.shengqianjun.mobile.app.AppHelper
-import com.shengqianjun.mobile.http.api.HdkClassApi
+import com.shengqianjun.mobile.http.api.ClassApi
 import com.shengqianjun.mobile.http.model.HttpData
 import com.shengqianjun.mobile.manager.ActivityManager
 import com.shengqianjun.mobile.other.DoubleClickHelper
@@ -182,9 +182,9 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
      */
     private fun getClassData() {
         EasyHttp.get(this)
-            .api(HdkClassApi())
-            .request(object : OnHttpListener<HttpData<ArrayList<HdkClassApi.ClassInfo>>> {
-                override fun onSucceed(result: HttpData<ArrayList<HdkClassApi.ClassInfo>>?) {
+            .api(ClassApi())
+            .request(object : OnHttpListener<HttpData<ArrayList<ClassApi.ClassInfo>>> {
+                override fun onSucceed(result: HttpData<ArrayList<ClassApi.ClassInfo>>?) {
                     try {
                         result?.getData()?.let {
                             AppHelper.classData = it

@@ -2,6 +2,7 @@ apply plugin : 'com.android.application'
 apply plugin : 'android-aspectjx'
 apply plugin : 'kotlin-kapt'
 apply from : '../common.gradle'
+apply plugin: 'kotlin-parcelize'
 
 // Android 代码规范文档：https://github.com/getActivity/AndroidCodeStandard
 android {

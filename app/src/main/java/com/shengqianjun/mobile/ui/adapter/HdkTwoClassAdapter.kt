@@ -65,7 +65,7 @@ class HdkTwoClassAdapter(val listener: OnItemClickListener) :
         fun onItemClick(classDataBean: ClassApi.Info)
     }
 
-    inner class ThreeClassAdapter(
+    class ThreeClassAdapter(
         val mContext: Context,
         val listener: HdkTwoClassAdapter.OnItemClickListener?
     ) :

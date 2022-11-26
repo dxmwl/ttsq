@@ -3,7 +3,7 @@ package com.shengqianjun.mobile.app
 import android.content.Context
 import android.text.TextUtils
 import androidx.core.content.edit
-import com.shengqianjun.mobile.http.api.HdkClassApi
+import com.shengqianjun.mobile.http.api.ClassApi
 
 /**
  * APP辅助类
@@ -11,7 +11,29 @@ import com.shengqianjun.mobile.http.api.HdkClassApi
 object AppHelper {
 
     //APP分类数据
-    var classData = ArrayList<HdkClassApi.ClassInfo>()
+    var classData = ArrayList<ClassApi.ClassInfo>()
+
+    /**
+     * 1女装，2男装，3内衣，4美妆，5配饰，6鞋品，7箱包，8儿童，9母婴，10居家，11美食，12数码，13家电，14其他，15车品，16文体
+     */
+    var bigClassList = arrayListOf(
+        ClassApi.ClassInfo(cid = "1", main_name = "女装"),
+        ClassApi.ClassInfo(cid = "2", main_name = "男装"),
+        ClassApi.ClassInfo(cid = "3", main_name = "内衣"),
+        ClassApi.ClassInfo(cid = "4", main_name = "美妆"),
+        ClassApi.ClassInfo(cid = "5", main_name = "配饰"),
+        ClassApi.ClassInfo(cid = "6", main_name = "鞋品"),
+        ClassApi.ClassInfo(cid = "7", main_name = "箱包"),
+        ClassApi.ClassInfo(cid = "8", main_name = "儿童"),
+        ClassApi.ClassInfo(cid = "9", main_name = "母婴"),
+        ClassApi.ClassInfo(cid = "10", main_name = "居家"),
+        ClassApi.ClassInfo(cid = "11", main_name = "美食"),
+        ClassApi.ClassInfo(cid = "12", main_name = "数码"),
+        ClassApi.ClassInfo(cid = "13", main_name = "家电"),
+        ClassApi.ClassInfo(cid = "14", main_name = "其他"),
+        ClassApi.ClassInfo(cid = "15", main_name = "车品"),
+        ClassApi.ClassInfo(cid = "16", main_name = "文体"),
+    )
 
     private const val RECENT_SEARCH = "RECENT_SEARCH"
     private const val SEARCH_HISTORY = "SEARCH_HISTORY"

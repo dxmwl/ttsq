@@ -49,7 +49,7 @@ class GoodsDetailActivity : AppActivity() {
         private const val ZTK_CODE: String = "ZTK_CODE"
 
         @Log
-        fun start(mContext: Context, goodsId: String?, ztkCode: String?) {
+        fun start(mContext: Context, goodsId: String?, ztkCode: String ="") {
             val intent = Intent(mContext, GoodsDetailActivity::class.java)
             intent.putExtra(GOODS_ID, goodsId)
             intent.putExtra(ZTK_CODE, ztkCode)

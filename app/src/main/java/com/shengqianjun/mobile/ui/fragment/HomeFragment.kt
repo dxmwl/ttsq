@@ -4,9 +4,12 @@ import android.view.View
 import android.widget.ImageView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import com.hjq.base.FragmentPagerAdapter
 import com.hjq.shape.layout.ShapeRelativeLayout
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.aop.SingleClick
+import com.shengqianjun.mobile.app.AppFragment
+import com.shengqianjun.mobile.app.AppHelper
 import com.shengqianjun.mobile.app.TitleBarFragment
 import com.shengqianjun.mobile.ui.activity.BrowserActivity
 import com.shengqianjun.mobile.ui.activity.HomeActivity
@@ -42,6 +45,18 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
     override fun initView() {
         setOnClickListener(search_view, shengqianbao, btn_shengqian)
 
+        postDelayed(Runnable {
+            home_tab?.setupWithViewPager(home_vp)
+            val homeFragmentAdapter = FragmentPagerAdapter<AppFragment<*>>(this)
+            homeFragmentAdapter.addFragment(RecommendFragment.newInstance(), "推荐")
+            AppHelper.classData.forEach {
+                homeFragmentAdapter.addFragment(
+                    HomeClassGoodsFragment.newInstance(it.data, it.cid),
+                    it.main_name
+                )
+            }
+            home_vp?.adapter = homeFragmentAdapter
+        }, 1000)
     }
 
     override fun initData() {

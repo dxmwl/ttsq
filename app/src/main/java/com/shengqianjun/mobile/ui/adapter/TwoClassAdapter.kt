@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.app.AppAdapter
-import com.shengqianjun.mobile.http.api.HdkClassApi
+import com.shengqianjun.mobile.http.api.ClassApi
 import com.shengqianjun.mobile.http.glide.GlideApp
 import com.shengqianjun.mobile.widget.SpacesItemDecoration
 
@@ -23,7 +23,7 @@ import com.shengqianjun.mobile.widget.SpacesItemDecoration
 class TwoClassAdapter(val listener: ThreeClassAdapter.OnItemClickListener) :
     RecyclerView.Adapter<TwoClassAdapter.TwoClassViewHolder>() {
 
-    private var listData = ArrayList<HdkClassApi.Data>()
+    private var listData = ArrayList<ClassApi.Data>()
 
     inner class TwoClassViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView14: TextView? by lazy { itemView.findViewById(R.id.textView14) }
@@ -54,7 +54,7 @@ class TwoClassAdapter(val listener: ThreeClassAdapter.OnItemClickListener) :
         return listData.size
     }
 
-    fun setData(listData: ArrayList<HdkClassApi.Data>) {
+    fun setData(listData: ArrayList<ClassApi.Data>) {
         this.listData.clear()
         this.listData.addAll(listData)
         notifyDataSetChanged()
@@ -62,14 +62,14 @@ class TwoClassAdapter(val listener: ThreeClassAdapter.OnItemClickListener) :
     }
 
 //    interface OnItemClickListener {
-//        fun onItemClick(classDataBean: HdkClassApi.ClassInfo)
+//        fun onItemClick(classDataBean: ClassApi.ClassInfo)
 //    }
 
     class ThreeClassAdapter(
         val mContext: Context,
         val listener: OnItemClickListener?
     ) :
-        AppAdapter<HdkClassApi.Info>(mContext) {
+        AppAdapter<ClassApi.Info>(mContext) {
 
 
         inner class ViewHolder : AppViewHolder(R.layout.item_three_class) {
@@ -94,7 +94,7 @@ class TwoClassAdapter(val listener: ThreeClassAdapter.OnItemClickListener) :
         }
 
         interface OnItemClickListener {
-            fun onItemClick(classDataBean: HdkClassApi.Info)
+            fun onItemClick(classDataBean: ClassApi.Info)
         }
     }
 }

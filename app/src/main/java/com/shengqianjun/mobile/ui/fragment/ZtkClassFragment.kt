@@ -2,14 +2,12 @@ package com.shengqianjun.mobile.ui.fragment
 
 import android.content.Intent
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.aop.SingleClick
 import com.shengqianjun.mobile.app.AppHelper
 import com.shengqianjun.mobile.app.TitleBarFragment
-import com.shengqianjun.mobile.http.api.HdkClassApi
 import com.shengqianjun.mobile.ui.activity.HomeActivity
 import com.shengqianjun.mobile.ui.activity.SearchActivity
 import com.shengqianjun.mobile.ui.activity.SearchResultActivity
@@ -17,6 +15,7 @@ import com.shengqianjun.mobile.ui.adapter.BigClassAdapter
 import com.shengqianjun.mobile.ui.adapter.TwoClassAdapter
 import com.hjq.base.BaseAdapter
 import com.hjq.shape.view.ShapeTextView
+import com.shengqianjun.mobile.http.api.ClassApi
 import java.util.ArrayList
 
 /**
@@ -95,7 +94,7 @@ class ZtkClassFragment : TitleBarFragment<HomeActivity>(), TwoClassAdapter.Three
         }
     }
 
-    private fun getTwoClassData(childs: ArrayList<HdkClassApi.Data>) {
+    private fun getTwoClassData(childs: ArrayList<ClassApi.Data>) {
         twoClassAdapter.setData(childs)
     }
 
@@ -113,7 +112,7 @@ class ZtkClassFragment : TitleBarFragment<HomeActivity>(), TwoClassAdapter.Three
         return false
     }
 
-    override fun onItemClick(classDataBean: HdkClassApi.Info) {
+    override fun onItemClick(classDataBean: ClassApi.Info) {
         val intent = Intent(getAttachActivity(), SearchResultActivity::class.java)
         intent.putExtra("KEYWORD", classDataBean.son_name)
         startActivity(intent)

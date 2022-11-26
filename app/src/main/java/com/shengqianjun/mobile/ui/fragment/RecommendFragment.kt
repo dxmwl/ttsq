@@ -1,6 +1,5 @@
 package com.shengqianjun.mobile.ui.fragment
 
-import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,10 +14,8 @@ import com.shengqianjun.mobile.http.api.HomeCainixihuanApi
 import com.shengqianjun.mobile.http.api.HomeGoodsListApi
 import com.shengqianjun.mobile.http.model.HttpData
 import com.shengqianjun.mobile.http.model.MenuDto
-import com.shengqianjun.mobile.other.AppConfig
 import com.shengqianjun.mobile.ui.activity.BrowserActivity
 import com.shengqianjun.mobile.ui.activity.HomeActivity
-import com.shengqianjun.mobile.ui.activity.SearchResultActivity
 import com.shengqianjun.mobile.ui.activity.ShengqianbaoActivity
 import com.shengqianjun.mobile.ui.adapter.BannerAdapter
 import com.shengqianjun.mobile.ui.adapter.HomeMenuListAdapter
@@ -26,13 +23,20 @@ import com.shengqianjun.mobile.ui.adapter.SearchGoodsListAdapter
 import com.umeng.commonsdk.UMConfigure
 import com.youth.banner.Banner
 
-class RecommendFragment: AppFragment<HomeActivity>() {
+class RecommendFragment : AppFragment<HomeActivity>() {
 
     private val banner: Banner<HomeBannerApi.BannerBean, BannerAdapter>? by lazy { findViewById(R.id.banner) }
     private val menuList: RecyclerView? by lazy { findViewById(R.id.menu_list) }
     private var homeGoodsListAdapter: SearchGoodsListAdapter? = null
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
+
+    companion object {
+
+        fun newInstance(): RecommendFragment {
+            return RecommendFragment()
+        }
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_recommend
@@ -45,26 +49,61 @@ class RecommendFragment: AppFragment<HomeActivity>() {
         }
         menuList?.let {
             val arrayListOf = arrayListOf(
-                MenuDto(id = "1", resId = R.drawable.icon_nvzhuang, title = "女装"),
-                MenuDto(id = "2", resId = R.drawable.icon_nanzhuang, title = "男装"),
-                MenuDto(id = "3", resId = R.drawable.icon_shenghuo, title = "生活用品"),
-                MenuDto(id = "4", resId = R.drawable.icon_neiyi, title = "内衣"),
-                MenuDto(id = "5", resId = R.drawable.icon_shipin, title = "食品"),
-                MenuDto(id = "6", resId = R.drawable.icon_shengqianbao, title = "省钱宝"),
+                MenuDto(
+                    id = "1",
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081206_73798",
+                    title = "饿了么",
+                    value = "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2#/propaganda?id=116"
+                ),
+                MenuDto(
+                    id = "2",
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1639987106_638617",
+                    title = "抖音好货",
+                    value = "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2#/inside-page/dylist"
+                ),
+                MenuDto(
+                    id = "3",
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1648537480_628688",
+                    title = "百亿补贴",
+                    value = "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2#/propaganda?id=4"
+                ),
+                MenuDto(
+                    id = "4",
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081152_7799",
+                    title = "福利线报",
+                    value = "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2&tmp=rt_xb&code=Ymg7Vc2&sp=#/sp"
+                ),
+                MenuDto(
+                    id = "5",
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081228_51540",
+                    title = "聚划算",
+                    value = "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2&tmp=juhuasuan&code=Ymg7Vc2&sp=#/sp"
+                ),
+                MenuDto(
+                    id = "6",
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624203264_377314",
+                    title = "9.9包邮",
+                    value = "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2&tmp=lowprice&code=Ymg7Vc2&sp=#/sp"
+                ),
                 MenuDto(
                     id = "7",
-                    resId = R.drawable.icon_baoyou,
-                    title = "9.9包邮",
-                    value = "http://cms.xeemm.com:10000/jiudianjiu.aspx?id=27660&sid=&relationId="
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1636017658_700397",
+                    title = "生活必需品",
+                    value = "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2&tmp=activity125&code=Ymg7Vc2&sp=#/sp"
                 ),
                 MenuDto(
                     id = "8",
-                    resId = R.drawable.icon_jingxuan,
-                    title = "每日精选",
-                    value = "http://cms.xeemm.com:10000/jingxuan.aspx?id=27660&sid=&relationId="
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081329_908029",
+                    title = "热销专场",
+                    value = "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2&tmp=hot_sale&code=Ymg7Vc2&sp=#/sp"
                 ),
-                MenuDto(id = "9", resId = R.drawable.icon_xiezi, title = "鞋品"),
-                MenuDto(id = "10", resId = R.drawable.icon_shuma, title = "数码")
+                MenuDto(id = "9", resId = R.drawable.icon_shengqianbao, title = "省钱宝"),
+                MenuDto(
+                    id = "10",
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624203252_511524",
+                    title = "防疫专区",
+                    value = "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2&tmp=fangyi&code=Ymg7Vc2&sp=#/sp"
+                )
             )
             it.layoutManager = GridLayoutManager(context, 5)
             val homeMenuListAdapter = context?.let { it1 -> HomeMenuListAdapter(it1) }
@@ -76,18 +115,12 @@ class RecommendFragment: AppFragment<HomeActivity>() {
                 ) {
                     val menuDto = arrayListOf[position]
                     when (menuDto.id) {
-                        "1", "2", "3", "4", "5", "9", "10" -> {
-                            val intent = Intent(requireContext(), SearchResultActivity::class.java)
-                            intent.putExtra("KEYWORD", menuDto.title)
-                            startActivity(intent)
-                        }
-                        "6" -> {
+                        "9" -> {
                             startActivity(ShengqianbaoActivity::class.java)
                         }
-                        "8", "7" -> {
+                        else -> {
                             BrowserActivity.start(requireContext(), menuDto.value.toString())
                         }
-                        else -> {}
                     }
                 }
 
