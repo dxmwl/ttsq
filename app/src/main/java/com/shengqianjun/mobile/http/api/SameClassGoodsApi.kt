@@ -10,9 +10,9 @@ import com.hjq.http.config.IRequestApi
  */
 class SameClassGoodsApi : IRequestApi {
     override fun getApi(): String {
-        return "api/open_item_guess_like.ashx"
+        return "get_similar_info"
     }
 
     //商品ID
-    var item_id: String = ""
+    var itemid: String = ""
 }

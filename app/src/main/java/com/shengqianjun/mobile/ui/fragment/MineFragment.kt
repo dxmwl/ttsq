@@ -126,7 +126,7 @@ class MineFragment : TitleBarFragment<HomeActivity>() {
                     if (pageIndex == 1) {
                         homeGoodsListAdapter?.clearData()
                     }
-                    homeGoodsListAdapter?.addData(result?.getData())
+//                    homeGoodsListAdapter?.addData(result?.getData())
                 }
 
                 override fun onFail(e: Exception?) {

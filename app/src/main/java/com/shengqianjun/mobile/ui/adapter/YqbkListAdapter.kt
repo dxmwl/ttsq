@@ -186,13 +186,13 @@ class YqbkListAdapter(val mContext: Context) : AppAdapter<YqbkApi.YqbkGoodsInfo>
      * @param type : 1,跳转淘宝  2:复制口令  3:分享图片
      */
     private fun getGaoyongUrl(taoId: String,type:Int) {
-        EasyHttp.get(ApplicationLifecycle())
+        EasyHttp.post(ApplicationLifecycle())
             .api(GetLingquanUrlApi().apply {
-                num_iid = taoId
+                itemid = taoId
             })
             .request(object :
-                OnHttpListener<HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlBean>>> {
-                override fun onSucceed(result: HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlBean>>?) {
+                OnHttpListener<HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlDto>>> {
+                override fun onSucceed(result: HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlDto>>?) {
                     val url = result?.getData()?.get(0)?.coupon_click_url.toString()
                     if (type==1){
                         if (AppUtils.isAppInstalled("com.taobao.taobao")) {

@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.app.AppAdapter
-import com.shengqianjun.mobile.http.api.HomeGoodsListApi
 import com.shengqianjun.mobile.http.glide.GlideApp
+import com.shengqianjun.mobile.http.model.GoodsDetailDto
 import com.shengqianjun.mobile.ui.activity.GoodsDetailActivity
 
 /**
@@ -18,7 +18,7 @@ import com.shengqianjun.mobile.ui.activity.GoodsDetailActivity
  * @time : 2022/6/23
  */
 class SearchGoodsListAdapter(val mContext: Context) :
-    AppAdapter<HomeGoodsListApi.GoodsBean>(mContext) {
+    AppAdapter<GoodsDetailDto>(mContext) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
         return ViewHolder()
     }
@@ -35,45 +35,24 @@ class SearchGoodsListAdapter(val mContext: Context) :
         override fun onBindView(position: Int) {
             val goodsBean = getItem(position)
             if (goodsImg != null) {
-                val pictUrl = goodsBean.pict_url
+                val pictUrl = goodsBean.itempic
                 if (pictUrl.startsWith("http") || pictUrl.startsWith("https")) {
                     GlideApp.with(mContext).load(pictUrl).into(goodsImg)
                 } else {
                     GlideApp.with(mContext).load("https://${pictUrl}").into(goodsImg)
                 }
             }
-            goodsName?.text = goodsBean.title
+            goodsName?.text = goodsBean.itemtitle
 
             //券后价
-            val quanhouJiage = goodsBean.quanhou_jiage
-            if (quanhouJiage.isNullOrBlank()) {
-                quanhoujia?.text = "${goodsBean.zk_final_price.subtract(goodsBean.coupon_amount)}"
-            } else {
-                quanhoujia?.text = "${quanhouJiage}"
-            }
+            quanhoujia?.text = "${goodsBean.itemendprice}"
             //原价
-            val size = goodsBean.size
-            if (size.isNullOrBlank()) {
-                yuanjia?.text = "￥${goodsBean.zk_final_price}"
-            } else {
-                yuanjia?.text = "￥${size}"
-
-            }
+            yuanjia?.text = "￥${goodsBean.itemprice}"
             yuanjia?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
-            monthlySales?.text = "月销量 ${goodsBean.volume}"
-            val couponInfoMoney = goodsBean.coupon_info_money
-            if (couponInfoMoney.isNullOrBlank()) {
-                yhqPrice?.text = "${goodsBean.coupon_amount}元券"
-            } else {
-                yhqPrice?.text = "${couponInfoMoney}元券"
-            }
+            monthlySales?.text = "月销量 ${goodsBean.itemsale}"
+            yhqPrice?.text = "${goodsBean.couponmoney}元券"
             getItemView().setOnClickListener {
-                val taoId = goodsBean.tao_id
-                if (taoId.isNullOrBlank()) {
-                    GoodsDetailActivity.start(mContext, goodsBean.item_id, goodsBean.code)
-                } else {
-                    GoodsDetailActivity.start(mContext, taoId, goodsBean.code)
-                }
+                GoodsDetailActivity.start(mContext, goodsBean.itemid)
             }
         }
     }

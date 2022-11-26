@@ -234,6 +234,7 @@
                     android:background="#F2F2F2" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/shop_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

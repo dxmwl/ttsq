@@ -195,7 +195,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                         if (pageIndex == 1) {
                             homeGoodsListAdapter?.clearData()
                         }
-                        homeGoodsListAdapter?.addData(result?.getData()?.result_list?.map_data)
+//                        homeGoodsListAdapter?.addData(result?.getData()?.result_list?.map_data)
                     }
 
                     override fun onFail(e: Exception?) {
@@ -220,7 +220,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                     if (pageIndex == 1) {
                         homeGoodsListAdapter?.clearData()
                     }
-                    homeGoodsListAdapter?.addData(result?.getData())
+//                    homeGoodsListAdapter?.addData(result?.getData())
                 }
 
                 override fun onFail(e: Exception?) {

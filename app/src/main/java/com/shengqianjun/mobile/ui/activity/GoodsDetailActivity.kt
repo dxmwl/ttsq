@@ -30,6 +30,7 @@ import com.shengqianjun.mobile.ui.dialog.ShareDialog
 import com.shengqianjun.mobile.utils.FormatUtils
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
+import com.shengqianjun.mobile.http.model.GoodsDetailDto
 import com.umeng.socialize.media.UMWeb
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnPageChangeListener
@@ -125,13 +126,12 @@ class GoodsDetailActivity : AppActivity() {
 
         EasyHttp.get(this)
             .api(GoodsDetailApi().apply {
-                tao_id = getString(GOODS_ID).toString()
-                code = getString(ZTK_CODE).toString()
+                itemid = getString(GOODS_ID).toString()
             })
-            .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
-                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
-                    initGoodsInfo(result?.getData()?.get(0))
-                    getSameClassGoods(result?.getData()?.get(0)?.tao_id)
+            .request(object : OnHttpListener<HttpData<GoodsDetailDto>> {
+                override fun onSucceed(result: HttpData<GoodsDetailDto>?) {
+                    initGoodsInfo(result?.getData())
+                    getSameClassGoods(result?.getData()?.itemid)
                 }
 
                 override fun onFail(e: Exception?) {
@@ -146,10 +146,10 @@ class GoodsDetailActivity : AppActivity() {
     private fun getSameClassGoods(taoId: String?) {
         EasyHttp.get(this)
             .api(SameClassGoodsApi().apply {
-                item_id = taoId.toString()
+                itemid = taoId.toString()
             })
-            .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
-                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
+            .request(object : OnHttpListener<HttpData<ArrayList<GoodsDetailDto>>> {
+                override fun onSucceed(result: HttpData<ArrayList<GoodsDetailDto>>?) {
                     goodsListAdapter.addData(result?.getData())
                 }
 
@@ -179,18 +179,19 @@ class GoodsDetailActivity : AppActivity() {
      * 获取领券地址
      */
     private fun getLingquanUrl(needShare: Boolean = false) {
-        EasyHttp.get(this)
+        EasyHttp.post(this)
             .api(GetLingquanUrlApi().apply {
-                num_iid = getString(GOODS_ID).toString()
+                itemid = getString(GOODS_ID).toString()
+                title = goodsInfoData?.itemtitle.toString()
             })
             .request(object :
-                OnHttpListener<HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlBean>>> {
-                override fun onSucceed(result: HttpData<ArrayList<GetLingquanUrlApi.LingquanUrlBean>>?) {
+                OnHttpListener<HttpData<GetLingquanUrlApi.LingquanUrlDto>> {
+                override fun onSucceed(result: HttpData<GetLingquanUrlApi.LingquanUrlDto>?) {
                     if (needShare) {
                         ShareDialog.Builder(this@GoodsDetailActivity)
                             .setShareLink(
                                 UMWeb(
-                                    result?.getData()?.get(0)?.coupon_click_url.toString()
+                                    result?.getData()?.coupon_click_url.toString()
                                 )
                             )
                             .show()
@@ -201,7 +202,7 @@ class GoodsDetailActivity : AppActivity() {
                         val intent = Intent()
                         intent.setAction("Android.intent.action.VIEW");
                         val uri = Uri.parse(
-                            result?.getData()?.get(0)?.coupon_click_url.toString()
+                            result?.getData()?.coupon_click_url.toString()
                         ); // 商品地址
                         intent.setData(uri);
                         intent.setClassName(
@@ -213,7 +214,7 @@ class GoodsDetailActivity : AppActivity() {
                     } else {
                         BrowserActivity.start(
                             this@GoodsDetailActivity,
-                            result?.getData()?.get(0)?.coupon_click_url.toString()
+                            result?.getData()?.coupon_click_url.toString()
                         )
                     }
                 }
@@ -227,29 +228,31 @@ class GoodsDetailActivity : AppActivity() {
 
     private var bannerList = 1
 
+    private var goodsInfoData : GoodsDetailDto? = null
     /**
      * 设置商品信息
      */
-    private fun initGoodsInfo(goodsInfo: HomeGoodsListApi.GoodsBean?) {
-        goods_title?.text = goodsInfo?.title
-        goods_price?.text = goodsInfo?.quanhou_jiage
-        yh_str?.text = "省${goodsInfo?.coupon_info_money}元"
-        yhq_jine?.text = goodsInfo?.coupon_info_money
-        start_time?.text = "${goodsInfo?.coupon_start_time}"
-        end_time?.text = "${goodsInfo?.coupon_end_time}"
-        yhje_str?.text = goodsInfo?.coupon_info
-        yuanjia?.text = goodsInfo?.size
+    private fun initGoodsInfo(goodsInfo: GoodsDetailDto?) {
+        goodsInfoData= goodsInfo
+        goods_title?.text = goodsInfo?.itemtitle
+        goods_price?.text = goodsInfo?.itemendprice
+        yh_str?.text = "省${goodsInfo?.couponmoney}元"
+        yhq_jine?.text = goodsInfo?.couponmoney
+        start_time?.text = "${goodsInfo?.couponstarttime}"
+        end_time?.text = "${goodsInfo?.couponendtime}"
+        yhje_str?.text = goodsInfo?.couponinfo
+        yuanjia?.text = goodsInfo?.itemprice
         yuanjia?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
-        FormatUtils.formatSales(buy_num, goodsInfo?.volume)
-        shop_logo?.let { GlideApp.with(this).load(goodsInfo?.shopIcon).into(it) }
-        shop_name?.text = goodsInfo?.shop_title
-        num_bbms?.text = goodsInfo?.score1
-        num_mjfw?.text = goodsInfo?.score2
-        num_wlfw?.text = goodsInfo?.score3
+        FormatUtils.formatSales(buy_num, goodsInfo?.itemsale)
+//        shop_logo?.let { GlideApp.with(this).load(goodsInfo?.shopIcon).into(it) }
+//        shop_name?.text = goodsInfo?.shop_title
+//        num_bbms?.text = goodsInfo?.score1
+//        num_mjfw?.text = goodsInfo?.score2
+//        num_wlfw?.text = goodsInfo?.score3
 
         val imgList = ArrayList<String>()
-        goodsInfo?.small_images?.split("|")?.forEachIndexed { index, s ->
-            imgList.add(s)
+        goodsInfo?.taobao_image?.split(",")?.forEachIndexed { index, s ->
+            imgList.add("${s}")
             val imageView = ImageView(this)
             val params = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -267,7 +270,7 @@ class GoodsDetailActivity : AppActivity() {
         bannerList = imgList.size
         banner?.setAdapter(GoodsDetailBannerAdapter(imgList))
 
-        if (goodsInfo?.coupon_info_money == "0" || goodsInfo?.coupon_info_money == "0.0" || goodsInfo?.coupon_info_money == "0.00") {
+        if (goodsInfo?.couponmoney == "0" || goodsInfo?.couponmoney == "0.0" || goodsInfo?.couponmoney == "0.00") {
             llYhq?.visibility = View.GONE
             llYh?.visibility = View.GONE
             yhStr?.visibility = View.GONE
