@@ -29,9 +29,9 @@ class BangdanFragment : TitleBarFragment<HomeActivity>() {
     }
 
     override fun initView() {
-        arrayListOf("实时热销榜","全天热销榜").forEach {
-            bangdan_tablayout?.newTab()?.setText(it)?.let { it1 -> bangdan_tablayout?.addTab(it1) }
-        }
+//        arrayListOf("实时热销榜","全天热销榜").forEach {
+//            bangdan_tablayout?.newTab()?.setText(it)?.let { it1 -> bangdan_tablayout?.addTab(it1) }
+//        }
         val pageAdapter = FragmentPagerAdapter<AppFragment<*>>(this)
         pageAdapter.addFragment(BangdanVpFragment.newInstance(1),"实时热销榜")
         pageAdapter.addFragment(BangdanVpFragment.newInstance(2),"全天热销榜")

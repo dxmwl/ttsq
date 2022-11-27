@@ -1,22 +1,14 @@
 package com.shengqianjun.mobile.ui.fragment
 
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
+import com.hjq.base.FragmentPagerAdapter
 import com.shengqianjun.mobile.R
+import com.shengqianjun.mobile.app.AppFragment
 import com.shengqianjun.mobile.app.TitleBarFragment
-import com.shengqianjun.mobile.http.api.HomeGoodsListApi
-import com.shengqianjun.mobile.http.api.QuantianBangdanApi
-import com.shengqianjun.mobile.http.api.ShishiBangdanApi
-import com.shengqianjun.mobile.http.model.HttpData
 import com.shengqianjun.mobile.ui.activity.HomeActivity
 import com.shengqianjun.mobile.ui.activity.SettingActivity
-import com.shengqianjun.mobile.ui.adapter.BangdanGoodsListAdapter
-import com.shengqianjun.mobile.ui.adapter.SearchGoodsListAdapter
-import com.hjq.http.EasyHttp
-import com.hjq.http.listener.OnHttpListener
-import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 /**
  *    author : Android 轮子哥
@@ -33,113 +25,34 @@ class MineFragment : TitleBarFragment<HomeActivity>() {
         }
     }
 
-    private var homeGoodsListAdapter: SearchGoodsListAdapter? = null
-    private var homeGoodsListAdapterShishi: BangdanGoodsListAdapter? = null
-    private var homeGoodsListAdapterQuantian: BangdanGoodsListAdapter? = null
-    private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
-    private val goods_list_shishi: RecyclerView? by lazy { findViewById(R.id.goods_list_shishi) }
-    private val goods_list_quantian: RecyclerView? by lazy { findViewById(R.id.goods_list_quantian) }
-    private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
+    private val bangdan_tablayout: TabLayout? by lazy { findViewById(R.id.bangdan_tablayout) }
+    private val bangdan_vp: ViewPager? by lazy { findViewById(R.id.bangdan_vp) }
 
     override fun getLayoutId(): Int {
         return R.layout.mine_fragment
     }
 
     override fun initView() {
-        goodsList?.let {
-            it.layoutManager = GridLayoutManager(context, 2)
-            homeGoodsListAdapter = context?.let { it1 -> SearchGoodsListAdapter(it1) }
-            it.adapter = homeGoodsListAdapter
-        }
-
-        goods_list_shishi?.let {
-            it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            homeGoodsListAdapterShishi = context?.let { it1 -> BangdanGoodsListAdapter(it1) }
-            it.adapter = homeGoodsListAdapterShishi
-        }
-        goods_list_quantian?.let {
-            it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            homeGoodsListAdapterQuantian = context?.let { it1 -> BangdanGoodsListAdapter(it1) }
-            it.adapter = homeGoodsListAdapterQuantian
-        }
-
-        refresh?.setOnRefreshListener {
-            pageIndex = 1
-            getGoodsList()
-        }
-        refresh?.setOnLoadMoreListener {
-            pageIndex++
-            getGoodsList()
-        }
+        setOnClickListener(R.id.btn_setting)
+        val pageAdapter = FragmentPagerAdapter<AppFragment<*>>(this)
+        pageAdapter.addFragment(PyqFragment.newInstance(), "朋友圈")
+        pageAdapter.addFragment(BangdanVpFragment.newInstance(2), "好货专场")
+        pageAdapter.addFragment(BangdanVpFragment.newInstance(2), "达人说")
+        bangdan_vp?.adapter = pageAdapter
+        bangdan_tablayout?.setupWithViewPager(bangdan_vp)
     }
-
-    private var pageIndex = 1
 
     override fun initData() {
-        getGoodsList()
-        getGoodsListShishi()
-        getGoodsListQuantian()
     }
 
-    private fun getGoodsListQuantian() {
-        EasyHttp.get(this)
-            .api(QuantianBangdanApi())
-            .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
-                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
-                    homeGoodsListAdapterQuantian?.setData(result?.getData())
-                }
-
-                override fun onFail(e: java.lang.Exception?) {
-                    toast(e?.message)
-                }
-
-            })
-    }
-
-    private fun getGoodsListShishi() {
-        EasyHttp.get(this)
-            .api(ShishiBangdanApi())
-            .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
-                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
-                    homeGoodsListAdapterShishi?.setData(result?.getData())
-                }
-
-                override fun onFail(e: java.lang.Exception?) {
-                    toast(e?.message)
-                }
-
-            })
-    }
-
-    /**
-     * 获取商品列表
-     */
-    private fun getGoodsList() {
-        EasyHttp.get(this)
-            .api(HomeGoodsListApi().apply {
-                page = pageIndex
-            })
-            .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
-                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
-                    refresh?.finishRefresh()
-                    refresh?.finishLoadMore()
-                    if (pageIndex == 1) {
-                        homeGoodsListAdapter?.clearData()
-                    }
-//                    homeGoodsListAdapter?.addData(result?.getData())
-                }
-
-                override fun onFail(e: Exception?) {
-                    refresh?.finishRefresh()
-                    refresh?.finishLoadMore()
-                    toast(e?.message)
-                }
-            })
-    }
-
-    override fun onRightClick(view: View) {
-        super.onRightClick(view)
-        startActivity(SettingActivity::class.java)
+    override fun onClick(view: View) {
+        super.onClick(view)
+        when (view.id) {
+            R.id.btn_setting -> {
+                startActivity(SettingActivity::class.java)
+            }
+            else -> {}
+        }
     }
 
     override fun isStatusBarEnabled(): Boolean {
