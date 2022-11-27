@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.hjq.shape.view.ShapeTextView
 import com.hjq.toast.ToastUtils
@@ -40,17 +41,12 @@ class XsqgGoodsAdapter(val mContext: Context, val type: Int = 1) :
         private val tips = findViewById<TextView>(R.id.tips)
         private val sale_num = findViewById<TextView>(R.id.sale_num)
         private val go_buy = findViewById<ShapeTextView>(R.id.go_buy)
+        private val progress = findViewById<ProgressBar>(R.id.progress)
 
         override fun onBindView(position: Int) {
             val goodsBean = getItem(position)
 
-            if (type == 1) {
-                tips?.text = "近两小时已抢"
-                sale_num?.text = goodsBean.itemsale2
-            } else {
-                tips?.text = "今日已抢"
-                sale_num?.text = goodsBean.todaysale
-            }
+            sale_num?.text = "${goodsBean.virtual_sum}"
             paiming?.text = "${position + 1}"
 
 
@@ -78,6 +74,7 @@ class XsqgGoodsAdapter(val mContext: Context, val type: Int = 1) :
 
             when (goodsBean.grab_type) {
                 1 -> {
+                    progress?.progress = 0
                     go_buy?.text = "即将开抢"
                     go_buy?.shapeDrawableBuilder
                         ?.setSolidColor(Color.parseColor("#B5B5B5"))
@@ -85,6 +82,7 @@ class XsqgGoodsAdapter(val mContext: Context, val type: Int = 1) :
                         ?.intoBackground();
                 }
                 2 -> {
+                    progress?.progress = 100
                     go_buy?.text = "已抢光"
                     go_buy?.shapeDrawableBuilder
                         ?.setSolidColor(Color.parseColor("#B5B5B5"))
@@ -92,6 +90,11 @@ class XsqgGoodsAdapter(val mContext: Context, val type: Int = 1) :
                         ?.intoBackground();
                 }
                 3 -> {
+                    var i = goodsBean.virtual_sum % 100
+                    if (i == 0) {
+                        i = 50
+                    }
+                    progress?.progress = i
                     go_buy?.text = "马上抢"
                     go_buy?.shapeDrawableBuilder
                         ?.setSolidColor(Color.parseColor("#FF0000"))
@@ -106,7 +109,7 @@ class XsqgGoodsAdapter(val mContext: Context, val type: Int = 1) :
                     GoodsDetailActivity.start(mContext, goodsBean.itemid)
                 } else if (goodsBean.grab_type == 2) {
                     ToastUtils.show("快抢已结束")
-                }else{
+                } else {
                     ToastUtils.show("快抢即将开始")
                 }
             }

@@ -25,36 +25,38 @@
         </androidx.cardview.widget.CardView>
 
         <com.hjq.shape.layout.ShapeLinearLayout
-            android:elevation="@dimen/dp_2"
-            android:orientation="vertical"
-            app:shape_solidColor="@color/red"
-            app:shape_radius="@dimen/dp_5"
-            android:gravity="center_horizontal"
-            android:paddingTop="@dimen/dp_2"
-            android:paddingVertical="@dimen/dp_5"
-            android:paddingHorizontal="@dimen/dp_5"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_8"
-            android:layout_height="wrap_content">
+            android:elevation="@dimen/dp_2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:paddingVertical="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_2"
+            app:shape_radius="@dimen/dp_5"
+            app:shape_solidColor="@color/red">
+
             <TextView
-                android:textSize="@dimen/sp_8"
-                android:textColor="@color/white"
-                android:text="TOP"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="TOP"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8" />
 
             <View
-                android:background="@color/white"
                 android:layout_width="@dimen/dp_15"
-                android:layout_height="0.5dp"/>
+                android:layout_height="0.5dp"
+                android:background="@color/white" />
+
             <TextView
                 android:id="@+id/paiming"
-                android:textStyle="bold"
-                android:textSize="@dimen/sp_10"
-                android:textColor="@color/white"
-                android:text="1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10"
+                android:textStyle="bold" />
         </com.hjq.shape.layout.ShapeLinearLayout>
     </RelativeLayout>
 
@@ -85,12 +87,12 @@
             android:layout_marginTop="@dimen/dp_10"
             android:paddingHorizontal="@dimen/dp_5"
             android:paddingVertical="@dimen/dp_2"
+            android:text="限时秒杀"
             android:textColor="@color/red"
             android:textSize="@dimen/sp_12"
             app:shape_radius="@dimen/dp_10"
             app:shape_strokeColor="@color/red"
-            app:shape_strokeWidth="0.5dp"
-            android:text="限时秒杀" />
+            app:shape_strokeWidth="0.5dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,54 +170,76 @@
                 tools:text="店铺" />
         </LinearLayout>
 
-        <com.hjq.shape.layout.ShapeLinearLayout
-            app:shape_startColor="#FFE5B9"
-            app:shape_endColor="#F48F36"
+        <LinearLayout
             android:layout_marginTop="@dimen/dp_5"
-            android:paddingStart="@dimen/dp_10"
-            app:shape_radius="@dimen/dp_3"
             android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_20">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tips"
-                android:textColor="#953B00"
-                android:textSize="@dimen/sp_8"
-                android:text="近两小时已抢"
+            <ImageView
+                android:src="@drawable/kq_icon_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_marginEnd="@dimen/dp_10"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:max="100"
+                android:progressDrawable="@drawable/layer_list_lesson_progress_bar"
+                android:layout_height="@dimen/dp_5"/>
 
-            <TextView
-                android:id="@+id/sale_num"
-                android:textColor="#953B00"
-                android:textSize="@dimen/sp_12"
-                android:text="10"
-                android:textStyle="bold"
+            <com.hjq.shape.layout.ShapeLinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:textColor="#953B00"
-                android:textSize="@dimen/sp_8"
-                android:text="件"
-                android:layout_marginEnd="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="@dimen/dp_20"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_10"
+                app:shape_endColor="#F48F36"
+                app:shape_radius="@dimen/dp_3"
+                app:shape_startColor="#FFE5B9">
 
-            <com.hjq.shape.view.ShapeTextView
-                android:text="马上抢"
-                android:id="@+id/go_buy"
-                app:shape_topRightRadius="@dimen/dp_3"
-                app:shape_bottomRightRadius="3dp"
-                app:shape_solidColor="@color/red"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="@dimen/sp_12"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/dp_10"
-                android:layout_height="match_parent"/>
-        </com.hjq.shape.layout.ShapeLinearLayout>
+                <TextView
+                    android:id="@+id/tips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已抢"
+                    android:textColor="#953B00"
+                    android:textSize="@dimen/sp_8" />
+
+                <TextView
+                    android:id="@+id/sale_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textColor="#953B00"
+                    android:textSize="@dimen/sp_12"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="件"
+                    android:textColor="#953B00"
+                    android:textSize="@dimen/sp_8" />
+
+                <com.hjq.shape.view.ShapeTextView
+                    android:id="@+id/go_buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/dp_10"
+                    android:text="马上抢"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    android:textStyle="bold"
+                    app:shape_bottomRightRadius="3dp"
+                    app:shape_solidColor="@color/red"
+                    app:shape_topRightRadius="@dimen/dp_3" />
+            </com.hjq.shape.layout.ShapeLinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
