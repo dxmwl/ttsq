@@ -35,16 +35,20 @@
                     android:id="@+id/bangdan_tablayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:tabIndicatorFullWidth="false" />
+                    android:background="@color/white"
+                    app:tabIndicatorColor="@color/red"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/red" />
 
                 <ImageView
                     android:id="@+id/btn_setting"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/icon_setting"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:src="@drawable/icon_setting" />
             </RelativeLayout>
 
             <androidx.viewpager.widget.ViewPager

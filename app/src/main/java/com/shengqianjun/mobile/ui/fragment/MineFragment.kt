@@ -37,7 +37,7 @@ class MineFragment : TitleBarFragment<HomeActivity>() {
         val pageAdapter = FragmentPagerAdapter<AppFragment<*>>(this)
         pageAdapter.addFragment(PyqFragment.newInstance(), "朋友圈")
         pageAdapter.addFragment(BangdanVpFragment.newInstance(2), "好货专场")
-        pageAdapter.addFragment(BangdanVpFragment.newInstance(2), "达人说")
+        pageAdapter.addFragment(DarenshuoFragment.newInstance(), "达人说")
         bangdan_vp?.adapter = pageAdapter
         bangdan_tablayout?.setupWithViewPager(bangdan_vp)
     }
