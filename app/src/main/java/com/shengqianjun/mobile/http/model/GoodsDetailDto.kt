@@ -70,7 +70,8 @@ data class GoodsDetailDto(
     val total_num: Int,
     val userid: String,
     val videoid: String,
-    val xid: String
+    val xid: String,
+    val grab_type: Int
 )
 
 data class ShopScore(

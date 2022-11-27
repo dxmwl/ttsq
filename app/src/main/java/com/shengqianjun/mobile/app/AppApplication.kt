@@ -24,8 +24,13 @@ import com.hjq.gson.factory.GsonFactory
 import com.hjq.http.EasyConfig
 import com.hjq.toast.ToastUtils
 import com.hjq.umeng.UmengClient
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.FormatStrategy
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.shengqianjun.mobile.BuildConfig
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import okhttp3.OkHttpClient
@@ -162,6 +167,19 @@ class AppApplication : Application() {
                     }
                 })
             }
+
+            val formatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(true) //（可选）是否显示线程信息。 默认值为true
+                .methodCount(2) // （可选）要显示的方法行数。 默认2
+                .methodOffset(7) // （可选）设置调用堆栈的函数偏移值，0的话则从打印该Log的函数开始输出堆栈信息，默认是0
+                .tag("SQJ") //（可选）每个日志的全局标记。 默认PRETTY_LOGGER（如上图）
+                .build()
+
+            Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
+                override fun isLoggable(priority: Int, tag: String?): Boolean {
+                    return BuildConfig.DEBUG
+                }
+            })
         }
 
         private lateinit var _context:Application

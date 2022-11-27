@@ -1,46 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hjq.shape.layout.ShapeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    app:shape_angle="-90"
+    app:shape_centerColor="#FF9696"
+    app:shape_endColor="#fff"
+    app:shape_startColor="@color/red"
     tools:context="com.shengqianjun.mobile.ui.fragment.YqbkFragment">
 
-    <com.hjq.bar.TitleBar
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:leftIcon="@null"
-        app:title="@string/home_nav_message" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/dp_100"
+        android:layout_marginTop="@dimen/dp_40"
+        android:src="@drawable/kuaiqiang_img1" />
 
-    <com.easywidgets.tablayout.EasyTabLayout
-        android:id="@+id/tab_yqbk"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tl_indicator_color="#FC383E"
-        app:tl_indicator_corner_radius="2dp"
-        app:tl_indicator_height="3dp"
-        app:tl_indicator_margin_bottom="3dp"
-        app:tl_indicator_width="22dp"
-        app:tl_textSelectColor="#FC383E"
-        app:tl_textSelectSize="18sp"
-        app:tl_textUnselectColor="#333333"
-        app:tl_textsize="16sp" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_10"
+        android:src="@drawable/kq_img2" />
 
-    <View
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#EEEEEE" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:src="@drawable/kq_desc" />
 
-    <RelativeLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_yqbk"
+        <com.hjq.shape.layout.ShapeLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:shape_solidColor="@color/white"
+            app:shape_topLeftRadius="@dimen/dp_10"
+            app:shape_topRightRadius="10dp">
 
-</LinearLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/time_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                app:tabIndicator="@null"
+                app:tabMode="scrollable" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/goods_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_xsqg_goods" />
+        </com.hjq.shape.layout.ShapeLinearLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+</com.hjq.shape.layout.ShapeLinearLayout>

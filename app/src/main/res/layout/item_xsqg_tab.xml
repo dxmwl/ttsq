@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="11dp"
+    android:background="@drawable/selector_xsqg_time_tab_color"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="13dp"
+    android:paddingTop="6dp"
+    android:paddingRight="13dp"
+    android:paddingBottom="6dp">
+
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/tab_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="09:00"
+        android:textColor="@color/selector_tab_tv_color"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tab_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已开抢"
+        android:textColor="@color/selector_tab_tv_color"
+        android:textSize="14sp" />
+</LinearLayout>
