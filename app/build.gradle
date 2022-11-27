@@ -1,7 +1,7 @@
-apply plugin : 'com.android.application'
-apply plugin : 'android-aspectjx'
-apply plugin : 'kotlin-kapt'
-apply from : '../common.gradle'
+apply plugin: 'com.android.application'
+apply plugin: 'android-aspectjx'
+apply plugin: 'kotlin-kapt'
+apply from: '../common.gradle'
 apply plugin: 'kotlin-parcelize'
 
 // Android 代码规范文档：https://github.com/getActivity/AndroidCodeStandard
@@ -65,7 +65,7 @@ android {
             signingConfig signingConfigs.config
             // 添加清单占位符
             addManifestPlaceholders([
-                    'app_name'    :    '省钱君 Debug 版'
+                    'app_name': '省钱君 Debug 版'
             ])
             // 调试模式下只保留一种架构的 so 库，提升打包速度
             ndk {
@@ -78,7 +78,7 @@ android {
             applicationIdSuffix ''
             // 添加清单占位符
             addManifestPlaceholders([
-                    'app_name'    :    '省钱君 Preview 版'
+                    'app_name': '省钱君 Preview 版'
             ])
         }
 
@@ -96,7 +96,7 @@ android {
             signingConfig signingConfigs.config
             // 添加清单占位符
             addManifestPlaceholders([
-                    'app_name'    :    '@string/app_name'
+                    'app_name': '@string/app_name'
             ])
             // 仅保留两种架构的 so 库，根据 Bugly 统计得出
             ndk {
@@ -228,6 +228,8 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
 
     implementation 'com.orhanobut:logger:2.2.0'
+
+    implementation 'com.zzhoujay.richtext:richtext:3.0.7'
 
     // 多语种：https://github.com/getActivity/MultiLanguages
     // 悬浮窗：https://github.com/getActivity/XToast

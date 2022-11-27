@@ -244,6 +244,7 @@
         <activity android:name="com.shengqianjun.mobile.ui.activity.SearchActivity" />
         <activity android:name="com.shengqianjun.mobile.ui.activity.ShengqianbaoActivity" />
         <activity android:name=".ui.activity.AllClassActivity" />
+        <activity android:name=".ui.activity.ArticleDetailActivity" />
 
     </application>
 

@@ -8,6 +8,8 @@ import com.bumptech.glide.Glide
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.app.AppAdapter
 import com.shengqianjun.mobile.http.api.DarenshuoApi
+import com.shengqianjun.mobile.ui.activity.ArticleDetailActivity
+import com.shengqianjun.mobile.ui.activity.GoodsListActivity
 
 /**
  * 朋友圈
@@ -29,6 +31,10 @@ class DarenshuoAdapter(val mContext: Context) : AppAdapter<DarenshuoApi.Newdata>
             thumb?.let { Glide.with(mContext).load(pyqGoodsDto.article_banner).into(it) }
             title?.text = pyqGoodsDto.name
             desc?.text = pyqGoodsDto.article
+
+            getItemView().setOnClickListener {
+                ArticleDetailActivity.start(mContext, pyqGoodsDto.id)
+            }
         }
     }
 }
