@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_marginEnd="@dimen/dp_10"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView4"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/goods_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher" />
+    </androidx.cardview.widget.CardView>
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/xiaoliang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:paddingVertical="@dimen/dp_2"
+        android:text="日销100件"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_8"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView4"
+        app:layout_constraintStart_toStartOf="@+id/cardView4"
+        app:shape_radius="@dimen/dp_3"
+        app:shape_solidColor="#E91E63" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="商品名称商品名称商品名称商品名称商品名称"
+        android:textSize="@dimen/sp_10"
+        app:layout_constraintEnd_toEndOf="@+id/cardView4"
+        app:layout_constraintStart_toStartOf="@+id/cardView4"
+        app:layout_constraintTop_toBottomOf="@+id/cardView4" />
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/shapeTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:paddingVertical="@dimen/dp_2"
+        android:text="2元券"
+        android:textColor="@color/red"
+        android:textSize="@dimen/sp_8"
+        app:layout_constraintStart_toStartOf="@+id/cardView4"
+        app:layout_constraintTop_toBottomOf="@id/textView12"
+        app:shape_radius="@dimen/dp_2"
+        app:shape_solidColor="#FFE8E8"
+        app:shape_strokeColor="@color/red"
+        app:shape_strokeWidth="0.5dp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="¥"
+        android:textColor="@color/red"
+        android:textSize="@dimen/sp_8"
+        app:layout_constraintStart_toStartOf="@+id/cardView4"
+        app:layout_constraintTop_toBottomOf="@+id/shapeTextView2" />
+
+    <TextView
+        android:id="@+id/goods_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="28.5"
+        android:textColor="@color/red"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintStart_toEndOf="@+id/textView13" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.bumptech.glide.Glide
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.aop.Log
@@ -50,7 +51,7 @@ class GoodsDetailActivity : AppActivity() {
         private const val ZTK_CODE: String = "ZTK_CODE"
 
         @Log
-        fun start(mContext: Context, goodsId: String?, ztkCode: String ="") {
+        fun start(mContext: Context, goodsId: String?, ztkCode: String = "") {
             val intent = Intent(mContext, GoodsDetailActivity::class.java)
             intent.putExtra(GOODS_ID, goodsId)
             intent.putExtra(ZTK_CODE, ztkCode)
@@ -99,7 +100,7 @@ class GoodsDetailActivity : AppActivity() {
                 override fun onPageScrolled(
                     position: Int,
                     positionOffset: Float,
-                    positionOffsetPixels: Int
+                    positionOffsetPixels: Int,
                 ) {
 
                 }
@@ -228,18 +229,29 @@ class GoodsDetailActivity : AppActivity() {
 
     private var bannerList = 1
 
-    private var goodsInfoData : GoodsDetailDto? = null
+    private var goodsInfoData: GoodsDetailDto? = null
+
     /**
      * 设置商品信息
      */
     private fun initGoodsInfo(goodsInfo: GoodsDetailDto?) {
-        goodsInfoData= goodsInfo
+        goodsInfoData = goodsInfo
         goods_title?.text = goodsInfo?.itemtitle
         goods_price?.text = goodsInfo?.itemendprice
         yh_str?.text = "省${goodsInfo?.couponmoney}元"
         yhq_jine?.text = goodsInfo?.couponmoney
-        start_time?.text = "${goodsInfo?.couponstarttime}"
-        end_time?.text = "${goodsInfo?.couponendtime}"
+        start_time?.text = "${
+            goodsInfo?.couponstarttime?.let {
+                TimeUtils.millis2String(it * 1000,
+                    "yyyy.mm.dd hh:mm")
+            }
+        }"
+        end_time?.text = "${
+            goodsInfo?.couponendtime?.let {
+                TimeUtils.millis2String(it * 1000,
+                    "yyyy.mm.dd hh:mm")
+            }
+        }"
         yhje_str?.text = goodsInfo?.couponinfo
         yuanjia?.text = goodsInfo?.itemprice
         yuanjia?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG

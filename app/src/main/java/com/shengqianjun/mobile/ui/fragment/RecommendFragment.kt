@@ -1,8 +1,12 @@
 package com.shengqianjun.mobile.ui.fragment
 
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.hjq.base.BaseAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
@@ -10,27 +14,33 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.shengqianjun.mobile.R
 import com.shengqianjun.mobile.app.AppFragment
 import com.shengqianjun.mobile.http.api.HomeBannerApi
-import com.shengqianjun.mobile.http.api.HomeCainixihuanApi
 import com.shengqianjun.mobile.http.api.HomeGoodsListApi
-import com.shengqianjun.mobile.http.model.GoodsDetailDto
+import com.shengqianjun.mobile.http.api.RecommendPinpaiApi
 import com.shengqianjun.mobile.http.model.HttpData
 import com.shengqianjun.mobile.http.model.MenuDto
 import com.shengqianjun.mobile.ui.activity.BrowserActivity
+import com.shengqianjun.mobile.ui.activity.GoodsDetailActivity
 import com.shengqianjun.mobile.ui.activity.HomeActivity
 import com.shengqianjun.mobile.ui.activity.ShengqianbaoActivity
 import com.shengqianjun.mobile.ui.adapter.BannerAdapter
 import com.shengqianjun.mobile.ui.adapter.HomeMenuListAdapter
+import com.shengqianjun.mobile.ui.adapter.PinpaiGoodsAdapter
 import com.shengqianjun.mobile.ui.adapter.SearchGoodsListAdapter
-import com.umeng.commonsdk.UMConfigure
 import com.youth.banner.Banner
 
 class RecommendFragment : AppFragment<HomeActivity>() {
 
+    private lateinit var pinpaiGoodsAdapter: PinpaiGoodsAdapter
     private val banner: Banner<HomeBannerApi.BannerBean, BannerAdapter>? by lazy { findViewById(R.id.banner) }
     private val menuList: RecyclerView? by lazy { findViewById(R.id.menu_list) }
     private var homeGoodsListAdapter: SearchGoodsListAdapter? = null
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
+    private val pinpai_banner: ImageView? by lazy { findViewById(R.id.pinpai_banner) }
+    private val logo_img: ImageView? by lazy { findViewById(R.id.logo_img) }
+    private val textView11: TextView? by lazy { findViewById(R.id.textView11) }
+    private val pinpai_biaoyu: TextView? by lazy { findViewById(R.id.pinpai_biaoyu) }
+    private val pinpai_goods_list: RecyclerView? by lazy { findViewById(R.id.pinpai_goods_list) }
 
     companion object {
 
@@ -145,13 +155,57 @@ class RecommendFragment : AppFragment<HomeActivity>() {
             pageIndex++
             getGoodsList()
         }
+        pinpai_goods_list?.let {
+            it.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            pinpaiGoodsAdapter = PinpaiGoodsAdapter(requireContext())
+            pinpaiGoodsAdapter.setOnItemClickListener(object :BaseAdapter.OnItemClickListener{
+                override fun onItemClick(
+                    recyclerView: RecyclerView?,
+                    itemView: View?,
+                    position: Int,
+                ) {
+                    val item = pinpaiGoodsAdapter.getItem(position)
+                    GoodsDetailActivity.start(requireContext(),item.itemid)
+                }
+
+            })
+            it.adapter = pinpaiGoodsAdapter
+        }
+
     }
 
     private var pageIndex = 1
 
     override fun initData() {
         getBannerList()
+        getPinpaiList()
         getGoodsList()
+    }
+
+    private fun getPinpaiList() {
+        EasyHttp.get(this)
+            .api(RecommendPinpaiApi())
+            .request(object : OnHttpListener<HttpData<RecommendPinpaiApi.RecommendPinpaiDto>> {
+                override fun onSucceed(result: HttpData<RecommendPinpaiApi.RecommendPinpaiDto>?) {
+                    result?.getData()?.let {
+                        pinpai_banner?.let { it1 ->
+                            Glide.with(this@RecommendFragment).load(it.data.background).into(it1)
+                        }
+                        logo_img?.let { it1 ->
+                            Glide.with(this@RecommendFragment).load(it.data.brand_logo).into(it1)
+                        }
+                        textView11?.text = it.data.name
+                        pinpai_biaoyu?.text = it.data.title
+                        pinpaiGoodsAdapter.setData(it.items)
+
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+            })
     }
 
     /**
