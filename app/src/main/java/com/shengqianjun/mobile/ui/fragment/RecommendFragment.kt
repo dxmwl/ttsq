@@ -3,7 +3,6 @@ package com.shengqianjun.mobile.ui.fragment
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.hjq.base.BaseAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
@@ -13,6 +12,7 @@ import com.shengqianjun.mobile.app.AppFragment
 import com.shengqianjun.mobile.http.api.HomeBannerApi
 import com.shengqianjun.mobile.http.api.HomeCainixihuanApi
 import com.shengqianjun.mobile.http.api.HomeGoodsListApi
+import com.shengqianjun.mobile.http.model.GoodsDetailDto
 import com.shengqianjun.mobile.http.model.HttpData
 import com.shengqianjun.mobile.http.model.MenuDto
 import com.shengqianjun.mobile.ui.activity.BrowserActivity
@@ -45,7 +45,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
 
     override fun initView() {
         banner?.let {
-            it.setBannerGalleryEffect(39, 16)
+//            it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
         }
         menuList?.let {
@@ -112,7 +112,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                 override fun onItemClick(
                     recyclerView: RecyclerView?,
                     itemView: View?,
-                    position: Int
+                    position: Int,
                 ) {
                     val menuDto = arrayListOf[position]
                     when (menuDto.id) {
@@ -162,7 +162,15 @@ class RecommendFragment : AppFragment<HomeActivity>() {
             .api(HomeBannerApi())
             .request(object : OnHttpListener<HttpData<ArrayList<HomeBannerApi.BannerBean>>> {
                 override fun onSucceed(result: HttpData<ArrayList<HomeBannerApi.BannerBean>>?) {
-                    banner?.setAdapter(BannerAdapter(result?.getData()))
+                    result?.getData()?.let {
+                        val bannerListData = ArrayList<HomeBannerApi.BannerBean>()
+                        it.forEach { bannerItem ->
+                            if (bannerItem.image.isNotBlank()) {
+                                bannerListData.add(bannerItem)
+                            }
+                        }
+                        banner?.setAdapter(BannerAdapter(bannerListData))
+                    }
                 }
 
                 override fun onFail(e: java.lang.Exception?) {
@@ -175,52 +183,53 @@ class RecommendFragment : AppFragment<HomeActivity>() {
      * 获取商品列表
      */
     private fun getGoodsList() {
-        UMConfigure.getOaid(requireContext()) { oaidStr ->
-            if (oaidStr.isNullOrBlank()) {
-                //获取不到的话,则获取优选商品
-                getYouxuanGoods()
-                return@getOaid
-            }
-
-            EasyHttp.get(this@RecommendFragment)
-                .api(HomeCainixihuanApi().apply {
-                    page = pageIndex
-                    device_value = oaidStr.toString()
-                })
-                .request(object :
-                    OnHttpListener<HttpData<HomeCainixihuanApi.CainixihuanGoodsInfo>> {
-                    override fun onSucceed(result: HttpData<HomeCainixihuanApi.CainixihuanGoodsInfo>?) {
-                        refresh?.finishRefresh()
-                        refresh?.finishLoadMore()
-                        if (pageIndex == 1) {
-                            homeGoodsListAdapter?.clearData()
-                        }
-//                        homeGoodsListAdapter?.addData(result?.getData()?.result_list?.map_data)
-                    }
-
-                    override fun onFail(e: Exception?) {
-                        refresh?.finishRefresh()
-                        refresh?.finishLoadMore()
-                        toast(e?.message)
-                    }
-                })
-        }
+        getYouxuanGoods()
+//        UMConfigure.getOaid(requireContext()) { oaidStr ->
+//            if (oaidStr.isNullOrBlank()) {
+//                //获取不到的话,则获取优选商品
+//                getYouxuanGoods()
+//                return@getOaid
+//            }
+//
+//            EasyHttp.get(this@RecommendFragment)
+//                .api(HomeCainixihuanApi().apply {
+//                    page = pageIndex
+//                    device_value = oaidStr.toString()
+//                })
+//                .request(object :
+//                    OnHttpListener<HttpData<HomeCainixihuanApi.CainixihuanGoodsInfo>> {
+//                    override fun onSucceed(result: HttpData<HomeCainixihuanApi.CainixihuanGoodsInfo>?) {
+//                        refresh?.finishRefresh()
+//                        refresh?.finishLoadMore()
+//                        if (pageIndex == 1) {
+//                            homeGoodsListAdapter?.clearData()
+//                        }
+////                        homeGoodsListAdapter?.addData(result?.getData()?.result_list?.map_data)
+//                    }
+//
+//                    override fun onFail(e: Exception?) {
+//                        refresh?.finishRefresh()
+//                        refresh?.finishLoadMore()
+//                        toast(e?.message)
+//                    }
+//                })
+//        }
     }
 
     private fun getYouxuanGoods() {
         EasyHttp.get(this)
             .api(HomeGoodsListApi().apply {
-                page = pageIndex
+                p = pageIndex
             })
             .request(object :
-                OnHttpListener<HttpData<java.util.ArrayList<HomeGoodsListApi.GoodsBean>>> {
-                override fun onSucceed(result: HttpData<java.util.ArrayList<HomeGoodsListApi.GoodsBean>>?) {
+                OnHttpListener<HttpData<HomeGoodsListApi.MaochaoGoods>> {
+                override fun onSucceed(result: HttpData<HomeGoodsListApi.MaochaoGoods>?) {
                     refresh?.finishRefresh()
                     refresh?.finishLoadMore()
                     if (pageIndex == 1) {
                         homeGoodsListAdapter?.clearData()
                     }
-//                    homeGoodsListAdapter?.addData(result?.getData())
+                    homeGoodsListAdapter?.addData(result?.getData()?.data)
                 }
 
                 override fun onFail(e: Exception?) {

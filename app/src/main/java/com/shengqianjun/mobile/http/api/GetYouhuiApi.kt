@@ -1,11 +1,12 @@
 package com.shengqianjun.mobile.http.api
 
 import com.hjq.http.config.IRequestApi
+import com.hjq.http.config.IRequestHost
 
 /**
  * 淘口令识别
  */
-class GetYouhuiApi : IRequestApi {
+class GetYouhuiApi : IRequestApi,IRequestHost {
     override fun getApi(): String {
         return "api/open_gaoyongzhuanlian_tkl.ashx"
     }
@@ -13,6 +14,10 @@ class GetYouhuiApi : IRequestApi {
     var tkl = ""
 
     val signurl = 5
+
+    val appkey = "2506f1398595428eab9055197bf671e7"
+    val sid = "154994"
+    val pid = "mm_111203980_10278226_34170938"
 
     data class GoodsYouhuiDto(
         val biaoqian: String,
@@ -84,4 +89,8 @@ class GetYouhuiApi : IRequestApi {
         val yunfeixian: String,
         val zhibo_url: String
     )
+
+    override fun getHost(): String {
+        return "https://api.zhetaoke.com:10001/"
+    }
 }

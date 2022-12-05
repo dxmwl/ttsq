@@ -12,7 +12,7 @@ import com.shengqianjun.mobile.http.api.BangdanGoodsApi
 import com.shengqianjun.mobile.http.api.CommodityScreeningApi
 import com.shengqianjun.mobile.http.model.HttpData
 import com.shengqianjun.mobile.ui.activity.HomeActivity
-import com.shengqianjun.mobile.ui.adapter.BangdanGoodsListAdapter
+//import com.shengqianjun.mobile.ui.adapter.BangdanGoodsListAdapter
 import com.shengqianjun.mobile.ui.adapter.BangdanGoodsListAdapter2
 
 /**

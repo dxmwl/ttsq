@@ -80,6 +80,8 @@
         <com.google.android.material.tabs.TabLayout
             android:layout_width="0dp"
             android:layout_weight="1"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorColor="@color/red"
             android:id="@+id/goods_sort"
             android:layout_height="wrap_content"/>
         <com.hjq.shape.view.ShapeCheckBox

@@ -13,6 +13,11 @@ open class HttpData<T> {
      */
     private val code: Int = 0
 
+    /**
+     * 省钱宝接口使用
+     */
+    private val status: Int = 0
+
     /** 提示语 */
     private val msg: String? = null
 
@@ -23,6 +28,11 @@ open class HttpData<T> {
      * 数据(好单库分类接口使用)
      */
     private val general_classify: T? = null
+
+    /**
+     * 省钱宝接口使用
+     */
+    private val content: T? = null
 
 
     fun getCode(): Int {
@@ -38,6 +48,8 @@ open class HttpData<T> {
             data
         } else if (general_classify != null) {
             general_classify
+        } else if (content != null) {
+            content
         } else {
             data
         }
@@ -47,7 +59,7 @@ open class HttpData<T> {
      * 是否请求成功
      */
     fun isRequestSucceed(): Boolean {
-        return code == 1 || code == 200
+        return code == 1 || code == 200 || status == 200
     }
 
     /**

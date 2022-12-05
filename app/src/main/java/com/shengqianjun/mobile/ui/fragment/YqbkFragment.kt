@@ -36,7 +36,7 @@ class YqbkFragment : TitleBarFragment<HomeActivity>(), TabLayout.OnTabSelectedLi
     }
 
     private lateinit var xsqgGoodsAdapter: XsqgGoodsAdapter
-    private var selectorPosition: Int = 1
+    private var selectorPosition: Int = 0
     private val time_tab_layout: TabLayout? by lazy { findViewById(R.id.time_tab_layout) }
     private val refresh: SmartRefreshLayout? by lazy { findViewById(R.id.refresh) }
     private val goods_list: RecyclerView? by lazy { findViewById(R.id.goods_list) }
@@ -230,7 +230,6 @@ class YqbkFragment : TitleBarFragment<HomeActivity>(), TabLayout.OnTabSelectedLi
      * 构造时间列表
      */
     private fun initTimeTabList(data: List<HourTypeDto>) {
-        selectorPosition = data.size
         data.forEachIndexed { index, xsqgTimeDto ->
             val newTab = time_tab_layout?.newTab()
             val inflate = View.inflate(requireContext(), R.layout.item_xsqg_tab, null)
@@ -238,7 +237,7 @@ class YqbkFragment : TitleBarFragment<HomeActivity>(), TabLayout.OnTabSelectedLi
                 TimeUtils.millis2String(xsqgTimeDto.timeInMillis, "hh:mm")
             inflate.findViewById<TextView>(R.id.tab_state)?.text = xsqgTimeDto.status
             newTab?.customView = inflate
-            if (xsqgTimeDto.status == "正在疯抢") {
+            if (xsqgTimeDto.status == "已开抢"||xsqgTimeDto.status == "正在疯抢") {
                 selectorPosition = index
             }
             if (newTab != null) {

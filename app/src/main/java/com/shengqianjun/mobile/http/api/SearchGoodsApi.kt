@@ -10,25 +10,21 @@ import com.hjq.http.config.IRequestApi
  */
 class SearchGoodsApi : IRequestApi {
     override fun getApi(): String {
-        return "api/api_quanwang.ashx"
+        return "supersearch"
     }
 
     //搜索关键字
-    var q: String = ""
+    var keyword: String = ""
 
-    var page: Int = 1
+    var min_id: Int = 1
 
-    var page_size: Int = 20
+    var back: Int = 20
 
     //	是否有券，1为有券，其它值为全部商品
-    var youquan: Int = 1
+    var is_coupon: Int = 1
 
     /**
-     * 商品排序方式，new：按照综合排序，
-    total_sale_num_asc：按照总销量从小到大排序，total_sale_num_desc：按照总销量从大到小排序，
-    sale_num_asc：按照月销量从小到大排序，sale_num_desc：按照月销量从大到小排序，
-    commission_rate_asc：按照佣金比例从小到大排序，commission_rate_desc：按照佣金比例从大到小排序，
-    price_asc：按照价格从小到大排序，price_desc：按照价格从大到小排序。
+     * 	0.综合，1.最新，2.销量（高到低），3.销量（低到高），4.价格(低到高)，5.价格（高到低），6.佣金比例（高到低）
      */
     var sort: String = "new"
 

@@ -22,6 +22,7 @@ import com.shengqianjun.mobile.manager.ActivityManager
 import com.shengqianjun.mobile.other.DoubleClickHelper
 import com.shengqianjun.mobile.ui.adapter.NavigationAdapter
 import com.shengqianjun.mobile.ui.fragment.*
+import com.shengqianjun.mobile.utils.HtmlUtil
 import org.greenrobot.eventbus.EventBus
 
 /**

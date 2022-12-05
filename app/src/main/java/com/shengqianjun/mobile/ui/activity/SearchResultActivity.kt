@@ -21,6 +21,7 @@ import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.hjq.shape.view.ShapeCheckBox
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.shengqianjun.mobile.http.model.GoodsDetailDto
 
 /**
  * @project : EasyBuy_Android
@@ -30,7 +31,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
  */
 class SearchResultActivity : AppActivity() {
     private var pageIndex: Int = 1
-    private var keyword: String = ""
+    private var keywordStr: String = ""
 
     private var homeGoodsListAdapter: SearchGoodsListAdapter? = null
     private val goodsList: RecyclerView? by lazy { findViewById(R.id.goods_list) }
@@ -41,7 +42,7 @@ class SearchResultActivity : AppActivity() {
     private val goods_sort: TabLayout? by lazy { findViewById(R.id.goods_sort) }
     private var zonghePopupView: ZongheShadowPopupView? = null
     private var isYouquan: Int = 1
-    private var paixu: String = "new"
+    private var paixu: String = "0"
 
     override fun getLayoutId(): Int {
         return R.layout.activity_search_result
@@ -49,18 +50,18 @@ class SearchResultActivity : AppActivity() {
 
     override fun initView() {
         setOnClickListener(R.id.btn_search, R.id.iv_back, R.id.sort_view)
-        keyword = intent.getStringExtra("KEYWORD").toString()
-        input_keyword?.setText(keyword)
-        input_keyword?.setSelection(keyword.length)
+        keywordStr = intent.getStringExtra("KEYWORD").toString()
+        input_keyword?.setText(keywordStr)
+        input_keyword?.setSelection(keywordStr.length)
 
         input_keyword?.addTextChangedListener {
-            keyword = it?.toString().toString()
+            keywordStr = it?.toString().toString()
         }
         val listData = arrayListOf(
-            MenuDto(title = "综合", checked = true, value = "new"),
-            MenuDto(title = "销量", checked = false, value = "sale_num_desc"),
-            MenuDto(title = "价格", checked = false, value = "price_asc"),
-            MenuDto(title = "优惠", checked = false, value = "commission_rate_desc"),
+            MenuDto(title = "综合", checked = true, value = "0"),
+            MenuDto(title = "销量", checked = false, value = "2"),
+            MenuDto(title = "价格", checked = false, value = "4"),
+            MenuDto(title = "优惠", checked = false, value = "6"),
         )
         listData.forEach {
             goods_sort?.newTab()?.setText(it.title)?.let { it1 -> goods_sort?.addTab(it1) }
@@ -113,22 +114,22 @@ class SearchResultActivity : AppActivity() {
     }
 
     private fun searchGoods() {
-        AppHelper.saveSearchHistory(keyword)
+        AppHelper.saveSearchHistory(keywordStr)
         EasyHttp.get(this)
             .api(SearchGoodsApi().apply {
-                q = keyword
-                page = pageIndex
-                youquan = isYouquan
+                keyword = keywordStr
+                min_id = pageIndex
+                is_coupon = isYouquan
                 sort = paixu
             })
-            .request(object : OnHttpListener<HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>> {
-                override fun onSucceed(result: HttpData<ArrayList<HomeGoodsListApi.GoodsBean>>?) {
+            .request(object : OnHttpListener<HttpData<ArrayList<GoodsDetailDto>>> {
+                override fun onSucceed(result: HttpData<ArrayList<GoodsDetailDto>>?) {
                     refresh?.finishRefresh()
                     refresh?.finishLoadMore()
                     if (pageIndex == 1) {
                         homeGoodsListAdapter?.clearData()
                     }
-//                    homeGoodsListAdapter?.addData(result?.getData())
+                    homeGoodsListAdapter?.addData(result?.getData())
                 }
 
                 override fun onFail(e: Exception?) {

@@ -1,6 +1,9 @@
 package com.shengqianjun.mobile.http.api
 
 import com.hjq.http.config.IRequestApi
+import com.hjq.http.config.IRequestServer
+import com.shengqianjun.mobile.http.model.GoodsDetailDto
+import com.shengqianjun.mobile.http.model.ShopScore
 import java.math.BigDecimal
 
 /**
@@ -9,20 +12,29 @@ import java.math.BigDecimal
  * @author : clb
  * @time : 2022/6/23
  */
-class HomeGoodsListApi : IRequestApi {
+class HomeGoodsListApi : IRequestApi , IRequestServer {
     override fun getApi(): String {
-        return "api/api_all.ashx"
+        return "api/maochao_items"
     }
 
     /**
      * 	分页获取数据,第几页
      */
-    var page: Int = 1
+    var p: Int = 1
+
+    //1.低价包邮；2.猫超热销；3.即将开抢；4.一元购(已下架)
+    var type: Int = 2
+
+    //排序：1.价格从低到高；2.价格从高到底；3.日销从高到低；4.日销从低到高；5.2小时销量从高到底；6.两小时销量从低到高；7.最新
+    var order: Int = 7
+    override fun getHost(): String {
+        return "https://api.haodanku.com/"
+    }
 
     /**
      * 每页数据条数（默认每页20条），可自定义1-50之间
      */
-    var page_size: Int = 20
+//    var page_size: Int = 20
 
     /**
      * 商品排序方式，new：按照综合排序，
@@ -35,51 +47,19 @@ class HomeGoodsListApi : IRequestApi {
     tkfee_asc：按照返佣金额从低到高排序，tkfee_desc：按照返佣金额从高到低排序，
     code：按照code值从大到小排序，date_time：按照更新时间排序，random：按照随机排序
      */
-    var sort: String = "new"
+//    var sort: String = "new"
 
     /**
      * 	一级商品分类，值为空：全部商品，1：女装，2：母婴，3：美妆，4：居家日用，5：鞋品，6：美食，7：文娱车品，8：数码家电，9：男装，10：内衣，11：箱包，12：配饰，13：户外运动，14：家装家纺
      */
-    var cid: String = ""
+//    var cid: String = ""
 
     /**
      * 	极品爆单商品，值为空：全部商品，1：极品爆单商品（拍2件、拍3件、拍4件、拍5件、拍6件等）
      */
-    var baodan: String = ""
+//    var baodan: String = ""
 
-    inner class GoodsBean(
-
-        //折淘客编号，输入非折淘客商品编号，此参数无作用。code值可通过其它领券API接口结果获得。code值必须与tao_id值对应。
-        val code: String,
-        //商品ID
-        val tao_id: String,
-        val item_id: String,
-        //商品主图
-        val pict_url: String,
-        //商品标题
-        val title: String,
-        //商品券后价
-        val quanhou_jiage: String,
-        //商品原价
-        val size: String,
-        val zk_final_price: BigDecimal,
-        //月销量
-        val volume: String,
-        //优惠券金额
-        val coupon_info_money: String,
-        val coupon_amount: BigDecimal,
-        val coupon_start_time: String,
-        val coupon_end_time: String,
-        //优惠券信息
-        val coupon_info: String,
-        //店铺名称
-        val shop_title: String,
-        //店铺Logo
-        val shopIcon: String,
-        val score1: String,
-        val score2: String,
-        val score3: String,
-        //商品小图列表
-        val small_images: String
+    inner class MaochaoGoods(
+        val data :ArrayList<GoodsDetailDto>
     )
 }

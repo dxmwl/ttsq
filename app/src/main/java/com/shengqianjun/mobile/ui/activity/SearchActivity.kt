@@ -232,7 +232,7 @@ class SearchActivity : AppActivity() {
                 ConvertUtils.dp2px(16F),
                 ConvertUtils.dp2px(5F)
             )
-            tv.text = data.keywords
+            tv.text = data.keyword
             tv.maxEms = 10
             tv.setTextColor(Color.parseColor("#FC383E"))
             tv.setSingleLine()
@@ -241,7 +241,7 @@ class SearchActivity : AppActivity() {
             hot_search_layout?.addView(tv, layoutParams)
             tv.setOnClickListener {
                 val intent = Intent(this, SearchResultActivity::class.java)
-                intent.putExtra("KEYWORD", data.keywords)
+                intent.putExtra("KEYWORD", data.keyword)
                 startActivity(intent)
             }
         }

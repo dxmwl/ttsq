@@ -7,10 +7,10 @@ import com.hjq.http.config.IRequestApi
  */
 class HotSearchApi : IRequestApi {
     override fun getApi(): String {
-        return "api/api_guanjianci.ashx"
+        return "hot_key"
     }
 
     data class HotSeaDto(
-        val keywords: String
+        val keyword: String
     )
 }

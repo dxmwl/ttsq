@@ -18,13 +18,13 @@ class HomeCainixihuanApi : IRequestApi {
 
     var device_type: String = "OAID"
 
-    data class CainixihuanGoodsInfo(
-        val is_default: String,
-        val request_id: String,
-        val result_list: ResultList
-    )
-
-    data class ResultList(
-        val map_data: ArrayList<HomeGoodsListApi.GoodsBean>
-    )
+//    data class CainixihuanGoodsInfo(
+//        val is_default: String,
+//        val request_id: String,
+//        val result_list: ResultList
+//    )
+//
+//    data class ResultList(
+//        val map_data: ArrayList<HomeGoodsListApi.GoodsBean>
+//    )
 }
