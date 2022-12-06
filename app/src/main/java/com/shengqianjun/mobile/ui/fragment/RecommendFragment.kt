@@ -18,10 +18,7 @@ import com.shengqianjun.mobile.http.api.HomeGoodsListApi
 import com.shengqianjun.mobile.http.api.RecommendPinpaiApi
 import com.shengqianjun.mobile.http.model.HttpData
 import com.shengqianjun.mobile.http.model.MenuDto
-import com.shengqianjun.mobile.ui.activity.BrowserActivity
-import com.shengqianjun.mobile.ui.activity.GoodsDetailActivity
-import com.shengqianjun.mobile.ui.activity.HomeActivity
-import com.shengqianjun.mobile.ui.activity.ShengqianbaoActivity
+import com.shengqianjun.mobile.ui.activity.*
 import com.shengqianjun.mobile.ui.adapter.BannerAdapter
 import com.shengqianjun.mobile.ui.adapter.HomeMenuListAdapter
 import com.shengqianjun.mobile.ui.adapter.PinpaiGoodsAdapter
@@ -54,6 +51,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
     }
 
     override fun initView() {
+        setOnClickListener(R.id.layout_pinpai)
         banner?.let {
 //            it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
@@ -292,5 +290,15 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                     toast(e?.message)
                 }
             })
+    }
+
+    override fun onClick(view: View) {
+        super.onClick(view)
+        when (view.id) {
+            R.id.layout_pinpai -> {
+                startActivity(PinpaiGoodsActivity::class.java)
+            }
+            else -> {}
+        }
     }
 }

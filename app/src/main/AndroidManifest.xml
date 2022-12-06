@@ -245,6 +245,7 @@
         <activity android:name="com.shengqianjun.mobile.ui.activity.ShengqianbaoActivity" />
         <activity android:name=".ui.activity.AllClassActivity" />
         <activity android:name=".ui.activity.ArticleDetailActivity" />
+        <activity android:name=".ui.activity.PinpaiGoodsActivity" />
 
     </application>
 

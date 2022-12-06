@@ -35,6 +35,24 @@ object AppHelper {
         ClassApi.ClassInfo(cid = "16", main_name = "文体"),
     )
 
+    /**
+     * 品牌分类	品牌分类：默认选择全部分类，1是母婴童品，2百变女装，3是食品酒水，4是居家日用，5是美妆洗护，6是品质男装，7是舒适内衣，8是箱包配饰，9是男女鞋靴，10是宠物用品，11是数码家电，12是车品文体
+     */
+    var bandClassList = arrayListOf(
+        ClassApi.ClassInfo(cid = "1", main_name = "母婴"),
+        ClassApi.ClassInfo(cid = "2", main_name = "女装"),
+        ClassApi.ClassInfo(cid = "3", main_name = "食品酒水"),
+        ClassApi.ClassInfo(cid = "4", main_name = "居家日用"),
+        ClassApi.ClassInfo(cid = "5", main_name = "美妆洗护"),
+        ClassApi.ClassInfo(cid = "6", main_name = "品质男装"),
+        ClassApi.ClassInfo(cid = "7", main_name = "内衣"),
+        ClassApi.ClassInfo(cid = "8", main_name = "箱包"),
+        ClassApi.ClassInfo(cid = "9", main_name = "男女鞋靴"),
+        ClassApi.ClassInfo(cid = "10", main_name = "宠物用品"),
+        ClassApi.ClassInfo(cid = "11", main_name = "数码家电"),
+        ClassApi.ClassInfo(cid = "12", main_name = "车品文体"),
+    )
+
     private const val RECENT_SEARCH = "RECENT_SEARCH"
     private const val SEARCH_HISTORY = "SEARCH_HISTORY"
 

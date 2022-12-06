@@ -49,6 +49,7 @@
                     tools:listitem="@layout/item_home_menu" />
 
                 <com.hjq.shape.layout.ShapeConstraintLayout
+                    android:id="@+id/layout_pinpai"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_10"
@@ -100,6 +101,7 @@
                             android:layout_height="match_parent">
 
                             <ImageView
+                                android:scaleType="centerCrop"
                                 android:id="@+id/pinpai_banner"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />

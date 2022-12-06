@@ -42,7 +42,11 @@ class SearchGoodsListAdapter(val mContext: Context) :
                     GlideApp.with(mContext).load("https://${pictUrl}").into(goodsImg)
                 }
             }
-            goodsName?.text = goodsBean.itemtitle
+            goodsName?.text = if (goodsBean.itemtitle.isNullOrBlank()){
+                goodsBean.itemshorttitle
+            }else{
+                goodsBean.itemtitle
+            }
 
             //券后价
             quanhoujia?.text = "${goodsBean.itemendprice}"

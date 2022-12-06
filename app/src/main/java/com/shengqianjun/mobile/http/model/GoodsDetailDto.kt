@@ -40,7 +40,7 @@ data class GoodsDetailDto(
     val itemsale: String,
     val itemsale2: String,
     val itemshorttitle: String,
-    val itemtitle: String,
+    val itemtitle: String? = "",
     val me: String,
     val min_buy: String,
     val online_users: String,
@@ -72,7 +72,7 @@ data class GoodsDetailDto(
     val videoid: String,
     val xid: String,
     val grab_type: Int,
-    val virtual_sum: Int
+    val virtual_sum: Int,
 )
 
 data class ShopScore(
@@ -81,5 +81,5 @@ data class ShopScore(
     val post_level: Int,
     val post_score: Double,
     val serv_level: Int,
-    val serv_score: Double
+    val serv_score: Double,
 )
