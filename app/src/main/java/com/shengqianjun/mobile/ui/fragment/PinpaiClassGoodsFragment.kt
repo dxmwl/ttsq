@@ -2,9 +2,11 @@ package com.shengqianjun.mobile.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hjq.base.BaseAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -14,6 +16,7 @@ import com.shengqianjun.mobile.http.api.ClassApi
 import com.shengqianjun.mobile.http.api.ClassPinpaiListApi
 import com.shengqianjun.mobile.http.api.CommodityScreeningApi
 import com.shengqianjun.mobile.http.model.HttpData
+import com.shengqianjun.mobile.ui.activity.PinpaiDetailActivity
 import com.shengqianjun.mobile.ui.activity.PinpaiGoodsActivity
 import com.shengqianjun.mobile.ui.adapter.ClassPinpaiListAdapter
 import java.lang.Exception
@@ -49,6 +52,16 @@ class PinpaiClassGoodsFragment : AppFragment<PinpaiGoodsActivity>() {
         item_pinpai_list?.let {
             it.layoutManager = LinearLayoutManager(requireContext())
             classPinpaiListAdapter = ClassPinpaiListAdapter(requireContext())
+            classPinpaiListAdapter.setOnItemClickListener(object :BaseAdapter.OnItemClickListener{
+                override fun onItemClick(
+                    recyclerView: RecyclerView?,
+                    itemView: View?,
+                    position: Int,
+                ) {
+                    val pinpaiListDto = classPinpaiListAdapter.getItem(position)
+                    PinpaiDetailActivity.start(requireContext(),pinpaiListDto.id)
+                }
+            })
             it.adapter = classPinpaiListAdapter
         }
         refresh?.setOnRefreshListener {

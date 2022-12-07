@@ -26,6 +26,7 @@ class ClassPinpaiListAdapter(val mContext: Context) :
         private val textView11: TextView? by lazy { findViewById(R.id.textView11) }
         private val pinpai_biaoyu: TextView? by lazy { findViewById(R.id.pinpai_biaoyu) }
         private val pinpai_goods_list: RecyclerView? by lazy { findViewById(R.id.pinpai_goods_list) }
+        private val pinpai_detail: RecyclerView? by lazy { findViewById(R.id.pinpai_detail) }
 
         override fun onBindView(position: Int) {
             val zhutiPinpaiDto = getItem(position)

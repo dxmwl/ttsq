@@ -246,6 +246,7 @@
         <activity android:name=".ui.activity.AllClassActivity" />
         <activity android:name=".ui.activity.ArticleDetailActivity" />
         <activity android:name=".ui.activity.PinpaiGoodsActivity" />
+        <activity android:name=".ui.activity.PinpaiDetailActivity" />
 
     </application>
 
