@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F4F4F4"
-    tools:context="com.shengqianjun.mobile.ui.fragment.HomeFragment">
+    tools:context="com.shengqiangou.mobile.ui.fragment.HomeFragment">
 
     <com.hjq.bar.TitleBar
         android:id="@+id/title_bar"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.shengqianjun.mobile.ui.activity.SplashActivity">
+    tools:context="com.shengqiangou.mobile.ui.activity.SplashActivity">
 
     <ImageView
         android:src="@drawable/splash_img"

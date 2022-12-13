@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shengqianjun.mobile.ui.activity.ImageSelectActivity">
+    tools:context="com.shengqiangou.mobile.ui.activity.ImageSelectActivity">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.shengqianjun.mobile.widget.StatusLayout
+        <com.shengqiangou.mobile.widget.StatusLayout
             android:id="@+id/hl_image_select_hint"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -30,7 +30,7 @@
                 tools:listitem="@layout/image_select_item"
                 tools:spanCount="3" />
 
-        </com.shengqianjun.mobile.widget.StatusLayout>
+        </com.shengqiangou.mobile.widget.StatusLayout>
 
         <com.hjq.widget.view.FloatActionButton
             android:id="@+id/fab_image_select_floating"

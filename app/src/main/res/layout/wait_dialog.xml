@@ -10,7 +10,7 @@
     app:cardBackgroundColor="@color/black85"
     app:cardCornerRadius="@dimen/dp_15"
     app:cardElevation="0px"
-    tools:context="com.shengqianjun.mobile.ui.dialog.WaitDialog">
+    tools:context="com.shengqiangou.mobile.ui.dialog.WaitDialog">
 
     <LinearLayout
         android:layout_width="wrap_content"

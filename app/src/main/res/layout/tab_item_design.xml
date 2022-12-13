@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:paddingHorizontal="@dimen/dp_10"
-    tools:context="com.shengqianjun.mobile.ui.adapter.TabAdapter">
+    tools:context="com.shengqiangou.mobile.ui.adapter.TabAdapter">
 
     <com.hjq.shape.view.ShapeTextView
         android:id="@+id/tv_tab_design_title"

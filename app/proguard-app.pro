@@ -5,17 +5,17 @@
 #-libraryjars libs/xxxxxxxxx.jar
 
 # 不混淆这个包下的类
--keep class com.shengqianjun.mobile.http.api.** {
+-keep class com.shengqiangou.mobile.http.api.** {
     <fields>;
 }
--keep class com.shengqianjun.mobile.http.response.** {
+-keep class com.shengqiangou.mobile.http.response.** {
     <fields>;
 }
--keep class com.shengqianjun.mobile.http.model.** {
+-keep class com.shengqiangou.mobile.http.model.** {
     <fields>;
 }
 
 # 不混淆被 Log 注解的方法信息
 -keepclassmembernames class ** {
-    @com.shengqianjun.mobile.aop.Log <methods>;
+    @com.shengqiangou.mobile.aop.Log <methods>;
 }
