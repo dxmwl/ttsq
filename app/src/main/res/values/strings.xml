@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">省钱君</string>
+    <string name="app_name">省钱购</string>
 
     <!-- 通用的 -->
     <string name="common_loading">加载中&#8230;</string>
