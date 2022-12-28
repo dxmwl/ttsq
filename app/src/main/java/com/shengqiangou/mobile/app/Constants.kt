@@ -17,6 +17,9 @@ object Constants {
     //隐私政策
     const val URL_PRIVACY_POLICY = "http://www.baidu.com"
 
+    //CMS域名前缀
+    const val URL_CMS = "https://shengqiangou.heartvoice.cn/"
+
     //上传作品图的最大数量
     const val MAXIMUM_NUMBER_OF_UPLOADED_PRODUCT = 5
 

@@ -11,6 +11,7 @@ import com.shengqiangou.mobile.R
 import com.shengqiangou.mobile.aop.SingleClick
 import com.shengqiangou.mobile.app.AppFragment
 import com.shengqiangou.mobile.app.AppHelper
+import com.shengqiangou.mobile.app.Constants
 import com.shengqiangou.mobile.app.TitleBarFragment
 import com.shengqiangou.mobile.eventbus.RefreshClass
 import com.shengqiangou.mobile.ui.activity.*
@@ -72,7 +73,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
             btn_shengqian -> {
                 BrowserActivity.start(
                     requireContext(),
-                    "https://hdkcmsc22.kuaizhan.com/?cid=Ymg7Vc2#/save-money"
+                    "${Constants.URL_CMS}?cid=Ymg7Vc2#/save-money"
                 )
             }
             all_class -> {
