@@ -7,7 +7,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingVertical="@dimen/dp_5"
-    tools:context="com.shengqiangou.mobile.ui.adapter.NavigationAdapter">
+    tools:context="com.ttsq.mobile.ui.adapter.NavigationAdapter">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_home_navigation_icon"

@@ -5,5 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/dp_50"
-    tools:context="com.shengqiangou.mobile.ui.adapter.GuideAdapter"
+    tools:context="com.ttsq.mobile.ui.adapter.GuideAdapter"
     tools:src="@drawable/guide_1_bg" />

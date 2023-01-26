@@ -11,7 +11,7 @@
     app:shape_solidColor="@color/white"
     app:shape_topLeftRadius="@dimen/dp_20"
     app:shape_topRightRadius="@dimen/dp_20"
-    tools:context="com.shengqiangou.mobile.ui.dialog.ShareDialog">
+    tools:context="com.ttsq.mobile.ui.dialog.ShareDialog">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"

@@ -11,7 +11,7 @@ android {
     defaultConfig {
 
         // 无痛修改包名：https://www.jianshu.com/p/17327e191d2e
-        applicationId 'com.shengqiangou.mobile'
+        applicationId 'com.ttsq.mobile'
 
         // 仅保留中文语种的资源
         resConfigs 'zh'
@@ -65,7 +65,7 @@ android {
             signingConfig signingConfigs.config
             // 添加清单占位符
             addManifestPlaceholders([
-                    'app_name': '省钱购 Debug 版'
+                    'app_name': '天天省钱 Debug 版'
             ])
             // 调试模式下只保留一种架构的 so 库，提升打包速度
             ndk {
@@ -78,7 +78,7 @@ android {
             applicationIdSuffix ''
             // 添加清单占位符
             addManifestPlaceholders([
-                    'app_name': '省钱购 Preview 版'
+                    'app_name': '天天省钱 Preview 版'
             ])
         }
 

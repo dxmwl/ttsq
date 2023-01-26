@@ -11,7 +11,7 @@
     app:shape="rectangle"
     app:shape_radius="@dimen/dp_20"
     app:shape_solidColor="@color/white"
-    tools:context="com.shengqiangou.mobile.ui.dialog.AlbumDialog"
+    tools:context="com.ttsq.mobile.ui.dialog.AlbumDialog"
     tools:itemCount="4"
     tools:layoutAnimation="@null"
     tools:listitem="@layout/album_item" />

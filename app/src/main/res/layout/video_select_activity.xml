@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shengqiangou.mobile.ui.activity.VideoSelectActivity">
+    tools:context="com.ttsq.mobile.ui.activity.VideoSelectActivity">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.shengqiangou.mobile.widget.StatusLayout
+        <com.ttsq.mobile.widget.StatusLayout
             android:id="@+id/hl_video_select_hint"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -30,7 +30,7 @@
                 tools:listitem="@layout/video_select_item"
                 tools:spanCount="2" />
 
-        </com.shengqiangou.mobile.widget.StatusLayout>
+        </com.ttsq.mobile.widget.StatusLayout>
 
         <com.hjq.widget.view.FloatActionButton
             android:id="@+id/fab_video_select_floating"

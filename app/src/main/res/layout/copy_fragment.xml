@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shengqiangou.mobile.ui.fragment.CopyFragment">
+    tools:context="com.ttsq.mobile.ui.fragment.CopyFragment">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"

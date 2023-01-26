@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="com.shengqiangou.mobile.ui.adapter.CopyAdapter">
+    tools:context="com.ttsq.mobile.ui.adapter.CopyAdapter">
 
 </LinearLayout>

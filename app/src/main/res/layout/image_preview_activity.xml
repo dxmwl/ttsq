@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#363636"
-    tools:context="com.shengqiangou.mobile.ui.activity.ImagePreviewActivity">
+    tools:context="com.ttsq.mobile.ui.activity.ImagePreviewActivity">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_image_preview_pager"

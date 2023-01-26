@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shengqiangou.mobile.ui.activity.DialogActivity">
+    tools:context="com.ttsq.mobile.ui.activity.DialogActivity">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
