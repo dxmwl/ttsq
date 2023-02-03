@@ -57,7 +57,7 @@ class PqyGoodsAdapter(val mContext: Context) : AppAdapter<PyqGoodsApi.PyqGoodsDt
             nine_img_view?.data = pyqGoodsDto.itempic
 
             textView4?.setOnClickListener {
-                GoodsDetailActivity.start(mContext, pyqGoodsDto.couponurl)
+                GoodsDetailActivity.start(mContext, pyqGoodsDto.itemid)
             }
 
             copy_wenan?.setOnClickListener {

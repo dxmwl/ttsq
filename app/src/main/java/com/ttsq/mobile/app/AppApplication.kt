@@ -48,6 +48,8 @@ class AppApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         _context = this
+
+        UmengClient.preInit(_context, BuildConfig.DEBUG)
         initSdk(this)
     }
 
@@ -182,7 +184,7 @@ class AppApplication : Application() {
             })
         }
 
-        private lateinit var _context:Application
+        private lateinit var _context: Application
 
         fun getApp(): Application {
             return _context

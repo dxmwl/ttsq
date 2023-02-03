@@ -31,7 +31,11 @@ import com.ttsq.mobile.ui.dialog.ShareDialog
 import com.ttsq.mobile.utils.FormatUtils
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.Permission
+import com.hjq.permissions.XXPermissions
 import com.ttsq.mobile.http.model.GoodsDetailDto
+import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.media.UMWeb
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnPageChangeListener
@@ -189,13 +193,21 @@ class GoodsDetailActivity : AppActivity() {
                 OnHttpListener<HttpData<GetLingquanUrlApi.LingquanUrlDto>> {
                 override fun onSucceed(result: HttpData<GetLingquanUrlApi.LingquanUrlDto>?) {
                     if (needShare) {
-                        ShareDialog.Builder(this@GoodsDetailActivity)
-                            .setShareLink(
-                                UMWeb(
-                                    result?.getData()?.coupon_click_url.toString()
-                                )
-                            )
-                            .show()
+                        XXPermissions.with(this@GoodsDetailActivity)
+                            .permission(Permission.WRITE_EXTERNAL_STORAGE)
+                            .request { _, all ->
+                                if (all) {
+                                    val umWeb = UMWeb(
+                                        result?.getData()?.coupon_click_url.toString()
+                                    )
+                                    umWeb.title = "粉丝福利购"
+                                    umWeb.description = "点击领取福利"
+                                    ShareDialog.Builder(this@GoodsDetailActivity)
+                                        .setShareLink(umWeb)
+                                        .show()
+                                }
+                            }
+
                         return
                     }
 
@@ -242,14 +254,18 @@ class GoodsDetailActivity : AppActivity() {
         yhq_jine?.text = goodsInfo?.couponmoney
         start_time?.text = "${
             goodsInfo?.couponstarttime?.let {
-                TimeUtils.millis2String(it * 1000,
-                    "yyyy.mm.dd hh:mm")
+                TimeUtils.millis2String(
+                    it * 1000,
+                    "yyyy.mm.dd hh:mm"
+                )
             }
         }"
         end_time?.text = "${
             goodsInfo?.couponendtime?.let {
-                TimeUtils.millis2String(it * 1000,
-                    "yyyy.mm.dd hh:mm")
+                TimeUtils.millis2String(
+                    it * 1000,
+                    "yyyy.mm.dd hh:mm"
+                )
             }
         }"
         yhje_str?.text = goodsInfo?.couponinfo
@@ -294,5 +310,10 @@ class GoodsDetailActivity : AppActivity() {
             yhStr?.visibility = View.VISIBLE
             yuanjia?.visibility = View.VISIBLE
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
     }
 }

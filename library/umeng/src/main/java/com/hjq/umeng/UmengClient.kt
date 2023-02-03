@@ -31,7 +31,13 @@ object UmengClient {
     fun init(application: Application?, logEnable: Boolean) {
         preInit(application, logEnable)
         // 友盟统计：https://developer.umeng.com/docs/66632/detail/101814#h1-u521Du59CBu5316u53CAu901Au7528u63A5u53E32
-        UMConfigure.init(application, BuildConfig.UM_KEY, "umeng", UMConfigure.DEVICE_TYPE_PHONE, "1259b20f38e8c240a435c2b428b9b681")
+        UMConfigure.init(
+            application,
+            BuildConfig.UM_KEY,
+            "umeng",
+            UMConfigure.DEVICE_TYPE_PHONE,
+            "1259b20f38e8c240a435c2b428b9b681"
+        )
         // 获取设备的 oaid
         UMConfigure.getOaid(application) { oaid: String? -> deviceOaid = oaid }
     }
@@ -65,7 +71,12 @@ object UmengClient {
      * @param action                分享意图
      * @param listener              分享监听
      */
-    fun share(activity: Activity?, platform: Platform?, action: ShareAction?, listener: OnShareListener?) {
+    fun share(
+        activity: Activity?,
+        platform: Platform?,
+        action: ShareAction?,
+        listener: OnShareListener?
+    ) {
         if (platform == null) {
             return
         }

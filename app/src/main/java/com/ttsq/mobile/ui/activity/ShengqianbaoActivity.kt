@@ -13,7 +13,11 @@ import com.ttsq.mobile.http.api.GetYouhuiApi
 import com.ttsq.mobile.http.model.HttpData
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
+import com.hjq.permissions.Permission
+import com.hjq.permissions.XXPermissions
 import com.hjq.shape.view.ShapeEditText
+import com.ttsq.mobile.ui.dialog.ShareDialog
+import com.umeng.socialize.media.UMWeb
 
 /**
  * 省钱宝
@@ -35,7 +39,7 @@ class ShengqianbaoActivity : AppActivity() {
     private var inputTklStr = ""
 
     override fun initView() {
-        setOnClickListener(R.id.go_buy, R.id.shapeTextView, R.id.clear_input)
+        setOnClickListener(R.id.go_buy, R.id.shapeTextView, R.id.clear_input, R.id.btn_share)
 
         shapeEditText?.addTextChangedListener {
             inputTklStr = it?.toString().toString()
@@ -57,6 +61,9 @@ class ShengqianbaoActivity : AppActivity() {
     override fun onClick(view: View) {
         super.onClick(view)
         when (view.id) {
+            R.id.btn_share -> {
+                getYouhuiInfo(true)
+            }
             R.id.go_buy -> {
                 if (AppUtils.isAppInstalled("com.taobao.taobao")) {
                     val intent = Intent()
@@ -83,7 +90,7 @@ class ShengqianbaoActivity : AppActivity() {
         }
     }
 
-    private fun getYouhuiInfo() {
+    private fun getYouhuiInfo(needShare: Boolean = false) {
         if (inputTklStr.isBlank()) {
             toast("请将商品链接到输入框")
             return
@@ -101,6 +108,21 @@ class ShengqianbaoActivity : AppActivity() {
                         youhuiquan?.text = "-${it.coupon_info_money}"
                         shiji_pay?.text = it.quanhou_jiage
                         go_buy?.text = "立即购买省\n¥${it.coupon_info_money}"
+
+                        if (needShare) {
+                            XXPermissions.with(this@ShengqianbaoActivity)
+                                .permission(Permission.WRITE_EXTERNAL_STORAGE)
+                                .request { _, all ->
+                                    if (all) {
+                                        val umWeb = UMWeb(youhuiUrl)
+                                        umWeb.title = "粉丝福利购"
+                                        umWeb.description = "点击领取福利"
+                                        ShareDialog.Builder(this@ShengqianbaoActivity)
+                                            .setShareLink(umWeb)
+                                            .show()
+                                    }
+                                }
+                        }
                     }
                 }
 

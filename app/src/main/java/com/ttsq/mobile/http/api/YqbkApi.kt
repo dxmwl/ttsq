@@ -40,6 +40,7 @@ class YqbkApi : IRequestApi {
         val category_id: String,
         val category_name: String,
         val code: String,
+        val itemid: String,
         val commentCount: String,
         val coupon_end_time: String,
         val coupon_id: String,

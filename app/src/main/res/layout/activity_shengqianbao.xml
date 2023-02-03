@@ -234,12 +234,13 @@
 
         <com.hjq.shape.view.ShapeTextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/btn_share"
+            android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/dp_10"
             android:layout_weight="1"
             android:gravity="center"
             android:paddingVertical="@dimen/dp_5"
-            android:text="分享好友赚\n收益"
+            android:text="分享好友"
             android:textColor="#714400"
             android:textSize="15sp"
             android:textStyle="bold"
