@@ -253,6 +253,9 @@ class YqbkFragment : TitleBarFragment<HomeActivity>(), TabLayout.OnTabSelectedLi
     private var pageIndex = 1
 
     private fun getGoodsList() {
+        if (selectorPosition>=hourType.size){
+            return
+        }
         val hourTypeDto = hourType[selectorPosition]
         EasyHttp.get(this)
             .api(XsqgApi().apply {

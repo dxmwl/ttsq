@@ -35,6 +35,7 @@ import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.ttsq.mobile.http.model.GoodsDetailDto
+import com.ttsq.mobile.ui.fragment.HomeFragment
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.media.UMWeb
 import com.youth.banner.Banner
@@ -68,6 +69,7 @@ class GoodsDetailActivity : AppActivity() {
     private val goods_title: TextView? by lazy { findViewById<TextView>(R.id.goods_title) }
     private val yuanjia: TextView? by lazy { findViewById<TextView>(R.id.yuanjia) }
     private val buy_num: TextView? by lazy { findViewById<TextView>(R.id.buy_num) }
+    private val home: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.home) }
     private val shop_name: TextView? by lazy { findViewById<TextView>(R.id.shop_name) }
     private val num_bbms: TextView? by lazy { findViewById<TextView>(R.id.num_bbms) }
     private val num_mjfw: TextView? by lazy { findViewById<TextView>(R.id.num_mjfw) }
@@ -96,7 +98,7 @@ class GoodsDetailActivity : AppActivity() {
     }
 
     override fun initView() {
-        setOnClickListener(iv_back2, ll_lq, iv_lq, ll_share)
+        setOnClickListener(iv_back2, ll_lq, iv_lq, ll_share,home)
         banner?.let {
 //            it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
@@ -167,6 +169,9 @@ class GoodsDetailActivity : AppActivity() {
     @SingleClick
     override fun onClick(view: View) {
         when (view) {
+            home->{
+                HomeActivity.start(this,HomeFragment::class.java)
+            }
             iv_back2 -> {
                 finish()
             }

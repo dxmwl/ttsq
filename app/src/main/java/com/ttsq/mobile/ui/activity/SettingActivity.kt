@@ -21,6 +21,7 @@ import com.hjq.http.EasyHttp
 import com.hjq.http.listener.HttpCallback
 import com.hjq.widget.layout.SettingBar
 import com.hjq.widget.view.SwitchButton
+import com.ttsq.mobile.app.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,7 +49,7 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
         autoSwitchView?.setOnCheckedChangeListener(this)
         setOnClickListener(R.id.sb_setting_language, R.id.sb_setting_update, R.id.sb_setting_phone,
             R.id.sb_setting_password, R.id.sb_setting_agreement, R.id.sb_setting_about,
-            R.id.sb_setting_cache, R.id.sb_setting_auto, R.id.sb_setting_exit)
+            R.id.sb_setting_cache, R.id.sb_setting_auto, R.id.sb_setting_exit,R.id.user_xieyi)
     }
 
     override fun initData() {
@@ -62,6 +63,9 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
     @SingleClick
     override fun onClick(view: View) {
         when (view.id) {
+            R.id.user_xieyi->{
+                BrowserActivity.start(this, Constants.URL_USER_AGREEMENT)
+            }
             R.id.sb_setting_language -> {
 
                 // 底部选择框
@@ -118,7 +122,7 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
             }
             R.id.sb_setting_agreement -> {
 
-                BrowserActivity.start(this, "https://github.com/getActivity/Donate")
+                BrowserActivity.start(this, Constants.URL_PRIVACY_POLICY)
             }
             R.id.sb_setting_about -> {
 
