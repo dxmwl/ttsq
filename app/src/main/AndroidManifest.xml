@@ -66,6 +66,7 @@
         <activity
             android:name="com.ttsq.mobile.ui.activity.SplashActivity"
             android:launchMode="singleTop"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
 

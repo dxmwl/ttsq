@@ -4,14 +4,14 @@ apply plugin: 'kotlin-android'
 android {
 
     // 编译源码版本
-    compileSdkVersion 30
+    compileSdkVersion 33
     defaultConfig {
         // 最低安装版本
         minSdkVersion 21
         // 目标适配版本
-        targetSdkVersion 30
-        versionName '1.0'
-        versionCode 10
+        targetSdkVersion 33
+        versionName '1.0.0'
+        versionCode 11
     }
 
     // 支持 Java JDK 8
