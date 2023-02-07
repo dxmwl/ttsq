@@ -73,7 +73,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() {
             btn_shengqian -> {
                 BrowserActivity.start(
                     requireContext(),
-                    "${Constants.URL_CMS}?cid=Ymg7Vc2#/save-money"
+                    "${Constants.URL_CMS}?cid=bBNmDymI#/save-money"
                 )
             }
             all_class -> {

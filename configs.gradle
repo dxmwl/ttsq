@@ -36,9 +36,9 @@ ext {
     // QQ Secret
     QQ_APP_SECRET = "m8R0Ht4pqi6pwFAZ"
     // 微信 AppId
-    WX_APP_ID = "wxd35706cc9f46114c"
+    WX_APP_ID = "wxdf96f973a6d3be68"
     // 微信 Secret
-    WX_APP_SECRET = "0c8c7cf831dd135a32b3e395ea459b5a"
+    WX_APP_SECRET = "213a5a44e83027a5f0e22cd626bc0476"
     //好单库APpKey
     HDK_APP_KEY = "6A1C5D434A43"
     //淘宝联盟PID

@@ -17,7 +17,7 @@
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_100"
         android:layout_marginTop="@dimen/dp_50"
-        android:layout_marginBottom="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_10"
         app:scaleRatio="1.5"
         app:srcCompat="@mipmap/ic_launcher" />
 
@@ -43,8 +43,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_10"
             android:autoLink="all"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="@dimen/dp_10"
+            android:textColor="#222222"
+            android:textSize="@dimen/sp_14" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:autoLink="all"
+            android:text="联系方式:3214341986@qq.com"
             android:gravity="center_horizontal"
             android:lineSpacingExtra="@dimen/dp_10"
             android:textColor="#222222"

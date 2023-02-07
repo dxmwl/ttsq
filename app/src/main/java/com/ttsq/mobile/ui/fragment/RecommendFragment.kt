@@ -63,56 +63,56 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                     id = "1",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081206_73798",
                     title = "饿了么",
-                    value = "${Constants.URL_CMS}?cid=Ymg7Vc2#/propaganda?id=116"
+                    value = "${Constants.URL_CMS}?cid=bBNmDymI#/propaganda?id=116"
                 ),
                 MenuDto(
                     id = "2",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1639987106_638617",
                     title = "抖音好货",
-                    value = "${Constants.URL_CMS}?cid=Ymg7Vc2#/inside-page/dylist"
+                    value = "${Constants.URL_CMS}?cid=bBNmDymI#/inside-page/dylist"
                 ),
                 MenuDto(
                     id = "3",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1648537480_628688",
                     title = "百亿补贴",
-                    value = "${Constants.URL_CMS}?cid=Ymg7Vc2#/propaganda?id=4"
+                    value = "${Constants.URL_CMS}?cid=bBNmDymI#/propaganda?id=4"
                 ),
                 MenuDto(
                     id = "4",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081152_7799",
                     title = "福利线报",
-                    value = "${Constants.URL_CMS}?cid=Ymg7Vc2&tmp=rt_xb&code=Ymg7Vc2&sp=#/sp"
+                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=rt_xb&code=bBNmDymI&sp=#/sp"
                 ),
                 MenuDto(
                     id = "5",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081228_51540",
                     title = "聚划算",
-                    value = "${Constants.URL_CMS}?cid=Ymg7Vc2&tmp=juhuasuan&code=Ymg7Vc2&sp=#/sp"
+                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=juhuasuan&code=bBNmDymI&sp=#/sp"
                 ),
                 MenuDto(
                     id = "6",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624203264_377314",
                     title = "9.9包邮",
-                    value = "${Constants.URL_CMS}?cid=Ymg7Vc2&tmp=lowprice&code=Ymg7Vc2&sp=#/sp"
+                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=lowprice&code=bBNmDymI&sp=#/sp"
                 ),
                 MenuDto(
                     id = "7",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1636017658_700397",
                     title = "生活必需品",
-                    value = "${Constants.URL_CMS}?cid=Ymg7Vc2&tmp=activity125&code=Ymg7Vc2&sp=#/sp"
+                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=activity125&code=bBNmDymI&sp=#/sp"
                 ),
                 MenuDto(
                     id = "8",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081329_908029",
                     title = "热销专场",
-                    value = "${Constants.URL_CMS}?cid=Ymg7Vc2&tmp=hot_sale&code=Ymg7Vc2&sp=#/sp"
+                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=hot_sale&code=bBNmDymI&sp=#/sp"
                 ),
                 MenuDto(id = "9", resId = R.drawable.icon_shengqianbao, title = "省钱宝"),
                 MenuDto(
                     id = "10",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624203252_511524",
                     title = "防疫专区",
-                    value = "${Constants.URL_CMS}?cid=Ymg7Vc2&tmp=fangyi&code=Ymg7Vc2&sp=#/sp"
+                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=fangyi&code=bBNmDymI&sp=#/sp"
                 )
             )
             it.layoutManager = GridLayoutManager(context, 5)
