@@ -95,12 +95,11 @@
                 app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
             <com.hjq.widget.layout.SettingBar
-                android:visibility="gone"
                 android:id="@+id/sb_setting_auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_15"
-                app:bar_leftText="@string/setting_auto">
+                app:bar_leftText="消息通知">
 
                 <com.hjq.widget.view.SwitchButton
                     android:id="@+id/sb_setting_switch"

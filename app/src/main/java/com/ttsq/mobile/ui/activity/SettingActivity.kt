@@ -3,6 +3,7 @@ package com.ttsq.mobile.ui.activity
 import android.view.Gravity
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.SPUtils
 import com.hjq.base.BaseDialog
 import com.hjq.base.action.AnimAction
 import com.ttsq.mobile.R
@@ -47,9 +48,15 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
     override fun initView() {
         // 设置切换按钮的监听
         autoSwitchView?.setOnCheckedChangeListener(this)
-        setOnClickListener(R.id.sb_setting_language, R.id.sb_setting_update, R.id.sb_setting_phone,
+        setOnClickListener(
+            R.id.sb_setting_language, R.id.sb_setting_update, R.id.sb_setting_phone,
             R.id.sb_setting_password, R.id.sb_setting_agreement, R.id.sb_setting_about,
-            R.id.sb_setting_cache, R.id.sb_setting_auto, R.id.sb_setting_exit,R.id.user_xieyi)
+            R.id.sb_setting_cache, R.id.sb_setting_exit, R.id.user_xieyi
+        )
+
+        autoSwitchView?.setChecked(
+            SPUtils.getInstance("APP_CONFIG").getBoolean("PUSH_SWITCH", true)
+        )
     }
 
     override fun initData() {
@@ -63,7 +70,7 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
     @SingleClick
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.user_xieyi->{
+            R.id.user_xieyi -> {
                 BrowserActivity.start(this, Constants.URL_USER_AGREEMENT)
             }
             R.id.sb_setting_language -> {
@@ -76,7 +83,10 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
 
                         override fun onSelected(dialog: BaseDialog?, position: Int, data: String) {
                             languageView?.setRightText(data)
-                            BrowserActivity.start(this@SettingActivity, "https://github.com/getActivity/MultiLanguages")
+                            BrowserActivity.start(
+                                this@SettingActivity,
+                                "https://github.com/getActivity/MultiLanguages"
+                            )
                         }
                     })
                     .setGravity(Gravity.BOTTOM)
@@ -128,13 +138,6 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
 
                 startActivity(AboutActivity::class.java)
             }
-            R.id.sb_setting_auto -> {
-
-                autoSwitchView?.let {
-                    // 自动登录
-                    it.setChecked(!it.isChecked())
-                }
-            }
             R.id.sb_setting_cache -> {
 
                 // 清除内存缓存（必须在主线程）
@@ -168,7 +171,8 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
                         override fun onSucceed(data: HttpData<Void?>?) {
                             startActivity(LoginActivity::class.java)
                             // 进行内存优化，销毁除登录页之外的所有界面
-                            ActivityManager.getInstance().finishAllActivities(LoginActivity::class.java)
+                            ActivityManager.getInstance()
+                                .finishAllActivities(LoginActivity::class.java)
                         }
                     })
             }
@@ -179,6 +183,6 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
      * [SwitchButton.OnCheckedChangeListener]
      */
     override fun onCheckedChanged(button: SwitchButton, checked: Boolean) {
-        toast(checked)
+        SPUtils.getInstance("APP_CONFIG").put("PUSH_SWITCH", autoSwitchView?.isChecked() == true)
     }
 }
