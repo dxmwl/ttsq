@@ -40,6 +40,7 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
     private val passwordView: SettingBar? by lazy { findViewById(R.id.sb_setting_password) }
     private val cleanCacheView: SettingBar? by lazy { findViewById(R.id.sb_setting_cache) }
     private val autoSwitchView: SwitchButton? by lazy { findViewById(R.id.sb_setting_switch) }
+    private val gxtj_switch: SwitchButton? by lazy { findViewById(R.id.gxtj_switch) }
 
     override fun getLayoutId(): Int {
         return R.layout.setting_activity
@@ -48,6 +49,7 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
     override fun initView() {
         // 设置切换按钮的监听
         autoSwitchView?.setOnCheckedChangeListener(this)
+        gxtj_switch?.setOnCheckedChangeListener(this)
         setOnClickListener(
             R.id.sb_setting_language, R.id.sb_setting_update, R.id.sb_setting_phone,
             R.id.sb_setting_password, R.id.sb_setting_agreement, R.id.sb_setting_about,
@@ -56,6 +58,9 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
 
         autoSwitchView?.setChecked(
             SPUtils.getInstance("APP_CONFIG").getBoolean("PUSH_SWITCH", true)
+        )
+        gxtj_switch?.setChecked(
+            SPUtils.getInstance("APP_CONFIG").getBoolean("GXTJ_SWITCH", true)
         )
     }
 
@@ -183,6 +188,14 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
      * [SwitchButton.OnCheckedChangeListener]
      */
     override fun onCheckedChanged(button: SwitchButton, checked: Boolean) {
-        SPUtils.getInstance("APP_CONFIG").put("PUSH_SWITCH", autoSwitchView?.isChecked() == true)
+        when (button) {
+            gxtj_switch -> {
+                SPUtils.getInstance("APP_CONFIG").put("GXTJ_SWITCH", gxtj_switch?.isChecked() == true)
+            }
+            autoSwitchView->{
+                SPUtils.getInstance("APP_CONFIG").put("PUSH_SWITCH", autoSwitchView?.isChecked() == true)
+            }
+            else -> {}
+        }
     }
 }

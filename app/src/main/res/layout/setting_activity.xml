@@ -111,6 +111,20 @@
             </com.hjq.widget.layout.SettingBar>
 
             <com.hjq.widget.layout.SettingBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bar_leftText="个性化推荐">
+
+                <com.hjq.widget.view.SwitchButton
+                    android:id="@+id/gxtj_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginHorizontal="@dimen/dp_15" />
+
+            </com.hjq.widget.layout.SettingBar>
+
+            <com.hjq.widget.layout.SettingBar
                 android:id="@+id/sb_setting_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
