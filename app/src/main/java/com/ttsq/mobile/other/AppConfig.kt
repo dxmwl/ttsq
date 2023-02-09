@@ -86,4 +86,11 @@ object AppConfig {
     fun getHdkAppKey(): String {
         return BuildConfig.HDK_APP_KEY
     }
+
+    /**
+     * 获取渠道标记
+     */
+    fun getChannelTag(): String {
+        return BuildConfig.CHANNEL_TAG
+    }
 }

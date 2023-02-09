@@ -202,7 +202,7 @@ class SplashActivity : AppActivity() {
     fun initSdk(application: Application) {
 
         // 友盟统计、登录、分享 SDK
-        UmengClient.init(application, AppConfig.isLogEnable())
+        UmengClient.init(application, AppConfig.isLogEnable(),AppConfig.getChannelTag())
 
         // Bugly 异常捕捉
         CrashReport.initCrashReport(application, AppConfig.getBuglyId(), AppConfig.isDebug())

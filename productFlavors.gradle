@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+
+// 多渠道配置
+android {
+    productFlavors {
+        guanfang { // 官方
+            //渠道号配置
+            buildConfigField('String', 'CHANNEL_TAG', '"guanfang"')
+            // 添加清单占位符
+            manifestPlaceholders = [
+                    app_name: "天天省钱"
+            ]
+            flavorDimensions "1"
+        }
+        xiaomi { // 小米
+            //渠道号配置
+            buildConfigField('String', 'CHANNEL_TAG', '"xiaomi"')
+            // 添加清单占位符
+            manifestPlaceholders = [
+                    app_name: "天天省钱"
+            ]
+            flavorDimensions "1"
+        }
+
+        huawei { // 华为
+            //渠道号配置
+            buildConfigField('String', 'CHANNEL_TAG', '"huawei"')
+            // 添加清单占位符
+            manifestPlaceholders = [
+                    app_name: "天天省钱"
+            ]
+            flavorDimensions "1"
+        }
+
+        oppo { // oppo
+            //渠道号配置
+            buildConfigField('String', 'CHANNEL_TAG', '"oppo"')
+            // 添加清单占位符
+            manifestPlaceholders = [
+                    app_name: "天天省钱"
+            ]
+            flavorDimensions "1"
+        }
+
+        vivo { // vivo
+            //渠道号配置
+            buildConfigField('String', 'CHANNEL_TAG', '"vivo"')
+            // 添加清单占位符
+            manifestPlaceholders = [
+                    app_name: "点线面天天省钱"
+            ]
+            flavorDimensions "1"
+        }
+
+        yingyongbao { // 应用宝
+            //渠道号配置
+            buildConfigField('String', 'CHANNEL_TAG', '"yingyongbao"')
+            // 添加清单占位符
+            manifestPlaceholders = [
+                    app_name: "天天省钱"
+            ]
+            flavorDimensions "1"
+        }
+
+        pugongying { // 蒲公英
+            //渠道号配置
+            buildConfigField('String', 'CHANNEL_TAG', '"pugongying"')
+            // 添加清单占位符
+            manifestPlaceholders = [
+                    app_name: "天天省钱"
+            ]
+            flavorDimensions "1"
+        }
+        baidu { // 百度
+            //渠道号配置
+            buildConfigField('String', 'CHANNEL_TAG', '"baidu"')
+            // 添加清单占位符
+            manifestPlaceholders = [
+                    app_name: "天天省钱"
+            ]
+            flavorDimensions "1"
+        }
+
+    }
+}

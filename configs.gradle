@@ -47,7 +47,6 @@ ext {
     hak_baseUrl = "http://v2.api.haodanku.com/"
     switch(serverType) {
         case SERVER_TYPE_TEST:
-        case SERVER_TYPE_PREVIEW:
             LOG_ENABLE = true
             BUGLY_ID = "1ff4582555"
             if (serverType == SERVER_TYPE_PREVIEW) {

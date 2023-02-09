@@ -28,13 +28,13 @@ object UmengClient {
     /**
      * 初始化友盟相关 SDK
      */
-    fun init(application: Application?, logEnable: Boolean) {
+    fun init(application: Application?, logEnable: Boolean,channelTag:String = "umeng") {
         preInit(application, logEnable)
         // 友盟统计：https://developer.umeng.com/docs/66632/detail/101814#h1-u521Du59CBu5316u53CAu901Au7528u63A5u53E32
         UMConfigure.init(
             application,
             BuildConfig.UM_KEY,
-            "umeng",
+            channelTag,
             UMConfigure.DEVICE_TYPE_PHONE,
             "1259b20f38e8c240a435c2b428b9b681"
         )
