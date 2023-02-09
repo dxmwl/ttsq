@@ -44,9 +44,6 @@ import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import com.ttsq.mobile.BuildConfig
 import com.ttsq.mobile.app.AppApplication
-import com.ttsq.mobile.app.Constants
-import com.ttsq.mobile.http.model.RequestHandler
-import com.ttsq.mobile.http.model.RequestServer
 import com.ttsq.mobile.manager.ActivityManager
 import com.ttsq.mobile.other.*
 import okhttp3.OkHttpClient
@@ -79,7 +76,7 @@ class SplashActivity : AppActivity() {
 //            }
 //        })
         postDelayed({
-            if (!SPUtils.getInstance("APP_CONFIG").getBoolean("AGREE_AGREEMENT",false)) {
+            if (!SPUtils.getInstance("APP_CONFIG").getBoolean("AGREE_AGREEMENT", false)) {
                 showYszcDialog()
             } else {
                 HomeActivity.start(this@SplashActivity)
@@ -163,12 +160,12 @@ class SplashActivity : AppActivity() {
             .append("亲爱的用户，本软件的正常使用需要依法征用您的登录身份个人信息，本平台承诺将严格保护您个人信息，确保信息安全，具体详见我方按照相关法律法规要求制定的")
             .append("《服务协议》")
             .setClickSpan(Color.parseColor("#FF0690FE"), false) {
-                BrowserActivity.start(this, Constants.URL_USER_AGREEMENT)
+                BrowserActivity.start(this, AppConfig.getUserAgreementUrl())
             }
             .append("及")
             .append("《隐私政策》")
             .setClickSpan(Color.parseColor("#FF0690FE"), false) {
-                BrowserActivity.start(this, Constants.URL_PRIVACY_POLICY)
+                BrowserActivity.start(this, AppConfig.getPrivacyPolicyUrl())
             }.create()
         dialog.show()
 
@@ -202,7 +199,7 @@ class SplashActivity : AppActivity() {
     fun initSdk(application: Application) {
 
         // 友盟统计、登录、分享 SDK
-        UmengClient.init(application, AppConfig.isLogEnable(),AppConfig.getChannelTag())
+        UmengClient.init(application, AppConfig.isLogEnable(), AppConfig.getChannelTag())
 
         // Bugly 异常捕捉
         CrashReport.initCrashReport(application, AppConfig.getBuglyId(), AppConfig.isDebug())

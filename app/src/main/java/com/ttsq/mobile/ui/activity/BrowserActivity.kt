@@ -70,7 +70,8 @@ class BrowserActivity : AppActivity(), com.ttsq.mobile.action.StatusAction, OnRe
         browserView?.apply {
             setBrowserViewClient(AppBrowserViewClient())
             setBrowserChromeClient(AppBrowserChromeClient(this))
-            loadUrl(getString(INTENT_KEY_IN_URL)!!)
+            val urlStr = getString(INTENT_KEY_IN_URL)
+            loadUrl(urlStr!!)
         }
     }
 

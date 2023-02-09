@@ -76,7 +76,7 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.user_xieyi -> {
-                BrowserActivity.start(this, Constants.URL_USER_AGREEMENT)
+                BrowserActivity.start(this, AppConfig.getUserAgreementUrl())
             }
             R.id.sb_setting_language -> {
 
@@ -137,7 +137,7 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
             }
             R.id.sb_setting_agreement -> {
 
-                BrowserActivity.start(this, Constants.URL_PRIVACY_POLICY)
+                BrowserActivity.start(this, AppConfig.getPrivacyPolicyUrl())
             }
             R.id.sb_setting_about -> {
 

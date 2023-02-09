@@ -1,6 +1,7 @@
 package com.ttsq.mobile.other
 
 import com.ttsq.mobile.BuildConfig
+import com.ttsq.mobile.app.Constants
 
 /**
  *    author : Android 轮子哥
@@ -92,5 +93,27 @@ object AppConfig {
      */
     fun getChannelTag(): String {
         return BuildConfig.CHANNEL_TAG
+    }
+
+    /**
+     * 获取用户协议链接
+     */
+    fun getUserAgreementUrl(): String {
+        return if (getChannelTag()=="vivo"){
+            Constants.URL_USER_AGREEMENT_VIVO
+        }else{
+            Constants.URL_USER_AGREEMENT
+        }
+    }
+
+    /**
+     * 获取隐私政策链接
+     */
+    fun getPrivacyPolicyUrl(): String {
+        return if (getChannelTag()=="vivo"){
+            Constants.URL_PRIVACY_POLICY_VIVO
+        }else{
+            Constants.URL_PRIVACY_POLICY
+        }
     }
 }
