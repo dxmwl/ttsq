@@ -5,7 +5,7 @@ import com.hjq.http.config.IRequestApi
 /**
  * 商品筛选
  */
-class CommodityScreeningApi : IRequestApi {
+class CommodityScreeningApi : HaodankuBaseApi()  {
     override fun getApi(): String {
         return "column"
     }

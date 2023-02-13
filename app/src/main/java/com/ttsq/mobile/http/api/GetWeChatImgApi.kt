@@ -1,11 +1,9 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 /**
  * 二维码发单图
  */
-class GetWeChatImgApi : IRequestApi {
+class GetWeChatImgApi : HaodankuBaseApi() {
     override fun getApi(): String {
         return "api/open_qrpic.ashx"
     }

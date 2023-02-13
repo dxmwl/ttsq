@@ -226,6 +226,12 @@ dependencies {
 
     implementation 'com.blankj:utilcodex:1.31.1'
 
+    //核心模块
+    debugImplementation "io.github.didi.dokit:dokitx:3.5.0"
+
+    //no-op 模块
+    releaseImplementation "io.github.didi.dokit:dokitx-no-op:3.5.0"
+
     // 多语种：https://github.com/getActivity/MultiLanguages
     // 悬浮窗：https://github.com/getActivity/XToast
     // 日志输出：https://github.com/getActivity/Logcat

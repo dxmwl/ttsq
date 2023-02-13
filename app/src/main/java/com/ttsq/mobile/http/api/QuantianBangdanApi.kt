@@ -1,14 +1,12 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 /**
  * 全天实时榜单
  */
-class QuantianBangdanApi:IRequestApi {
+class QuantianBangdanApi : HaodankuBaseApi() {
     override fun getApi(): String {
         return "api/api_quantian.ashx"
     }
 
-    var sort:String = "new"
+    var sort: String = "new"
 }

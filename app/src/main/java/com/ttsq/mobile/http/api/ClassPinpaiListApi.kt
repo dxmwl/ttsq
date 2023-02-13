@@ -3,7 +3,7 @@ package com.ttsq.mobile.http.api
 import com.hjq.http.config.IRequestApi
 
 
-class ClassPinpaiListApi : IRequestApi {
+class ClassPinpaiListApi : HaodankuBaseApi()  {
     override fun getApi(): String {
         return "brand"
     }

@@ -50,7 +50,7 @@ class SearchActivity : AppActivity() {
 
         input_keyword?.addTextChangedListener {
             if (it.isNullOrEmpty()) {
-                match_character_list?.visibility = View.GONE
+                match_character_list?.visibility = View.INVISIBLE
             } else {
                 getLianxiang(it.toString())
             }
@@ -86,7 +86,7 @@ class SearchActivity : AppActivity() {
                 override fun onSucceed(result: HttpData<ArrayList<LianxiangApi.LianxiangDto>>?) {
                     result?.getData()?.let {
                         if (it.isEmpty()) {
-                            match_character_list?.visibility = View.GONE
+                            match_character_list?.visibility = View.INVISIBLE
                         } else {
                             match_character_list?.visibility = View.VISIBLE
                             lianxiangciAdapter.setData(it)

@@ -1,7 +1,5 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 
 /**
  * @project : EasyBuy_Android
@@ -9,7 +7,7 @@ import com.hjq.http.config.IRequestApi
  * @author : clb
  * @time : 2022/6/23
  */
-class GoodsListApi() : IRequestApi {
+class GoodsListApi() : HaodankuBaseApi() {
 
     override fun getApi(): String {
         return "get_index_activity_items"

@@ -189,6 +189,7 @@ class GoodsDetailActivity : AppActivity() {
      * 获取领券地址
      */
     private fun getLingquanUrl(needShare: Boolean = false) {
+        showDialog()
         EasyHttp.post(this)
             .api(GetLingquanUrlApi().apply {
                 itemid = getString(GOODS_ID).toString()
@@ -197,6 +198,7 @@ class GoodsDetailActivity : AppActivity() {
             .request(object :
                 OnHttpListener<HttpData<GetLingquanUrlApi.LingquanUrlDto>> {
                 override fun onSucceed(result: HttpData<GetLingquanUrlApi.LingquanUrlDto>?) {
+                    hideDialog()
                     if (needShare) {
                         XXPermissions.with(this@GoodsDetailActivity)
                             .permission(Permission.WRITE_EXTERNAL_STORAGE)
@@ -238,6 +240,7 @@ class GoodsDetailActivity : AppActivity() {
                 }
 
                 override fun onFail(e: java.lang.Exception?) {
+                    hideDialog()
                     toast(e?.message)
                 }
 

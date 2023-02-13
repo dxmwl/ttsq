@@ -1,14 +1,12 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 /**
  * @project : EasyBuy_Android
  * @Description : 项目描述
  * @author : clb
  * @time : 2022/6/23
  */
-class GetLingquanUrlApi : IRequestApi {
+class GetLingquanUrlApi : HaodankuBaseApi() {
     override fun getApi(): String {
         return "ratesurl"
     }

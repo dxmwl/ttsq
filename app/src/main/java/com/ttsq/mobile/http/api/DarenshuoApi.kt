@@ -1,11 +1,9 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 /**
  * 达人说
  */
-class DarenshuoApi : IRequestApi {
+class DarenshuoApi : HaodankuBaseApi() {
     override fun getApi(): String {
         return "talent_info"
     }

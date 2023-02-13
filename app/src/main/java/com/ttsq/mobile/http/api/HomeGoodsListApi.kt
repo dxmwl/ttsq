@@ -1,10 +1,6 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-import com.hjq.http.config.IRequestServer
 import com.ttsq.mobile.http.model.GoodsDetailDto
-import com.ttsq.mobile.http.model.ShopScore
-import java.math.BigDecimal
 
 /**
  * @project : EasyBuy_Android
@@ -12,7 +8,7 @@ import java.math.BigDecimal
  * @author : clb
  * @time : 2022/6/23
  */
-class HomeGoodsListApi : IRequestApi , IRequestServer {
+class HomeGoodsListApi : HaodankuBaseApi() {
     override fun getApi(): String {
         return "api/maochao_items"
     }
@@ -27,6 +23,7 @@ class HomeGoodsListApi : IRequestApi , IRequestServer {
 
     //排序：1.价格从低到高；2.价格从高到底；3.日销从高到低；4.日销从低到高；5.2小时销量从高到底；6.两小时销量从低到高；7.最新
     var order: Int = 7
+
     override fun getHost(): String {
         return "https://api.haodanku.com/"
     }
@@ -60,6 +57,6 @@ class HomeGoodsListApi : IRequestApi , IRequestServer {
 //    var baodan: String = ""
 
     inner class MaochaoGoods(
-        val data :ArrayList<GoodsDetailDto>
+        val data: ArrayList<GoodsDetailDto>
     )
 }

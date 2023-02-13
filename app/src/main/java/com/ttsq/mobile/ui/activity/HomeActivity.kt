@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.didichuxing.doraemonkit.DoKit
 import com.gyf.immersionbar.ImmersionBar
 import com.hjq.base.FragmentPagerAdapter
 import com.hjq.http.EasyHttp
@@ -29,6 +30,7 @@ import com.hjq.http.listener.OnHttpListener
 import com.orhanobut.logger.Logger
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppActivity
+import com.ttsq.mobile.app.AppApplication
 import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.app.AppHelper
 import com.ttsq.mobile.eventbus.RefreshClass
@@ -107,6 +109,10 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             setOnNavigationListener(this@HomeActivity)
             navigationView?.adapter = this
         }
+
+        DoKit.Builder(AppApplication.getApp())
+            .productId("2f3d442feec5bff93d8c643c6612d833")
+            .build()
     }
 
     override fun initData() {
@@ -293,7 +299,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
                 }
 
                 override fun onFail(e: Exception?) {
-                    toast(e?.message)
+//                    toast(e?.message)
                 }
             })
     }
@@ -301,10 +307,12 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     override fun onResume() {
         super.onResume()
 
-        val clipboardContent = ClipboardUtils.getText()
-        if (clipboardContent.isNullOrBlank().not()) {
-            val toString = clipboardContent.toString()
-            getYouhuiInfo(toString)
-        }
+        postDelayed({
+            val clipboardContent = ClipboardUtils.getText()
+            if (clipboardContent.isNullOrBlank().not()) {
+                val toString = clipboardContent.toString()
+                getYouhuiInfo(toString)
+            }
+        },2000)
     }
 }

@@ -5,7 +5,7 @@ import com.hjq.http.config.IRequestApi
 /**
  * 榜单
  */
-class BangdanGoodsApi : IRequestApi {
+class BangdanGoodsApi : HaodankuBaseApi() {
     override fun getApi(): String {
         return "sales_list"
     }
@@ -18,6 +18,4 @@ class BangdanGoodsApi : IRequestApi {
     var min_id: Int = 1
 
     var cid: String = "0"
-
-
 }

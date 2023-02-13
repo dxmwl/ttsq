@@ -45,13 +45,15 @@ class ShengqianbaoActivity : AppActivity() {
             inputTklStr = it?.toString().toString()
         }
 
-        val clipboardContent = ClipboardUtils.getText()
-        if (clipboardContent.isNullOrBlank().not()) {
-            inputTklStr = clipboardContent.toString()
-            shapeEditText?.setText(inputTklStr)
-            shapeEditText?.setSelection(inputTklStr.length)
-            getYouhuiInfo()
-        }
+        postDelayed({
+            val clipboardContent = ClipboardUtils.getText()
+            if (clipboardContent.isNullOrBlank().not()) {
+                inputTklStr = clipboardContent.toString()
+                shapeEditText?.setText(inputTklStr)
+                shapeEditText?.setSelection(inputTklStr.length)
+                getYouhuiInfo()
+            }
+        }, 2000)
     }
 
     override fun initData() {
@@ -95,12 +97,14 @@ class ShengqianbaoActivity : AppActivity() {
             toast("请将商品链接到输入框")
             return
         }
+        showDialog()
         EasyHttp.get(this)
             .api(GetYouhuiApi().apply {
                 tkl = inputTklStr
             })
             .request(object : OnHttpListener<HttpData<ArrayList<GetYouhuiApi.GoodsYouhuiDto>>> {
                 override fun onSucceed(result: HttpData<ArrayList<GetYouhuiApi.GoodsYouhuiDto>>?) {
+                    hideDialog()
                     result?.getData()?.get(0)?.let {
                         youhuiUrl = it.coupon_click_url
                         yuanjia?.text = it.size
@@ -127,7 +131,8 @@ class ShengqianbaoActivity : AppActivity() {
                 }
 
                 override fun onFail(e: Exception?) {
-                    toast(e?.message)
+                    hideDialog()
+                    toast("该商品暂无相关优惠,可以试试其他商品哦~")
                 }
             })
     }

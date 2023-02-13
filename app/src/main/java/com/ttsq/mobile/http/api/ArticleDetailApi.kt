@@ -1,11 +1,9 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 /**
  * 文章详情
  */
-class ArticleDetailApi : IRequestApi {
+class ArticleDetailApi : HaodankuBaseApi() {
     override fun getApi(): String {
         return "talent_article"
     }

@@ -5,7 +5,7 @@ import com.hjq.http.config.IRequestApi
 /**
  * 热搜
  */
-class HotSearchApi : IRequestApi {
+class HotSearchApi : HaodankuBaseApi()  {
     override fun getApi(): String {
         return "hot_key"
     }

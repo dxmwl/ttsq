@@ -1,11 +1,9 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 /**
  * 朋友圈
  */
-class PyqGoodsApi : IRequestApi {
+class PyqGoodsApi : HaodankuBaseApi() {
     override fun getApi(): String {
         return "selected_item"
     }

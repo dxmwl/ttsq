@@ -1,11 +1,9 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 /**
  * 友圈爆款
  */
-class YqbkApi : IRequestApi {
+class YqbkApi : HaodankuBaseApi() {
     override fun getApi(): String {
         return "api/api_all.ashx"
     }

@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 /**
  * 分类数据
  */
-class ClassApi : IRequestApi, IRequestHost {
+class ClassApi : HaodankuBaseApi() {
 
     override fun getHost(): String {
         return AppConfig.getHakBaseUrl()

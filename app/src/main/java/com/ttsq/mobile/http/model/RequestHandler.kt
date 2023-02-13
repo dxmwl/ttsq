@@ -105,9 +105,9 @@ class RequestHandler constructor(private val application: Application) : IReques
             }
             if (model.isTokenFailure()) {
                 // 代表登录失效，需要重新登录
-                throw com.ttsq.mobile.http.exception.TokenException(application.getString(R.string.http_token_error))
+                throw TokenException(application.getString(R.string.http_token_error))
             }
-            throw com.ttsq.mobile.http.exception.ResultException(model.getMessage(), model)
+            throw ResultException(model.getMessage(), model)
         }
         return result
     }
@@ -115,7 +115,7 @@ class RequestHandler constructor(private val application: Application) : IReques
     override fun requestFail(httpRequest: HttpRequest<*>, e: Exception): Exception {
         // 判断这个异常是不是自己抛的
         if (e is HttpException) {
-            if (e is com.ttsq.mobile.http.exception.TokenException) {
+            if (e is TokenException) {
                 // 登录信息失效，跳转到登录页
                 val application: Application = ActivityManager.getInstance().getApplication()
                 val intent = Intent(application, LoginActivity::class.java)

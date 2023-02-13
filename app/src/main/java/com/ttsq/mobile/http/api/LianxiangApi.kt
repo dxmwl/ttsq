@@ -1,16 +1,15 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 /**
  * 联想词
  */
-class LianxiangApi:IRequestApi {
+class LianxiangApi : ZhetaokeBaseApi() {
     override fun getApi(): String {
         return "api/api_suggest.ashx"
     }
 
-    var content:String = ""
+    var content: String = ""
 
     class LianxiangDto : ArrayList<String>()
+
 }
