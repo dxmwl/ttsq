@@ -66,7 +66,7 @@ open class HttpData<T> {
      * 是否请求成功
      */
     fun isRequestSucceed(): Boolean {
-        return code == 1 || code == 200 || status == 200 || code == 0
+        return code == 1 || code == 200 || status == 200
     }
 
     /**

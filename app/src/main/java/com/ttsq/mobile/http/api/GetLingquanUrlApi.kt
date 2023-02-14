@@ -13,8 +13,6 @@ class GetLingquanUrlApi : HaodankuBaseApi() {
 
     //商品ID,商品ID必须填
     var itemid: String = ""
-    var pid: String = "mm_111203980_2669400158_114621000490"
-    var tb_name: String = "魅影天利时代"
     var get_taoword: String = "1"
     var title: String = ""
 

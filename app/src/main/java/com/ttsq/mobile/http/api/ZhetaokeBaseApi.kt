@@ -2,6 +2,7 @@ package com.ttsq.mobile.http.api
 
 import com.hjq.http.config.IRequestApi
 import com.hjq.http.config.IRequestHost
+import com.ttsq.mobile.other.AppConfig
 
 /**
  * Created with Android studio
@@ -15,7 +16,7 @@ abstract class ZhetaokeBaseApi: IRequestApi, IRequestHost {
     val signurl = 5
 
     val sid = "154994"
-    val pid = "mm_111203980_10278226_34170938"
+    val pid = AppConfig.getTblmPid()
 
 
     override fun getHost(): String {

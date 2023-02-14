@@ -48,13 +48,13 @@ class SearchActivity : AppActivity() {
     override fun initView() {
         setOnClickListener(btn_search, icon_del_history, iv_back)
 
-        input_keyword?.addTextChangedListener {
-            if (it.isNullOrEmpty()) {
-                match_character_list?.visibility = View.INVISIBLE
-            } else {
-                getLianxiang(it.toString())
-            }
-        }
+//        input_keyword?.addTextChangedListener {
+//            if (it.isNullOrEmpty()) {
+//                match_character_list?.visibility = View.INVISIBLE
+//            } else {
+//                getLianxiang(it.toString())
+//            }
+//        }
 
         match_character_list?.also {
             it.layoutManager = LinearLayoutManager(this)

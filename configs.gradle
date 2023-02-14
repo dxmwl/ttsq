@@ -42,7 +42,7 @@ ext {
     //好单库APpKey
     HDK_APP_KEY = "6A1C5D434A43"
     //淘宝联盟PID
-    TBLM_PID = "mm_111203980_10278226_34170938"
+    TBLM_PID = "mm_111203980_2669400158_114621000490"
     //好单库请求地址
     hak_baseUrl = "http://v2.api.haodanku.com/"
     switch(serverType) {
