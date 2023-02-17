@@ -70,7 +70,7 @@ android {
 //            ])
             // 调试模式下只保留一种架构的 so 库，提升打包速度
             ndk {
-                abiFilters 'armeabi-v7a'
+                abiFilters 'armeabi-v7a', 'x86_64'
             }
         }
 
