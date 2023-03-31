@@ -7,5 +7,7 @@ data class MenuDto(
     val resId: Any? = R.mipmap.launcher_ic,
     val title: String? = "",
     val value: String? = "",
+    //0:跳转网址  1跳转小程序
+    val jumpType:Int = 0,
     var checked:Boolean = false
 )

@@ -11,6 +11,9 @@ import com.hjq.base.BaseAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
+import com.tencent.mm.opensdk.openapi.IWXAPI
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.app.Constants
@@ -25,6 +28,7 @@ import com.ttsq.mobile.ui.adapter.HomeMenuListAdapter
 import com.ttsq.mobile.ui.adapter.PinpaiGoodsAdapter
 import com.ttsq.mobile.ui.adapter.SearchGoodsListAdapter
 import com.youth.banner.Banner
+
 
 class RecommendFragment : AppFragment<HomeActivity>() {
 
@@ -62,8 +66,8 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                 MenuDto(
                     id = "1",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081206_73798",
-                    title = "饿了么",
-                    value = "${Constants.URL_CMS}?cid=bBNmDymI#/propaganda?id=116"
+                    title = "品牌小样",
+                    value = "https://kzurl20.cn/NGxBF"
                 ),
                 MenuDto(
                     id = "2",
@@ -80,8 +84,8 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                 MenuDto(
                     id = "4",
                     resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081152_7799",
-                    title = "福利线报",
-                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=rt_xb&code=bBNmDymI&sp=#/sp"
+                    title = "吃喝玩乐",
+                    value = ""
                 ),
                 MenuDto(
                     id = "5",
@@ -125,6 +129,17 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                 ) {
                     val menuDto = arrayListOf[position]
                     when (menuDto.id) {
+                        "4"->{
+                            val appId = "wxdf96f973a6d3be68" // 填移动应用(App)的 AppId，非小程序的 AppID
+                            val api: IWXAPI = WXAPIFactory.createWXAPI(context, appId)
+                            val req = WXLaunchMiniProgram.Req()
+                            req.userName = "gh_8114d0d91764" // 填小程序原始id
+//                            req.path =
+//                                path ////拉起小程序页面的可带参路径，不填默认拉起小程序首页，对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"。
+                            req.miniprogramType =
+                                WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE // 可选打开 开发版，体验版和正式版
+                            api.sendReq(req)
+                        }
                         "9" -> {
                             startActivity(ShengqianbaoActivity::class.java)
                         }
