@@ -79,6 +79,7 @@ class SplashActivity : AppActivity() {
             if (!SPUtils.getInstance("APP_CONFIG").getBoolean("AGREE_AGREEMENT", false)) {
                 showYszcDialog()
             } else {
+                initSdk(AppApplication.getApp())
                 HomeActivity.start(this@SplashActivity)
             }
         }, 5000)

@@ -65,7 +65,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
             val arrayListOf = arrayListOf(
                 MenuDto(
                     id = "1",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081206_73798",
+                    resId = R.drawable.icon_ppxy,
                     title = "品牌小样",
                     value = "https://kzurl20.cn/NGxBF"
                 ),
@@ -83,7 +83,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                 ),
                 MenuDto(
                     id = "4",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081152_7799",
+                    resId = R.drawable.icon_chwl,
                     title = "吃喝玩乐",
                     value = ""
                 ),

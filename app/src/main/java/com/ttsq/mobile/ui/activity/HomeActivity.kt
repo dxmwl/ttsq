@@ -41,8 +41,10 @@ import com.ttsq.mobile.manager.ActivityManager
 import com.ttsq.mobile.other.DoubleClickHelper
 import com.ttsq.mobile.ui.adapter.NavigationAdapter
 import com.ttsq.mobile.ui.fragment.*
-import com.ttsq.mobile.utils.HtmlUtil
+import com.umeng.message.PushAgent
+import com.umeng.message.inapp.InAppMessageManager
 import org.greenrobot.eventbus.EventBus
+
 
 /**
  *    author : Android 轮子哥
@@ -81,6 +83,8 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     }
 
     override fun initView() {
+        PushAgent.getInstance(this).onAppStart()
+
         navigationAdapter = NavigationAdapter(this).apply {
             addItem(
                 NavigationAdapter.MenuItem(
@@ -113,6 +117,11 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         DoKit.Builder(AppApplication.getApp())
             .productId("2f3d442feec5bff93d8c643c6612d833")
             .build()
+
+        //展示插屏消息
+        InAppMessageManager.getInstance(this).showCardMessage(
+            this, "main"
+        ) { }
     }
 
     override fun initData() {

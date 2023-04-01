@@ -1,5 +1,5 @@
-apply plugin : 'com.android.library'
-apply from : '../../common.gradle'
+apply plugin: 'com.android.library'
+apply from: '../../common.gradle'
 
 android {
 
@@ -16,11 +16,11 @@ android {
 
         // 清单占位符
         addManifestPlaceholders([
-                'UM_KEY' : UMENG_APP_KEY,
-                'QQ_ID' : QQ_APP_ID,
-                'QQ_SECRET' : QQ_APP_SECRET,
-                'WX_ID' : WX_APP_ID,
-                'WX_SECRET' : WX_APP_SECRET
+                'UM_KEY'   : UMENG_APP_KEY,
+                'QQ_ID'    : QQ_APP_ID,
+                'QQ_SECRET': QQ_APP_SECRET,
+                'WX_ID'    : WX_APP_ID,
+                'WX_SECRET': WX_APP_SECRET
         ])
     }
 }
@@ -42,4 +42,6 @@ dependencies {
     api 'com.tencent.tauth:qqopensdk:3.53.0'
     // 微信组件：https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/Android.html
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.7.9'
+    //推送
+    api 'com.umeng.umsdk:push:6.5.7'
 }

@@ -5,12 +5,15 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.util.Log
 import com.hjq.umeng.UmengLogin.LoginListenerWrapper
 import com.hjq.umeng.UmengLogin.OnLoginListener
 import com.hjq.umeng.UmengShare.OnShareListener
 import com.hjq.umeng.UmengShare.ShareListenerWrapper
 import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.UMConfigure
+import com.umeng.message.PushAgent
+import com.umeng.message.api.UPushRegisterCallback
 import com.umeng.socialize.PlatformConfig
 import com.umeng.socialize.ShareAction
 import com.umeng.socialize.UMShareAPI
@@ -24,6 +27,7 @@ import com.umeng.socialize.UMShareAPI
 object UmengClient {
 
     private var deviceOaid: String? = null
+    private const val TAG = "UmengClient"
 
     /**
      * 初始化友盟相关 SDK
@@ -36,10 +40,22 @@ object UmengClient {
             BuildConfig.UM_KEY,
             channelTag,
             UMConfigure.DEVICE_TYPE_PHONE,
-            "1259b20f38e8c240a435c2b428b9b681"
+            "4f89d5d11630d0afe4db4f558dc5db0b"
         )
         // 获取设备的 oaid
         UMConfigure.getOaid(application) { oaid: String? -> deviceOaid = oaid }
+
+        //初始化推送
+        PushAgent.getInstance(application).register(object :UPushRegisterCallback{
+            override fun onSuccess(p0: String?) {
+                Log.d(TAG,"推送注册成功:${p0}")
+            }
+
+            override fun onFailure(p0: String?, p1: String?) {
+                Log.d(TAG,"推送注册失败:${p0}******${p1}")
+            }
+
+        })
     }
 
     /**
