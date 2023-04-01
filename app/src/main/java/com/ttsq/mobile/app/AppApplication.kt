@@ -1,15 +1,8 @@
 package com.ttsq.mobile.app
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
-import android.os.Build
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import com.blankj.utilcode.util.EncryptUtils
 import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.Log
 import com.ttsq.mobile.http.glide.GlideApp
@@ -17,10 +10,7 @@ import com.ttsq.mobile.http.model.RequestHandler
 import com.ttsq.mobile.http.model.RequestServer
 import com.ttsq.mobile.manager.ActivityManager
 import com.ttsq.mobile.other.*
-import com.google.gson.reflect.TypeToken
-import com.google.gson.stream.JsonToken
 import com.hjq.bar.TitleBar
-import com.hjq.gson.factory.GsonFactory
 import com.hjq.http.EasyConfig
 import com.hjq.toast.ToastUtils
 import com.hjq.umeng.UmengClient
@@ -31,7 +21,6 @@ import com.orhanobut.logger.PrettyFormatStrategy
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.ttsq.mobile.BuildConfig
-import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import okhttp3.OkHttpClient
 import timber.log.Timber
@@ -51,7 +40,7 @@ class AppApplication : Application() {
 
         initSdk(this)
 
-        UmengClient.preInit(_context, BuildConfig.DEBUG)
+        UmengClient.preInit(_context, BuildConfig.DEBUG, AppConfig.getChannelTag())
     }
 
     override fun onLowMemory() {

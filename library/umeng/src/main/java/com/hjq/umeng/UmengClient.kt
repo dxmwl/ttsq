@@ -33,7 +33,7 @@ object UmengClient {
      * 初始化友盟相关 SDK
      */
     fun init(application: Application?, logEnable: Boolean,channelTag:String = "umeng") {
-        preInit(application, logEnable)
+        preInit(application, logEnable, channelTag)
         // 友盟统计：https://developer.umeng.com/docs/66632/detail/101814#h1-u521Du59CBu5316u53CAu901Au7528u63A5u53E32
         UMConfigure.init(
             application,
@@ -61,8 +61,8 @@ object UmengClient {
     /**
      * 预初始化 SDK（在用户没有同意隐私协议前调用）
      */
-    fun preInit(application: Application?, logEnable: Boolean) {
-        UMConfigure.preInit(application, BuildConfig.UM_KEY, "umeng")
+    fun preInit(application: Application?, logEnable: Boolean, channelTag: String) {
+        UMConfigure.preInit(application, BuildConfig.UM_KEY, channelTag)
         // 选用自动采集模式：https://developer.umeng.com/docs/119267/detail/118588#h1-u9875u9762u91C7u96C63
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO)
 
