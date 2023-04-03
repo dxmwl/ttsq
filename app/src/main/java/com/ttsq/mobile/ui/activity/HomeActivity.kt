@@ -100,6 +100,12 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             )
             addItem(
                 NavigationAdapter.MenuItem(
+                    getString(R.string.home_nav_fuli),
+                    ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_fuli_selector)
+                )
+            )
+            addItem(
+                NavigationAdapter.MenuItem(
                     getString(R.string.home_nav_message),
                     ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_message_selector)
                 )
@@ -128,6 +134,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         pagerAdapter = FragmentPagerAdapter<AppFragment<*>>(this).apply {
             addFragment(HomeFragment.newInstance())
             addFragment(BangdanFragment.newInstance())
+            addFragment(FuliFragment.newInstance())
             addFragment(YqbkFragment.newInstance())
             addFragment(MineFragment.newInstance())
             viewPager?.adapter = this
@@ -163,7 +170,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             return
         }
         when (fragmentIndex) {
-            0, 1, 2, 3 -> {
+            0, 1, 2, 3, 4 -> {
                 viewPager?.currentItem = fragmentIndex
                 navigationAdapter?.setSelectedPosition(fragmentIndex)
             }
@@ -175,7 +182,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
      */
     override fun onNavigationItemSelected(position: Int): Boolean {
         return when (position) {
-            0, 1, 2, 3 -> {
+            0, 1, 2, 3, 4 -> {
                 viewPager?.currentItem = position
                 true
             }
@@ -295,7 +302,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         }
     }
 
-    private fun getYouhuiInfo(contentStr:String) {
+    private fun getYouhuiInfo(contentStr: String) {
         EasyHttp.get(this)
             .api(GetYouhuiApi().apply {
                 tkl = contentStr
@@ -322,6 +329,6 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
                 val toString = clipboardContent.toString()
                 getYouhuiInfo(toString)
             }
-        },2000)
+        }, 2000)
     }
 }
