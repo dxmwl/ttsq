@@ -1,6 +1,7 @@
 package com.ttsq.mobile.ui.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.ttsq.mobile.http.api.CommodityScreeningApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.http.model.MenuDto
 import com.ttsq.mobile.ui.activity.HomeActivity
+import com.ttsq.mobile.ui.activity.SearchResultActivity
 import com.ttsq.mobile.ui.adapter.HdkTwoClassAdapter
 import com.ttsq.mobile.ui.adapter.SearchGoodsListAdapter
 import com.ttsq.mobile.ui.adapter.ShaixuanGoodsListAdapter
@@ -131,7 +133,9 @@ class HomeClassGoodsFragment : AppFragment<HomeActivity>(), HdkTwoClassAdapter.O
     }
 
     override fun onItemClick(classDataBean: ClassApi.Info) {
-
+        val intent = Intent(getAttachActivity(), SearchResultActivity::class.java)
+        intent.putExtra("KEYWORD", classDataBean.son_name)
+        startActivity(intent)
     }
 
     private fun searchGoods() {

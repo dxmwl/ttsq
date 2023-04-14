@@ -65,9 +65,9 @@ class RecommendFragment : AppFragment<HomeActivity>() {
             val arrayListOf = arrayListOf(
                 MenuDto(
                     id = "1",
-                    resId = R.drawable.icon_ppxy,
-                    title = "品牌小样",
-                    value = "https://kzurl20.cn/NGxBF"
+                    resId = R.drawable.icon_zfbhb,
+                    title = "支付宝红包",
+                    value = "https://kurl03.cn/NXxbw"
                 ),
                 MenuDto(
                     id = "2",
