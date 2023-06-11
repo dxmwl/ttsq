@@ -23,6 +23,7 @@ import com.hjq.http.listener.HttpCallback
 import com.hjq.widget.layout.SettingBar
 import com.hjq.widget.view.SwitchButton
 import com.ttsq.mobile.app.Constants
+import com.ttsq.mobile.manager.UserManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -165,6 +166,8 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
                     ActivityManager.getInstance().finishAllActivities(
                         LoginActivity::class.java
                     )
+                    //清空本地存储的用户数据
+                    UserManager.cleanToken()
                     return
                 }
 

@@ -11,10 +11,15 @@ import com.hjq.http.config.IRequestApi
 class UserInfoApi : IRequestApi {
 
     override fun getApi(): String {
-        return "user/info"
+        return "api/user/userInfo"
     }
 
-    class Bean {
-
-    }
+    data class UserInfoDto(
+        val userId: String,
+        val nickName: String,
+        val avatar: String,
+        val phonenumber: String,
+        val memberStatus: Boolean,
+        val memberTime: String,
+    )
 }

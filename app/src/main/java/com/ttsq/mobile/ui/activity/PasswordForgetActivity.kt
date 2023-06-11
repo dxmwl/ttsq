@@ -14,7 +14,9 @@ import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.manager.InputTextManager
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.HttpCallback
+import com.hjq.http.listener.OnHttpListener
 import com.hjq.widget.view.CountdownView
+import java.lang.Exception
 
 /**
  *    author : Android 轮子哥
@@ -23,6 +25,7 @@ import com.hjq.widget.view.CountdownView
  *    desc   : 忘记密码
  */
 class PasswordForgetActivity : AppActivity(), OnEditorActionListener {
+
 
     private val phoneView: EditText? by lazy { findViewById(R.id.et_password_forget_phone) }
     private val codeView: EditText? by lazy { findViewById(R.id.et_password_forget_code) }
@@ -60,12 +63,6 @@ class PasswordForgetActivity : AppActivity(), OnEditorActionListener {
                 toast(R.string.common_phone_input_error)
                 return
             }
-            if (true) {
-                toast(R.string.common_code_send_hint)
-                countdownView?.start()
-                return
-            }
-
             // 隐藏软键盘
             hideKeyboard(currentFocus)
 
@@ -73,12 +70,18 @@ class PasswordForgetActivity : AppActivity(), OnEditorActionListener {
             EasyHttp.post(this)
                 .api(GetCodeApi().apply {
                     setPhone(phoneView?.text.toString())
+                    type = 3
                 })
-                .request(object : HttpCallback<HttpData<Void?>>(this) {
-                    override fun onSucceed(data: HttpData<Void?>) {
+                .request(object : OnHttpListener<HttpData<Any>> {
+                    override fun onSucceed(result: HttpData<Any>?) {
                         toast(R.string.common_code_send_hint)
                         countdownView?.start()
                     }
+
+                    override fun onFail(e: Exception?) {
+                        toast(e?.message)
+                    }
+
                 })
 
         } else if (view === commitView) {
@@ -94,11 +97,6 @@ class PasswordForgetActivity : AppActivity(), OnEditorActionListener {
                 toast(R.string.common_code_error_hint)
                 return
             }
-            if (true) {
-                PasswordResetActivity.start(this, phoneView?.text.toString(), codeView?.text.toString())
-                finish()
-                return
-            }
 
             // 验证码校验
             EasyHttp.post(this)
@@ -106,12 +104,17 @@ class PasswordForgetActivity : AppActivity(), OnEditorActionListener {
                     setPhone(phoneView?.text.toString())
                     setCode(codeView?.text.toString())
                 })
-                .request(object : HttpCallback<HttpData<Void?>>(this) {
-
-                    override fun onSucceed(data: HttpData<Void?>) {
-                        PasswordResetActivity.start(this@PasswordForgetActivity,
-                            phoneView?.text.toString(), codeView?.text.toString())
+                .request(object : OnHttpListener<HttpData<Any>> {
+                    override fun onSucceed(result: HttpData<Any>?) {
+                        PasswordResetActivity.start(
+                            this@PasswordForgetActivity,
+                            phoneView?.text.toString(), codeView?.text.toString()
+                        )
                         finish()
+                    }
+
+                    override fun onFail(e: Exception?) {
+                        toast(e?.message)
                     }
                 })
         }

@@ -132,7 +132,6 @@
                 app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
             <com.hjq.widget.layout.SettingBar
-                android:visibility="gone"
                 android:id="@+id/sb_setting_exit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -11,11 +11,14 @@ import com.hjq.http.config.IRequestApi
 class GetCodeApi : IRequestApi {
 
     override fun getApi(): String {
-        return "code/get"
+        return "api/user/sendCode"
     }
 
     /** 手机号 */
     private var phone: String? = null
+
+    //验证码类型(1:登录注册验证 2:重置密码,3:验证身份))
+    var type: Int? = null
 
     fun setPhone(phone: String?): GetCodeApi = apply {
         this.phone = phone

@@ -11,7 +11,7 @@ import com.hjq.http.config.IRequestApi
 class LoginApi : IRequestApi {
 
     override fun getApi(): String {
-        return "user/login"
+        return "api/user/loginByCode"
     }
 
     /** 手机号 */
@@ -19,6 +19,11 @@ class LoginApi : IRequestApi {
 
     /** 登录密码 */
     private var password: String? = null
+
+    /**
+     * 验证码
+     */
+    var code: String? = null
 
     fun setPhone(phone: String?): LoginApi = apply {
         this.phone = phone
@@ -28,7 +33,7 @@ class LoginApi : IRequestApi {
         this.password = password
     }
 
-    class Bean {
+    class TokenResult {
 
         private val token: String? = null
 

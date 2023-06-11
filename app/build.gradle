@@ -155,12 +155,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.12.13'
 
     // Json 解析框架：https://github.com/google/gson
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.10'
     // Gson 解析容错：https://github.com/getActivity/GsonFactory
-    implementation 'com.github.getActivity:GsonFactory:5.2'
+    implementation 'com.github.getActivity:GsonFactory:6.3'
 
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:6.0'
+    implementation 'com.github.getActivity:ShapeView:8.5'
 
     // AOP 插件库：https://mvnrepository.com/artifact/org.aspectj/aspectjrt
     implementation 'org.aspectj:aspectjrt:1.9.6'
@@ -231,6 +231,10 @@ dependencies {
 
     //no-op 模块
     releaseImplementation "io.github.didi.dokit:dokitx-no-op:3.5.0"
+
+
+    //潘多拉工具箱 https://gitee.com/clbDream/pdl-box_tools
+    implementation 'com.gitee.clbDream:pdl-box_tools:1.3.18'
 
     // 多语种：https://github.com/getActivity/MultiLanguages
     // 悬浮窗：https://github.com/getActivity/XToast

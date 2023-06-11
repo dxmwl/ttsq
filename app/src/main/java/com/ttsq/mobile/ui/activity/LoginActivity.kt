@@ -5,34 +5,42 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import com.blankj.utilcode.util.SpanUtils
 import com.gyf.immersionbar.ImmersionBar
+import com.hjq.base.BaseDialog
+import com.hjq.http.EasyConfig
+import com.hjq.http.EasyHttp
+import com.hjq.http.listener.OnHttpListener
+import com.hjq.umeng.Platform
+import com.hjq.umeng.UmengClient
+import com.hjq.widget.view.CountdownView
+import com.hjq.widget.view.SubmitButton
 import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.Log
 import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.app.AppActivity
+import com.ttsq.mobile.http.api.GetCodeApi
 import com.ttsq.mobile.http.api.LoginApi
-import com.ttsq.mobile.http.glide.GlideApp
+import com.ttsq.mobile.http.api.PwdLoginApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.manager.InputTextManager
+import com.ttsq.mobile.manager.UserManager
+import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.other.KeyboardWatcher
-import com.ttsq.mobile.ui.fragment.MineFragment
-import com.ttsq.mobile.wxapi.WXEntryActivity
-import com.hjq.http.EasyConfig
-import com.hjq.http.EasyHttp
-import com.hjq.http.listener.HttpCallback
-import com.hjq.umeng.Platform
-import com.hjq.umeng.UmengClient
-import com.hjq.umeng.UmengLogin
-import com.hjq.widget.view.SubmitButton
+import com.ttsq.mobile.ui.dialog.MessageDialog
+import com.ttsq.mobile.utils.livebus.LiveDataBus
 import okhttp3.Call
 
 /**
@@ -41,8 +49,8 @@ import okhttp3.Call
  *    time   : 2018/10/18
  *    desc   : 登录界面
  */
-class LoginActivity : AppActivity(), UmengLogin.OnLoginListener,
-    KeyboardWatcher.SoftKeyboardStateListener, TextView.OnEditorActionListener {
+class LoginActivity : AppActivity(),
+    KeyboardWatcher.SoftKeyboardStateListener, TextView.OnEditorActionListener{
 
     companion object {
 
@@ -61,15 +69,23 @@ class LoginActivity : AppActivity(), UmengLogin.OnLoginListener,
         }
     }
 
+    private val countdownView: CountdownView? by lazy { findViewById(R.id.cv_register_countdown) }
     private val logoView: ImageView? by lazy { findViewById(R.id.iv_login_logo) }
     private val bodyLayout: ViewGroup? by lazy { findViewById(R.id.ll_login_body) }
     private val phoneView: EditText? by lazy { findViewById(R.id.et_login_phone) }
     private val passwordView: EditText? by lazy { findViewById(R.id.et_login_password) }
+    private val loginType: TextView? by lazy { findViewById(R.id.login_type) }
+    private val xieyi_str: TextView? by lazy { findViewById(R.id.xieyi_str) }
+    private val cb_xieyi: CheckBox? by lazy { findViewById(R.id.cb_xieyi) }
     private val forgetView: View? by lazy { findViewById(R.id.tv_login_forget) }
     private val commitView: SubmitButton? by lazy { findViewById(R.id.btn_login_commit) }
     private val otherView: View? by lazy { findViewById(R.id.ll_login_other) }
     private val qqView: View? by lazy { findViewById(R.id.iv_login_qq) }
     private val weChatView: View? by lazy { findViewById(R.id.iv_login_wechat) }
+    private val codeView: EditText? by lazy { findViewById(R.id.et_register_code) }
+    private val login_type_pwd: LinearLayout? by lazy { findViewById(R.id.login_type_pwd) }
+    private val login_type_code: LinearLayout? by lazy { findViewById(R.id.login_type_code) }
+    private val et_login_password: EditText? by lazy { findViewById(R.id.et_login_password) }
 
     /** logo 缩放比例 */
     private val logoScale: Float = 0.8f
@@ -77,20 +93,37 @@ class LoginActivity : AppActivity(), UmengLogin.OnLoginListener,
     /** 动画时间 */
     private val animTime: Int = 300
 
+    /**
+     * 当前登录类型 1:验证码登录 2:密码登录
+     */
+    private var loginTypeCode = 1
+
     override fun getLayoutId(): Int {
         return R.layout.login_activity
     }
 
     override fun initView() {
-        setOnClickListener(forgetView, commitView, qqView, weChatView)
+        setOnClickListener(forgetView, commitView, qqView, weChatView, countdownView, loginType)
         passwordView?.setOnEditorActionListener(this)
         commitView?.let {
             InputTextManager.with(this)
                 .addView(phoneView)
-                .addView(passwordView)
+                .addView(codeView)
                 .setMain(it)
                 .build()
         }
+
+        SpanUtils.with(xieyi_str)
+            .append("《用户协议》")
+            .setClickSpan(Color.parseColor("#43CF7C"), false) {
+                BrowserActivity.start(this, AppConfig.getUserAgreementUrl())
+            }
+            .append("及")
+            .append("《隐私政策》")
+            .setClickSpan(Color.parseColor("#43CF7C"), false) {
+                BrowserActivity.start(this, AppConfig.getPrivacyPolicyUrl())
+            }.create()
+
     }
 
     override fun initData() {
@@ -119,25 +152,38 @@ class LoginActivity : AppActivity(), UmengLogin.OnLoginListener,
         passwordView?.setText(getString(INTENT_KEY_IN_PASSWORD))
     }
 
-    override fun onRightClick(view: View) {
-        // 跳转到注册界面
-        RegisterActivity.start(this, phoneView?.text.toString(), passwordView?.text.toString(),
-            object : RegisterActivity.OnRegisterListener {
-
-                override fun onSucceed(phone: String?, password: String?) {
-                    // 如果已经注册成功，就执行登录操作
-                    phoneView?.setText(phone)
-                    passwordView?.setText(password)
-                    passwordView?.requestFocus()
-                    passwordView?.setSelection(passwordView?.text.toString().length)
-                    commitView?.let { onClick(it) }
-                }
-            }
-        )
-    }
-
     @SingleClick
     override fun onClick(view: View) {
+        if (view === countdownView) {
+            if (phoneView?.text.toString().length != 11) {
+                phoneView?.startAnimation(
+                    AnimationUtils.loadAnimation(
+                        getContext(),
+                        R.anim.shake_anim
+                    )
+                )
+                toast(R.string.common_phone_input_error)
+                return
+            }
+            // 获取验证码
+            EasyHttp.post(this)
+                .api(GetCodeApi().apply {
+                    setPhone(phoneView?.text.toString())
+                    type = 1
+                })
+                .request(object : OnHttpListener<HttpData<Void?>> {
+
+                    override fun onSucceed(data: HttpData<Void?>) {
+                        toast(R.string.common_code_send_hint)
+                        countdownView?.start()
+                    }
+
+                    override fun onFail(e: Exception?) {
+                        toast(e?.message)
+                    }
+                })
+            return
+        }
         if (view === forgetView) {
             startActivity(PasswordForgetActivity::class.java)
             return
@@ -157,53 +203,34 @@ class LoginActivity : AppActivity(), UmengLogin.OnLoginListener,
 
             // 隐藏软键盘
             hideKeyboard(currentFocus)
-            if (true) {
-                commitView?.showProgress()
-                postDelayed({
-                    commitView?.showSucceed()
-                    postDelayed({
-                        HomeActivity.start(getContext(), MineFragment::class.java)
-                        finish()
-                    }, 1000)
-                }, 2000)
+
+            //判断是否同意协议
+            if (cb_xieyi?.isChecked == false) {
+                MessageDialog.Builder(this)
+                    .setTitle("协议提醒")
+                    .setMessage("是否同意《用户协议》和《隐私政策》")
+                    .setCancel("取消")
+                    .setConfirm("同意")
+                    .setListener(object : MessageDialog.OnListener {
+                        override fun onConfirm(dialog: BaseDialog?) {
+                            cb_xieyi?.isChecked = true
+                            if (loginTypeCode == 1) {
+                                loginByPhoneCode()
+                            }else {
+                                loginByPwd()
+                            }
+                        }
+                    })
+                    .show()
                 return
             }
-            EasyHttp.post(this)
-                .api(LoginApi().apply {
-                    setPhone(phoneView?.text.toString())
-                    setPassword(passwordView?.text.toString())
-                })
-                .request(object : HttpCallback<HttpData<LoginApi.Bean?>>(this) {
 
-                    override fun onStart(call: Call) {
-                        commitView?.showProgress()
-                    }
-
-                    override fun onEnd(call: Call) {}
-
-                    override fun onSucceed(data: HttpData<LoginApi.Bean?>) {
-                        // 更新 Token
-                        EasyConfig.getInstance()
-                            .addParam("token", data.getData()?.getToken())
-                        postDelayed({
-                            commitView?.showSucceed()
-                            postDelayed({
-                                // 跳转到首页
-                                HomeActivity.start(getContext(), MineFragment::class.java)
-                                finish()
-                            }, 1000)
-                        }, 1000)
-                    }
-
-                    override fun onFail(e: Exception?) {
-                        super.onFail(e)
-                        postDelayed({ commitView?.showError(3000) }, 1000)
-                    }
-                })
+            if (loginTypeCode == 1) {
+                loginByPhoneCode()
+            }
             return
         }
         if (view === qqView || view === weChatView) {
-            toast("记得改好第三方 AppID 和 Secret，否则会调不起来哦")
             val platform: Platform?
             when {
                 view === qqView -> {
@@ -215,124 +242,139 @@ class LoginActivity : AppActivity(), UmengLogin.OnLoginListener,
                         return
                     }
                     platform = Platform.WECHAT
-                    toast("也别忘了改微信 " + WXEntryActivity::class.java.simpleName + " 类所在的包名哦")
                 }
                 else -> {
                     throw IllegalStateException("are you ok?")
                 }
             }
-            UmengClient.login(this, platform, this)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        // 友盟回调
-        UmengClient.onActivityResult(this, requestCode, resultCode, data)
-    }
-
-    /**
-     * [UmengLogin.OnLoginListener]
-     */
-    /**
-     * 授权成功的回调
-     *
-     * @param platform      平台名称
-     * @param data          用户资料返回
-     */
-    override fun onSucceed(platform: Platform?, data: UmengLogin.LoginData?) {
-        if (isFinishing || isDestroyed) {
-            // Glide：You cannot start a load for a destroyed activity
-            return
-        }
-        when (platform) {
-            Platform.QQ -> {
-
-            }
-            Platform.WECHAT -> {
-
-            }
-        }
-
-        logoView?.let {
-            GlideApp.with(this)
-                .load(data?.getAvatar())
-                .circleCrop()
-                .into(it)
-        }
-
-        toast(("昵称：" + data?.getName() + "\n" +
-                    "性别：" + data?.getSex() + "\n" +
-                    "id：" + data?.getId() + "\n" +
-                    "token：" + data?.getToken()))
-    }
-
-    /**
-     * 授权失败的回调
-     *
-     * @param platform      平台名称
-     * @param t             错误原因
-     */
-    override fun onError(platform: Platform?, t: Throwable) {
-        toast("第三方登录出错：" + t.message)
-    }
-
-    /**
-     * [KeyboardWatcher.SoftKeyboardStateListener]
-     */
-    override fun onSoftKeyboardOpened(keyboardHeight: Int) {
-        // 执行位移动画
-        bodyLayout?.let {
-            val objectAnimator: ObjectAnimator = ObjectAnimator.ofFloat(it,
-                "translationY", 0f, (-(commitView?.height?.toFloat() ?: 0f)))
-            objectAnimator.duration = animTime.toLong()
-            objectAnimator.interpolator = AccelerateDecelerateInterpolator()
-            objectAnimator.start()
-        }
-
-        // 执行缩小动画
-        logoView?.let {
-            it.pivotX = it.width / 2f
-            it.pivotY = it.height.toFloat()
-            val animatorSet = AnimatorSet()
-            val scaleX = ObjectAnimator.ofFloat(it, "scaleX", 1f, logoScale)
-            val scaleY = ObjectAnimator.ofFloat(it, "scaleY", 1f, logoScale)
-            val translationY = ObjectAnimator.ofFloat(it, "translationY",
-                0f, (-(commitView?.height?.toFloat() ?: 0f)))
-            animatorSet.play(translationY).with(scaleX).with(scaleY)
-            animatorSet.duration = animTime.toLong()
-            animatorSet.start()
-        }
-    }
-
-    override fun onSoftKeyboardClosed() {
-        // 执行位移动画
-        bodyLayout?.let {
-            val objectAnimator: ObjectAnimator = ObjectAnimator.ofFloat(it,
-                "translationY", it.translationY, 0f)
-            objectAnimator.duration = animTime.toLong()
-            objectAnimator.interpolator = AccelerateDecelerateInterpolator()
-            objectAnimator.start()
-        }
-
-        // 执行放大动画
-        logoView?.let {
-            it.pivotX = it.width / 2f
-            it.pivotY = it.height.toFloat()
-
-            if (it.translationY == 0f) {
+            if (cb_xieyi?.isChecked == false) {
+                MessageDialog.Builder(this)
+                    .setTitle("协议提醒")
+                    .setMessage("是否同意《用户协议》和《隐私政策》")
+                    .setCancel("取消")
+                    .setConfirm("同意")
+                    .setListener(object : MessageDialog.OnListener {
+                        override fun onConfirm(dialog: BaseDialog?) {
+                            cb_xieyi?.isChecked = true
+                        }
+                    })
+                    .show()
                 return
             }
-
-            val animatorSet = AnimatorSet()
-            val scaleX: ObjectAnimator = ObjectAnimator.ofFloat(it, "scaleX", logoScale, 1f)
-            val scaleY: ObjectAnimator = ObjectAnimator.ofFloat(it, "scaleY", logoScale, 1f)
-            val translationY: ObjectAnimator = ObjectAnimator.ofFloat(it,
-                "translationY", it.translationY, 0f)
-            animatorSet.play(translationY).with(scaleX).with(scaleY)
-            animatorSet.duration = animTime.toLong()
-            animatorSet.start()
+            return
         }
+        if (view == loginType) {
+            if (loginTypeCode == 1) {
+                //切换为密码登录
+                loginType?.text = "验证码登录"
+                loginTypeCode = 2
+                login_type_pwd?.visibility = View.VISIBLE
+                login_type_code?.visibility = View.GONE
+
+                commitView?.let {
+                    InputTextManager.with(this)
+                        .addView(phoneView)
+                        .addView(et_login_password)
+                        .setMain(it)
+                        .build()
+                }
+            } else {
+                //切换为验证码登录
+                loginType?.text = "密码登录"
+                loginTypeCode = 1
+                login_type_pwd?.visibility = View.GONE
+                login_type_code?.visibility = View.VISIBLE
+
+                commitView?.let {
+                    InputTextManager.with(this)
+                        .addView(phoneView)
+                        .addView(codeView)
+                        .setMain(it)
+                        .build()
+                }
+            }
+            return
+        }
+    }
+
+    /**
+     * 密码登录
+     */
+    private fun loginByPwd() {
+        commitView?.showProgress()
+        EasyHttp.post(this)
+            .api(PwdLoginApi().apply {
+                phone = phoneView?.text.toString()
+                loginPwd = et_login_password?.text.toString()
+            })
+            .request(object : OnHttpListener<HttpData<LoginApi.TokenResult>>{
+                override fun onSucceed(data: HttpData<LoginApi.TokenResult>) {
+                    // 更新 Token
+                    EasyConfig.getInstance()
+                        .addHeader("Authorization", "Bearer ${data.getData()?.getToken()}")
+                    //存储到SP中
+                    UserManager.saveToken(data.getData())
+
+                    postDelayed({
+                        commitView?.showSucceed()
+                        postDelayed({
+                            // 跳转到首页
+                            HomeActivity.start(getContext())
+                            finish()
+                        }, 1000)
+                    }, 1000)
+
+                    LiveDataBus.postValue("refreshUserInfo", "")
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    postDelayed({ commitView?.showError(3000) }, 1000)
+                }
+
+            })
+    }
+
+    /**
+     * 验证码登录
+     */
+    private fun loginByPhoneCode() {
+        EasyHttp.post(this)
+            .api(LoginApi().apply {
+                setPhone(phoneView?.text.toString())
+                code = codeView?.text.toString()
+//                    setPassword(passwordView?.text.toString())
+            })
+            .request(object : OnHttpListener<HttpData<LoginApi.TokenResult?>> {
+
+                override fun onStart(call: Call) {
+                    commitView?.showProgress()
+                }
+
+                override fun onEnd(call: Call) {}
+
+                override fun onSucceed(data: HttpData<LoginApi.TokenResult?>) {
+                    // 更新 Token
+                    EasyConfig.getInstance()
+                        .addHeader("Authorization", "Bearer ${data.getData()?.getToken()}")
+                    //存储到SP中
+                    UserManager.saveToken(data.getData())
+
+                    postDelayed({
+                        commitView?.showSucceed()
+                        postDelayed({
+                            // 跳转到首页
+                            HomeActivity.start(getContext())
+                            finish()
+                        }, 1000)
+                    }, 1000)
+
+                    LiveDataBus.postValue("refreshUserInfo", "")
+                }
+
+                override fun onFail(e: Exception?) {
+                    postDelayed({ commitView?.showError(3000) }, 1000)
+                }
+            })
     }
 
     /**
@@ -356,5 +398,71 @@ class LoginActivity : AppActivity(), UmengLogin.OnLoginListener,
         return super.createStatusBarConfig()
             // 指定导航栏背景颜色
             .navigationBarColor(R.color.white)
+    }
+
+    /**
+     * [KeyboardWatcher.SoftKeyboardStateListener]
+     */
+    override fun onSoftKeyboardOpened(keyboardHeight: Int) {
+        // 执行位移动画
+        bodyLayout?.let {
+            val objectAnimator: ObjectAnimator = ObjectAnimator.ofFloat(
+                it,
+                "translationY", 0f, (-(commitView?.height?.toFloat() ?: 0f))
+            )
+            objectAnimator.duration = animTime.toLong()
+            objectAnimator.interpolator = AccelerateDecelerateInterpolator()
+            objectAnimator.start()
+        }
+
+        // 执行缩小动画
+        logoView?.let {
+            it.pivotX = it.width / 2f
+            it.pivotY = it.height.toFloat()
+            val animatorSet = AnimatorSet()
+            val scaleX = ObjectAnimator.ofFloat(it, "scaleX", 1f, logoScale)
+            val scaleY = ObjectAnimator.ofFloat(it, "scaleY", 1f, logoScale)
+            val translationY = ObjectAnimator.ofFloat(
+                it, "translationY",
+                0f, (-(commitView?.height?.toFloat() ?: 0f))
+            )
+            animatorSet.play(translationY).with(scaleX).with(scaleY)
+            animatorSet.duration = animTime.toLong()
+            animatorSet.start()
+        }
+    }
+
+    override fun onSoftKeyboardClosed() {
+        // 执行位移动画
+        bodyLayout?.let {
+            val objectAnimator: ObjectAnimator = ObjectAnimator.ofFloat(
+                it,
+                "translationY", it.translationY, 0f
+            )
+            objectAnimator.duration = animTime.toLong()
+            objectAnimator.interpolator = AccelerateDecelerateInterpolator()
+            objectAnimator.start()
+        }
+
+        // 执行放大动画
+        logoView?.let {
+            it.pivotX = it.width / 2f
+            it.pivotY = it.height.toFloat()
+
+            if (it.translationY == 0f) {
+                return
+            }
+
+            val animatorSet = AnimatorSet()
+            val scaleX: ObjectAnimator = ObjectAnimator.ofFloat(it, "scaleX", logoScale, 1f)
+            val scaleY: ObjectAnimator = ObjectAnimator.ofFloat(it, "scaleY", logoScale, 1f)
+            val translationY: ObjectAnimator = ObjectAnimator.ofFloat(
+                it,
+                "translationY", it.translationY, 0f
+            )
+            animatorSet.play(translationY).with(scaleX).with(scaleY)
+            animatorSet.duration = animTime.toLong()
+            animatorSet.start()
+        }
     }
 }

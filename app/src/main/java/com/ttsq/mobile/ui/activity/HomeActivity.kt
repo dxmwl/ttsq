@@ -36,11 +36,14 @@ import com.ttsq.mobile.app.AppHelper
 import com.ttsq.mobile.eventbus.RefreshClass
 import com.ttsq.mobile.http.api.ClassApi
 import com.ttsq.mobile.http.api.GetYouhuiApi
+import com.ttsq.mobile.http.api.UserInfoApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.manager.ActivityManager
+import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.DoubleClickHelper
 import com.ttsq.mobile.ui.adapter.NavigationAdapter
 import com.ttsq.mobile.ui.fragment.*
+import com.ttsq.mobile.utils.livebus.LiveDataBus
 import com.umeng.message.PushAgent
 import com.umeng.message.inapp.InAppMessageManager
 import org.greenrobot.eventbus.EventBus
@@ -136,12 +139,16 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             addFragment(BangdanFragment.newInstance())
             addFragment(FuliFragment.newInstance())
             addFragment(YqbkFragment.newInstance())
-            addFragment(MineFragment.newInstance())
+            addFragment(MeFragment.newInstance())
             viewPager?.adapter = this
         }
         onNewIntent(intent)
 
         getClassData()
+
+        LiveDataBus.subscribe("refreshUserInfo", this) { data ->
+            getUserInfo()
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -323,6 +330,8 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     override fun onResume() {
         super.onResume()
 
+        getUserInfo()
+
         postDelayed({
             val clipboardContent = ClipboardUtils.getText()
             if (clipboardContent.isNullOrBlank().not()) {
@@ -331,4 +340,30 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             }
         }, 2000)
     }
+
+
+    /**
+     * 获取登录用户信息
+     */
+    private fun getUserInfo() {
+        if (!UserManager.loginStatus) {
+            return
+        }
+
+        EasyHttp.post(this)
+            .api(UserInfoApi())
+            .request(object : OnHttpListener<HttpData<UserInfoApi.UserInfoDto>> {
+                override fun onSucceed(result: HttpData<UserInfoApi.UserInfoDto>?) {
+                    result?.getData()?.let {
+                        UserManager.initUserInfo(it)
+                        LiveDataBus.postValue("upDateUserInfo", it)
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+
+                }
+            })
+    }
+
 }
