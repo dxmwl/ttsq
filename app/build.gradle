@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply from: '../common.gradle'
 apply from: '../productFlavors.gradle'
 apply plugin: 'kotlin-parcelize'
+//apply plugin: 'com.didi.dokit.debug'
 
 // Android 代码规范文档：https://github.com/getActivity/AndroidCodeStandard
 android {
@@ -226,11 +227,17 @@ dependencies {
 
     implementation 'com.blankj:utilcodex:1.31.1'
 
-    //核心模块
-    debugImplementation "io.github.didi.dokit:dokitx:3.5.0"
+    def kitVer = "3.7.1"
 
+    //核心模块
+    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
     //no-op 模块
-    releaseImplementation "io.github.didi.dokit:dokitx-no-op:3.5.0"
+    releaseImplementation "io.github.didi.dokit:dokitx-no-op:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx-rpc:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx-mc:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx-rpc-mc:$kitVer"
+//    releaseImplementation "io.github.didi.dokit:dokitx-no-op:$kitVer"
 
 
     //潘多拉工具箱 https://gitee.com/clbDream/pdl-box_tools
