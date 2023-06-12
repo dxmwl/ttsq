@@ -54,7 +54,7 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
         setOnClickListener(
             R.id.sb_setting_language, R.id.sb_setting_update, R.id.sb_setting_phone,
             R.id.sb_setting_password, R.id.sb_setting_agreement, R.id.sb_setting_about,
-            R.id.sb_setting_cache, R.id.sb_setting_exit, R.id.user_xieyi
+            R.id.sb_setting_cache, R.id.sb_setting_exit, R.id.user_xieyi,R.id.cancel_account
         )
 
         autoSwitchView?.setChecked(
@@ -183,6 +183,9 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
                                 .finishAllActivities(LoginActivity::class.java)
                         }
                     })
+            }
+            R.id.cancel_account->{
+                startActivity(CancelAccountActivity::class.java)
             }
         }
     }

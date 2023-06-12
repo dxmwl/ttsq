@@ -156,7 +156,7 @@
     <string name="home_nav_fuli">福利</string>
     <string name="home_nav_found">榜单</string>
     <string name="home_nav_message">快抢</string>
-    <string name="home_nav_me">发现</string>
+    <string name="home_nav_me">我的</string>
 
     <!-- 登录 -->
     <string name="login_register">注册</string>

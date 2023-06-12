@@ -45,15 +45,18 @@ ext {
     TBLM_PID = "mm_111203980_2669400158_114621000490"
     //好单库请求地址
     hak_baseUrl = "http://v2.api.haodanku.com/"
-    switch(serverType) {
+    switch (serverType) {
         case SERVER_TYPE_TEST:
             LOG_ENABLE = true
             BUGLY_ID = "1ff4582555"
             if (serverType == SERVER_TYPE_PREVIEW) {
                 HOST_URL = "http://192.168.0.103:20233/"
             } else {
-                HOST_URL = "http://192.168.0.103:20233/"
+//                HOST_URL = "http://192.168.0.103:20233/"
+                HOST_URL = "https://20fr341949.imdo.co:443/"
+//                HOST_URL = "https://api.yimulin.dxmwl.com:20233/"
             }
+
             break
         case SERVER_TYPE_PRODUCT:
             LOG_ENABLE = false

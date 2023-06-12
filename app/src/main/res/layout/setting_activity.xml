@@ -95,6 +95,13 @@
                 app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
             <com.hjq.widget.layout.SettingBar
+                android:id="@+id/cancel_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bar_leftText="注销账号"
+                app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+            <com.hjq.widget.layout.SettingBar
                 android:id="@+id/sb_setting_auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
