@@ -88,8 +88,8 @@ class MeFragment : AppFragment<AppActivity>() {
             }
             R.id.kefu_online -> {
                 MessageDialog.Builder(requireContext())
-                    .setTitle("产品经理")
-                    .setMessage("与产品经理一对一沟通需求，方便、快捷地说出你的需求\n微信：dxmcpjl")
+                    .setTitle("在线客服")
+                    .setMessage("与在线客服一对一沟通需求，方便、快捷地说出你的需求\n微信：dxmcpjl")
                     .setConfirm("复制微信")
                     .setListener(object : MessageDialog.OnListener {
                         override fun onConfirm(dialog: BaseDialog?) {
