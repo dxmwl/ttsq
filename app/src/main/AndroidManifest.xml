@@ -274,6 +274,12 @@
         <activity
             android:name=".ui.activity.CancelAccountActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.InviteFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.FriendsListActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

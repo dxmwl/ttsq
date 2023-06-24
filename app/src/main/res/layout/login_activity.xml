@@ -135,6 +135,17 @@
                     style="@style/CountdownViewStyle" />
             </LinearLayout>
 
+            <com.hjq.shape.view.ShapeEditText
+                android:id="@+id/input_invitation_code"
+                app:shape_radius="8dp"
+                android:paddingHorizontal="10dp"
+                android:hint="邀请码（选填）"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                app:shape_solidColor="#F6F6F6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <RelativeLayout
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="@dimen/dp_15"

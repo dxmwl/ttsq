@@ -13,6 +13,7 @@ import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.http.api.UserInfoApi
 import com.ttsq.mobile.manager.UserManager
+import com.ttsq.mobile.ui.activity.InviteFriendsActivity
 import com.ttsq.mobile.ui.activity.LoginActivity
 import com.ttsq.mobile.ui.activity.MemberCenterActivity
 import com.ttsq.mobile.ui.activity.SettingActivity
@@ -45,7 +46,7 @@ class MeFragment : AppFragment<AppActivity>() {
     override fun initView() {
         setOnClickListener(
             R.id.my_member, R.id.kefu_online, R.id.setting, R.id.nick_name,
-            R.id.member_time
+            R.id.member_time,R.id.invite_friends,R.id.my_order
         )
     }
 
@@ -74,6 +75,12 @@ class MeFragment : AppFragment<AppActivity>() {
     override fun onClick(view: View) {
         super.onClick(view)
         when (view.id) {
+            R.id.my_order->{
+
+            }
+            R.id.invite_friends->{
+                startActivity(InviteFriendsActivity::class.java)
+            }
             R.id.nick_name -> {
                 if (UserManager.userInfo == null) {
                     startActivity(LoginActivity::class.java)
