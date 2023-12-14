@@ -1,5 +1,6 @@
 package com.ttsq.mobile.ui.activity
 
+import android.view.View
 import android.widget.TextView
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppActivity
@@ -20,8 +21,18 @@ class AboutActivity : AppActivity() {
     }
 
     override fun initView() {
+        setOnClickListener(R.id.tv_beian)
         app_version?.text = AppConfig.getVersionName()
     }
 
     override fun initData() {}
+
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.tv_beian -> {
+                BrowserActivity.start(this,"https://beian.miit.gov.cn")
+            }
+            else -> {}
+        }
+    }
 }

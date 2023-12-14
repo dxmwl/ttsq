@@ -72,4 +72,23 @@
         android:textColor="#BDBDBD"
         android:textSize="@dimen/sp_14" />
 
+    <LinearLayout
+        android:id="@+id/tv_beian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ICP备案号：豫ICP备2023000435号-4A"
+            android:textColor="#BDBDBD"
+            android:textSize="@dimen/sp_10" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/icon_more_right" />
+    </LinearLayout>
 </LinearLayout>
