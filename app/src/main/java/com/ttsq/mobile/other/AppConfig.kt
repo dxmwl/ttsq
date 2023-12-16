@@ -93,29 +93,29 @@ object AppConfig {
      * 获取渠道标记
      */
     fun getChannelTag(): String {
-        return BuildConfig.CHANNEL_TAG
+        return "umeng"
     }
 
     /**
      * 获取用户协议链接
      */
     fun getUserAgreementUrl(): String {
-        return if (getChannelTag()=="vivo"){
-            Constants.URL_USER_AGREEMENT_VIVO
-        }else{
-            Constants.URL_USER_AGREEMENT
-        }
+//        return if (getChannelTag()=="vivo"){
+//            Constants.URL_USER_AGREEMENT_VIVO
+//        }else{
+        return Constants.URL_USER_AGREEMENT
+//        }
     }
 
     /**
      * 获取隐私政策链接
      */
     fun getPrivacyPolicyUrl(): String {
-        return if (getChannelTag()=="vivo"){
-            Constants.URL_PRIVACY_POLICY_VIVO
-        }else{
-            Constants.URL_PRIVACY_POLICY
-        }
+//        return if (getChannelTag() == "vivo") {
+//            Constants.URL_PRIVACY_POLICY_VIVO
+//        } else {
+        return Constants.URL_PRIVACY_POLICY
+//        }
     }
 
     /**
