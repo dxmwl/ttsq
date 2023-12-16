@@ -7,7 +7,7 @@ plugins {
 }
 
 apply from: '../common.gradle'
-apply from: '../productFlavors.gradle'
+//apply from: '../productFlavors.gradle'
 //apply plugin: 'com.didi.dokit.debug'
 
 // Android 代码规范文档：https://github.com/getActivity/AndroidCodeStandard
