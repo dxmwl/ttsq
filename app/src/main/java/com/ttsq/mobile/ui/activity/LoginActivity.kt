@@ -227,6 +227,8 @@ class LoginActivity : AppActivity(),
 
             if (loginTypeCode == 1) {
                 loginByPhoneCode()
+            }else if(loginTypeCode == 2){
+                loginByPwd()
             }
             return
         }

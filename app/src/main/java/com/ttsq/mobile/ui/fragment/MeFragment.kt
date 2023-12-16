@@ -6,6 +6,8 @@ import android.widget.TextView
 import com.blankj.utilcode.util.ClipboardUtils
 import com.hjq.base.BaseDialog
 import com.hjq.shape.view.ShapeTextView
+import com.hjq.umeng.Platform
+import com.hjq.umeng.UmengShare
 import com.pdlbox.tools.utils.GlideUtils
 import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.SingleClick
@@ -13,12 +15,15 @@ import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.http.api.UserInfoApi
 import com.ttsq.mobile.manager.UserManager
+import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.ui.activity.InviteFriendsActivity
 import com.ttsq.mobile.ui.activity.LoginActivity
 import com.ttsq.mobile.ui.activity.MemberCenterActivity
 import com.ttsq.mobile.ui.activity.SettingActivity
 import com.ttsq.mobile.ui.dialog.MessageDialog
+import com.ttsq.mobile.ui.dialog.ShareDialog
 import com.ttsq.mobile.utils.livebus.LiveDataBus
+import com.umeng.socialize.media.UMWeb
 
 /**
  * @ClassName: LocalToolsFragment
@@ -62,7 +67,7 @@ class MeFragment : AppFragment<AppActivity>() {
     }
 
     private fun setUserInfo(userInfoDto: UserInfoApi.UserInfoDto) {
-        userAvatar?.let { it1 -> GlideUtils.showRoundImg(userInfoDto.avatar, it1) }
+//        userAvatar?.let { it1 -> GlideUtils.showRoundImg(userInfoDto.avatar, it1) }
         nickName?.text = userInfoDto.nickName
         if (userInfoDto.memberStatus) {
             member_time?.text = userInfoDto.memberTime
@@ -79,7 +84,13 @@ class MeFragment : AppFragment<AppActivity>() {
 
             }
             R.id.invite_friends->{
-                startActivity(InviteFriendsActivity::class.java)
+                val umWeb = UMWeb(AppConfig.getDownloadUrl())
+                umWeb.title = "限时福利"
+                umWeb.description = "点击领取福利"
+                ShareDialog.Builder(requireActivity())
+                    .setShareLink(umWeb)
+                   .show()
+//                startActivity(InviteFriendsActivity::class.java)
             }
             R.id.nick_name -> {
                 if (UserManager.userInfo == null) {

@@ -139,6 +139,7 @@
                 android:id="@+id/input_invitation_code"
                 app:shape_radius="8dp"
                 android:paddingHorizontal="10dp"
+                android:visibility="gone"
                 android:hint="邀请码（选填）"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="10dp"

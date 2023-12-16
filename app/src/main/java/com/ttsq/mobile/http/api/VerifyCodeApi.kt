@@ -11,20 +11,20 @@ import com.hjq.http.config.IRequestApi
 class VerifyCodeApi : IRequestApi {
 
     override fun getApi(): String {
-        return "code/checkout"
+        return "api/user/verifyUserIdentity"
     }
 
     /** 手机号 */
-    private var phone: String? = null
+    private var phoneNumber: String? = null
 
     /** 验证码 */
-    private var code: String? = null
+    private var phoneCode: String? = null
 
-    fun setPhone(phone: String?): VerifyCodeApi = apply {
-        this.phone = phone
+    fun setPhone(phoneNumber: String?): VerifyCodeApi = apply {
+        this.phoneNumber = phoneNumber
     }
 
-    fun setCode(code: String?): VerifyCodeApi = apply {
-        this.code = code
+    fun setCode(phoneCode: String?): VerifyCodeApi = apply {
+        this.phoneCode = phoneCode
     }
 }

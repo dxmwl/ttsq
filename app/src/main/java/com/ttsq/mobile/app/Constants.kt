@@ -23,4 +23,7 @@ object Constants {
 
     //CMS域名前缀
     const val URL_CMS = "https://shengqiangou.heartvoice.cn/"
+
+    //下载地址
+    const val URL_DOWNLOAD = "https://www.pgyer.com/lLJz"
 }

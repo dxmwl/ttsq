@@ -11,20 +11,20 @@ import com.hjq.http.config.IRequestApi
 class PasswordApi : IRequestApi {
 
     override fun getApi(): String {
-        return "user/password"
+        return "api/user/updatePwd"
     }
 
     /** 手机号（已登录可不传） */
-    private var phone: String? = null
+    private var phoneNumber: String? = null
 
     /** 验证码 */
     private var code: String? = null
 
     /** 密码 */
-    private var password: String? = null
+    private var newPassword: String? = null
 
     fun setPhone(phone: String?): PasswordApi = apply {
-        this.phone = phone
+        this.phoneNumber = phone
     }
 
     fun setCode(code: String?): PasswordApi = apply {
@@ -32,6 +32,6 @@ class PasswordApi : IRequestApi {
     }
 
     fun setPassword(password: String?): PasswordApi = apply {
-        this.password = password
+        this.newPassword = password
     }
 }

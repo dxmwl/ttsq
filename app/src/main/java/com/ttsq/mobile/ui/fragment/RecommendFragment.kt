@@ -77,9 +77,9 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                 ),
                 MenuDto(
                     id = "3",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1648537480_628688",
-                    title = "百亿补贴",
-                    value = "${Constants.URL_CMS}?cid=bBNmDymI#/propaganda?id=4"
+                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081152_7799",
+                    title = "福利线报",
+                    value = "${Constants.URL_CMS}?cid=cms&tmp=rt_xb&code=cms&from=2&sp=#/sp"
                 ),
                 MenuDto(
                     id = "4",

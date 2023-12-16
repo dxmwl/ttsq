@@ -57,10 +57,12 @@
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/sp_18"
                     android:text="注册/登录"
+                    app:layout_constraintBottom_toBottomOf="@id/user_avatar"
                     app:layout_constraintStart_toEndOf="@+id/user_avatar"
                     app:layout_constraintTop_toTopOf="@+id/user_avatar"/>
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -73,6 +75,7 @@
 
                 <com.hjq.shape.view.ShapeTextView
                     android:id="@+id/member_time"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -104,6 +107,7 @@
 
                 <com.hjq.widget.layout.SettingBar
                     android:id="@+id/my_order"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:bar_leftDrawable="@drawable/my_order"
@@ -126,6 +130,7 @@
                     android:layout_height="wrap_content"
                     app:bar_leftDrawable="@drawable/user_member_icon"
                     app:bar_leftText="会员"
+                    android:visibility="gone"
                     app:bar_rightDrawable="@drawable/icon_more_sanjiao"
                     app:bar_rightTextHint="更多服务"
                     app:bar_rightTextSize="14sp" />
