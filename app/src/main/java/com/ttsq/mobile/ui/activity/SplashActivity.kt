@@ -45,6 +45,7 @@ import com.tencent.mmkv.MMKV
 import com.ttsq.mobile.BuildConfig
 import com.ttsq.mobile.app.AppApplication
 import com.ttsq.mobile.manager.ActivityManager
+import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.*
 import okhttp3.OkHttpClient
 import timber.log.Timber
@@ -67,6 +68,9 @@ class SplashActivity : AppActivity() {
     }
 
     override fun initView() {
+
+        UserManager.init()
+
         // 设置动画监听
 //        lottieView?.addAnimatorListener(object : AnimatorListenerAdapter() {
 //            override fun onAnimationEnd(animation: Animator?) {
@@ -94,19 +98,6 @@ class SplashActivity : AppActivity() {
                 it.visibility = View.INVISIBLE
             }
         }
-
-        if (true) {
-            return
-        }
-        // 刷新用户信息
-        EasyHttp.post(this)
-            .api(UserInfoApi())
-            .request(object : HttpCallback<HttpData<UserInfoApi.Bean?>>(this) {
-
-                override fun onSucceed(data: HttpData<UserInfoApi.Bean?>) {
-
-                }
-            })
     }
 
     override fun createStatusBarConfig(): ImmersionBar {

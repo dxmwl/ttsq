@@ -15,6 +15,7 @@ import com.hjq.http.EasyLog
 import com.hjq.http.config.IRequestHandler
 import com.hjq.http.exception.*
 import com.hjq.http.request.HttpRequest
+import com.ttsq.mobile.manager.UserManager
 import okhttp3.Headers
 import okhttp3.Response
 import okhttp3.ResponseBody
@@ -123,6 +124,8 @@ class RequestHandler constructor(private val application: Application) : IReques
                 application.startActivity(intent)
                 // 销毁除了登录页之外的 Activity
                 ActivityManager.getInstance().finishAllActivities(LoginActivity::class.java)
+                //清空本地存储的用户数据
+                UserManager.cleanToken()
             }
             return e
         }

@@ -65,8 +65,8 @@
         <!-- 闪屏页 -->
         <activity
             android:name="com.ttsq.mobile.ui.activity.SplashActivity"
-            android:launchMode="singleTop"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
 
@@ -241,15 +241,45 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name="com.ttsq.mobile.ui.activity.GoodsListActivity" />
-        <activity android:name="com.ttsq.mobile.ui.activity.GoodsDetailActivity" />
-        <activity android:name="com.ttsq.mobile.ui.activity.SearchResultActivity" />
-        <activity android:name="com.ttsq.mobile.ui.activity.SearchActivity" />
-        <activity android:name="com.ttsq.mobile.ui.activity.ShengqianbaoActivity" />
-        <activity android:name=".ui.activity.AllClassActivity" />
-        <activity android:name=".ui.activity.ArticleDetailActivity" />
-        <activity android:name=".ui.activity.PinpaiGoodsActivity" />
-        <activity android:name=".ui.activity.PinpaiDetailActivity" />
+        <activity
+            android:name="com.ttsq.mobile.ui.activity.GoodsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ttsq.mobile.ui.activity.GoodsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ttsq.mobile.ui.activity.SearchResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ttsq.mobile.ui.activity.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ttsq.mobile.ui.activity.ShengqianbaoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AllClassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ArticleDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PinpaiGoodsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PinpaiDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MemberCenterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CancelAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.InviteFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.FriendsListActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

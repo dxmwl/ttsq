@@ -2,6 +2,7 @@ package com.ttsq.mobile.other
 
 import com.ttsq.mobile.BuildConfig
 import com.ttsq.mobile.app.Constants
+import com.ttsq.mobile.app.Constants.URL_DOWNLOAD
 
 /**
  *    author : Android 轮子哥
@@ -115,5 +116,12 @@ object AppConfig {
         }else{
             Constants.URL_PRIVACY_POLICY
         }
+    }
+
+    /**
+     * 下载地址
+     */
+    fun getDownloadUrl(): String {
+        return URL_DOWNLOAD
     }
 }

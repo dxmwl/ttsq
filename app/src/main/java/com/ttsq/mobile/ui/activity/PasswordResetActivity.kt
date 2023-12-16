@@ -18,6 +18,8 @@ import com.ttsq.mobile.manager.InputTextManager
 import com.ttsq.mobile.ui.dialog.TipsDialog
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.HttpCallback
+import com.hjq.http.listener.OnHttpListener
+import java.lang.Exception
 
 /**
  *    author : Android 轮子哥
@@ -26,6 +28,7 @@ import com.hjq.http.listener.HttpCallback
  *    desc   : 重置密码
  */
 class PasswordResetActivity : AppActivity(), OnEditorActionListener {
+
 
     companion object {
 
@@ -87,31 +90,15 @@ class PasswordResetActivity : AppActivity(), OnEditorActionListener {
 
             // 隐藏软键盘
             hideKeyboard(currentFocus)
-            if (true) {
-                TipsDialog.Builder(this)
-                    .setIcon(TipsDialog.ICON_FINISH)
-                    .setMessage(R.string.password_reset_success)
-                    .setDuration(2000)
-                    .addOnDismissListener(object : BaseDialog.OnDismissListener {
-
-                        override fun onDismiss(dialog: BaseDialog?) {
-                            finish()
-                        }
-                    })
-                    .show()
-                return
-            }
 
             // 重置密码
             EasyHttp.post(this)
                 .api(PasswordApi().apply {
                     setPhone(phoneNumber)
-                    setCode(verifyCode)
                     setPassword(firstPassword?.text.toString())
                 })
-                .request(object : HttpCallback<HttpData<Void?>>(this) {
-
-                    override fun onSucceed(data: HttpData<Void?>) {
+                .request(object : OnHttpListener<HttpData<Any>> {
+                    override fun onSucceed(result: HttpData<Any>?) {
                         TipsDialog.Builder(this@PasswordResetActivity)
                             .setIcon(TipsDialog.ICON_FINISH)
                             .setMessage(R.string.password_reset_success)
@@ -123,6 +110,10 @@ class PasswordResetActivity : AppActivity(), OnEditorActionListener {
                                 }
                             })
                             .show()
+                    }
+
+                    override fun onFail(e: Exception?) {
+                        toast(e?.message)
                     }
                 })
         }

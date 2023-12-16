@@ -1,9 +1,14 @@
-apply plugin: 'com.android.application'
-apply plugin: 'android-aspectjx'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'io.github.wurensen.android-aspectjx'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
 apply from: '../common.gradle'
 apply from: '../productFlavors.gradle'
-apply plugin: 'kotlin-parcelize'
+//apply plugin: 'com.didi.dokit.debug'
 
 // Android 代码规范文档：https://github.com/getActivity/AndroidCodeStandard
 android {
@@ -65,9 +70,9 @@ android {
             // 签名信息配置
             signingConfig signingConfigs.config
             // 添加清单占位符
-//            addManifestPlaceholders([
-//                    'app_name': '天天省钱 Debug 版'
-//            ])
+            addManifestPlaceholders([
+                    'app_name': '天天省钱 Debug 版'
+            ])
             // 调试模式下只保留一种架构的 so 库，提升打包速度
             ndk {
                 abiFilters 'armeabi-v7a', 'x86_64'
@@ -87,9 +92,9 @@ android {
             // 签名信息配置
             signingConfig signingConfigs.config
             // 添加清单占位符
-//            addManifestPlaceholders([
-//                    'app_name': '@string/app_name'
-//            ])
+            addManifestPlaceholders([
+                    'app_name': '@string/app_name'
+            ])
             // 仅保留两种架构的 so 库，根据 Bugly 统计得出
             ndk {
                 // armeabi：万金油架构平台（占用率：0%）
@@ -155,12 +160,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.12.13'
 
     // Json 解析框架：https://github.com/google/gson
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.10'
     // Gson 解析容错：https://github.com/getActivity/GsonFactory
-    implementation 'com.github.getActivity:GsonFactory:5.2'
+    implementation 'com.github.getActivity:GsonFactory:6.3'
 
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:6.0'
+    implementation 'com.github.getActivity:ShapeView:8.5'
 
     // AOP 插件库：https://mvnrepository.com/artifact/org.aspectj/aspectjrt
     implementation 'org.aspectj:aspectjrt:1.9.6'
@@ -226,11 +231,24 @@ dependencies {
 
     implementation 'com.blankj:utilcodex:1.31.1'
 
-    //核心模块
-    debugImplementation "io.github.didi.dokit:dokitx:3.5.0"
+    def kitVer = "3.7.1"
 
+    //核心模块
+    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
     //no-op 模块
-    releaseImplementation "io.github.didi.dokit:dokitx-no-op:3.5.0"
+    releaseImplementation "io.github.didi.dokit:dokitx-no-op:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx-rpc:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx-mc:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx-rpc-mc:$kitVer"
+//    releaseImplementation "io.github.didi.dokit:dokitx-no-op:$kitVer"
+
+
+    //潘多拉工具箱 https://gitee.com/clbDream/pdl-box_tools
+    implementation 'com.gitee.clbDream:pdl-box_tools:1.3.18'
+
+    //圆角图片 https://github.com/vinc3m1/RoundedImageView
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
     // 多语种：https://github.com/getActivity/MultiLanguages
     // 悬浮窗：https://github.com/getActivity/XToast
