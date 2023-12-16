@@ -330,6 +330,7 @@ class LoginActivity : AppActivity(),
                 }
 
                 override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
                     postDelayed({ commitView?.showError(3000) }, 1000)
                 }
 
@@ -374,6 +375,7 @@ class LoginActivity : AppActivity(),
                 }
 
                 override fun onFail(e: Exception?) {
+                    toast(e?.message)
                     postDelayed({ commitView?.showError(3000) }, 1000)
                 }
             })
