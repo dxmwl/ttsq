@@ -32,6 +32,7 @@ import com.ttsq.mobile.ui.dialog.TipsDialog
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.hjq.widget.layout.NestedScrollWebView
+import com.ttsq.mobile.other.PermissionInterceptor
 import timber.log.Timber
 import java.io.File
 import java.net.URISyntaxException
@@ -352,9 +353,10 @@ class BrowserView  @JvmOverloads constructor(
                         XXPermissions.with(activity)
                             .permission(Permission.ACCESS_FINE_LOCATION)
                             .permission(Permission.ACCESS_COARSE_LOCATION)
+                            .interceptor(PermissionInterceptor())
                             .request(object : PermissionCallback() {
                                 override fun onGranted(
-                                    permissions: MutableList<String?>?,
+                                    permissions: MutableList<String>,
                                     all: Boolean
                                 ) {
                                     if (all) {
@@ -385,6 +387,7 @@ class BrowserView  @JvmOverloads constructor(
             }
             XXPermissions.with(activity)
                 .permission(*Permission.Group.STORAGE)
+                .interceptor(PermissionInterceptor())
                 .request(object : PermissionCallback() {
                     override fun onGranted(permissions: MutableList<String>, all: Boolean) {
                         if (all) {

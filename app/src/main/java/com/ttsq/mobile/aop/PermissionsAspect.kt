@@ -5,6 +5,7 @@ import com.ttsq.mobile.manager.*
 import com.ttsq.mobile.other.PermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.tencent.bugly.crashreport.CrashReport
+import com.ttsq.mobile.other.PermissionInterceptor
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -55,9 +56,10 @@ class PermissionsAspect {
 
     private fun requestPermissions(joinPoint: ProceedingJoinPoint, activity: Activity, permissions: Array<out String>) {
         XXPermissions.with(activity)
+            .interceptor(PermissionInterceptor())
             .permission(*permissions)
             .request(object : PermissionCallback() {
-                override fun onGranted(permissions: MutableList<String?>?, all: Boolean) {
+                override fun onGranted(permissions: MutableList<String>, all: Boolean) {
                     if (all) {
                         try {
                             // 获得权限，执行原方法
