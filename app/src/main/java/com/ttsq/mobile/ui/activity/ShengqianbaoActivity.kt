@@ -16,6 +16,7 @@ import com.hjq.http.listener.OnHttpListener
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.hjq.shape.view.ShapeEditText
+import com.ttsq.mobile.other.PermissionInterceptor
 import com.ttsq.mobile.ui.dialog.ShareDialog
 import com.umeng.socialize.media.UMWeb
 
@@ -115,6 +116,7 @@ class ShengqianbaoActivity : AppActivity() {
 
                         if (needShare) {
                             XXPermissions.with(this@ShengqianbaoActivity)
+                                .interceptor(PermissionInterceptor())
                                 .permission(Permission.WRITE_EXTERNAL_STORAGE)
                                 .request { _, all ->
                                     if (all) {

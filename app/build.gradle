@@ -145,7 +145,7 @@ dependencies {
     implementation project(':library:umeng')
 
     // 权限请求框架：https://github.com/getActivity/XXPermissions
-    implementation 'com.github.getActivity:XXPermissions:13.5'
+    implementation 'com.github.getActivity:XXPermissions:18.5'
 
     // 标题栏框架：https://github.com/getActivity/TitleBar
     implementation 'com.github.getActivity:TitleBar:9.2'

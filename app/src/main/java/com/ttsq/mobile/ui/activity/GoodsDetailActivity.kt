@@ -35,6 +35,7 @@ import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.ttsq.mobile.http.model.GoodsDetailDto
+import com.ttsq.mobile.other.PermissionInterceptor
 import com.ttsq.mobile.ui.fragment.HomeFragment
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.media.UMWeb
@@ -201,6 +202,7 @@ class GoodsDetailActivity : AppActivity() {
                     hideDialog()
                     if (needShare) {
                         XXPermissions.with(this@GoodsDetailActivity)
+                            .interceptor(PermissionInterceptor())
                             .permission(Permission.WRITE_EXTERNAL_STORAGE)
                             .request { _, all ->
                                 if (all) {
