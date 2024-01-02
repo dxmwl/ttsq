@@ -353,7 +353,7 @@ class BrowserView  @JvmOverloads constructor(
                         XXPermissions.with(activity)
                             .permission(Permission.ACCESS_FINE_LOCATION)
                             .permission(Permission.ACCESS_COARSE_LOCATION)
-                            .interceptor(PermissionInterceptor())
+                            .interceptor(PermissionInterceptor("使用定位功能,用于网页中涉及到用户位置相关的功能"))
                             .request(object : PermissionCallback() {
                                 override fun onGranted(
                                     permissions: MutableList<String>,
@@ -387,7 +387,7 @@ class BrowserView  @JvmOverloads constructor(
             }
             XXPermissions.with(activity)
                 .permission(*Permission.Group.STORAGE)
-                .interceptor(PermissionInterceptor())
+                .interceptor(PermissionInterceptor("使用存储权限,用于上传图片/文件等功能"))
                 .request(object : PermissionCallback() {
                     override fun onGranted(permissions: MutableList<String>, all: Boolean) {
                         if (all) {

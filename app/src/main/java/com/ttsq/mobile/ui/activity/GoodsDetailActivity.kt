@@ -202,7 +202,7 @@ class GoodsDetailActivity : AppActivity() {
                     hideDialog()
                     if (needShare) {
                         XXPermissions.with(this@GoodsDetailActivity)
-                            .interceptor(PermissionInterceptor())
+                            .interceptor(PermissionInterceptor("使用存储权限,用于分享链接/图片等到QQ/微信等平台"))
                             .permission(Permission.WRITE_EXTERNAL_STORAGE)
                             .request { _, all ->
                                 if (all) {
