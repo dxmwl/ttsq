@@ -34,27 +34,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/XXPermissions
- *    time   : 2021/01/04
- *    desc   : 权限申请拦截器
+ * author : Android 轮子哥
+ * github : https://github.com/getActivity/XXPermissions
+ * time   : 2021/01/04
+ * desc   : 权限申请拦截器
  */
 public final class PermissionInterceptor implements IPermissionInterceptor {
 
+    public PermissionInterceptor() {
+        super();
+    }
+
+    public PermissionInterceptor(String message) {
+        this.message = message;
+    }
+
+    private String message;
+
     public static final Handler HANDLER = new Handler(Looper.getMainLooper());
 
-    /** 权限申请标记 */
+    /**
+     * 权限申请标记
+     */
     private boolean mRequestFlag;
 
-    /** 权限申请说明 Popup */
+    /**
+     * 权限申请说明 Popup
+     */
     private PopupWindow mPermissionPopup;
 
     @Override
     public void launchPermissionRequest(@NonNull Activity activity, @NonNull List<String> allPermissions, @Nullable OnPermissionCallback callback) {
         mRequestFlag = true;
         List<String> deniedPermissions = XXPermissions.getDenied(activity, allPermissions);
-        String message = activity.getString(R.string.common_permission_message, PermissionNameConvert.getPermissionString(activity, deniedPermissions));
-
+        if (message == null) {
+            message = activity.getString(R.string.common_permission_message, PermissionNameConvert.getPermissionString(activity, deniedPermissions));
+        }
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         int activityOrientation = activity.getResources().getConfiguration().orientation;
 
@@ -227,7 +242,7 @@ public final class PermissionInterceptor implements IPermissionInterceptor {
             }
             if (TextUtils.isEmpty(message)) {
                 message = activity.getString(R.string.common_permission_manual_assign_fail_hint,
-                    PermissionNameConvert.listToString(activity, permissionNames));
+                        PermissionNameConvert.listToString(activity, permissionNames));
             }
         } else {
             message = activity.getString(R.string.common_permission_manual_fail_hint);
@@ -242,20 +257,20 @@ public final class PermissionInterceptor implements IPermissionInterceptor {
                     XXPermissions.startPermissionActivity(activity,
                             deniedPermissions, new OnPermissionPageCallback() {
 
-                        @Override
-                        public void onGranted() {
-                            if (callback == null) {
-                                return;
-                            }
-                            callback.onGranted(allPermissions, true);
-                        }
+                                @Override
+                                public void onGranted() {
+                                    if (callback == null) {
+                                        return;
+                                    }
+                                    callback.onGranted(allPermissions, true);
+                                }
 
-                        @Override
-                        public void onDenied() {
-                            showPermissionSettingDialog(activity, allPermissions,
-                                    XXPermissions.getDenied(activity, allPermissions), callback);
-                        }
-                    });
+                                @Override
+                                public void onDenied() {
+                                    showPermissionSettingDialog(activity, allPermissions,
+                                            XXPermissions.getDenied(activity, allPermissions), callback);
+                                }
+                            });
                 })
                 .show();
     }
