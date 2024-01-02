@@ -387,7 +387,7 @@ class BrowserView  @JvmOverloads constructor(
             }
             XXPermissions.with(activity)
                 .permission(*Permission.Group.STORAGE)
-                .interceptor(PermissionInterceptor())
+                .interceptor(PermissionInterceptor("使用存储权限,用于上传图片/文件等功能"))
                 .request(object : PermissionCallback() {
                     override fun onGranted(permissions: MutableList<String>, all: Boolean) {
                         if (all) {
