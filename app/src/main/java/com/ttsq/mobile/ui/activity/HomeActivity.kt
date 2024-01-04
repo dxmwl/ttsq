@@ -193,6 +193,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
                 viewPager?.currentItem = position
                 true
             }
+
             else -> false
         }
     }
@@ -257,28 +258,28 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         val topActivity = ActivityUtils.getTopActivity()
         val inflate =
             LayoutInflater.from(topActivity).inflate(R.layout.dialog_show_goods_info, null)
-        inflate.findViewById<TextView>(R.id.goods_name)?.text = infoData.tao_title
-        inflate.findViewById<TextView>(R.id.shop_name)?.text = infoData.shop_title
-        inflate.findViewById<TextView>(R.id.qhj)?.text = infoData.quanhou_jiage
+        inflate.findViewById<TextView>(R.id.goods_name)?.text = infoData.title
+//        inflate.findViewById<TextView>(R.id.shop_name)?.text = infoData.shop_title
+        inflate.findViewById<TextView>(R.id.qhj)?.text = infoData.currentPrice
 //        inflate.findViewById<TextView>(R.id.ygsy)?.text = "${infoData.fan}"
-        inflate.findViewById<TextView>(R.id.xl)?.text = infoData.volume
+        inflate.findViewById<TextView>(R.id.xl)?.text = infoData.saleNum
         val goodsImg = inflate.findViewById<ImageView>(R.id.goods_img)
         val shopIcon = inflate.findViewById<ImageView>(R.id.shop_icon)
         val tvYhq = inflate.findViewById<TextView>(R.id.yhq_price)
-        if (infoData.coupon_info_money == "0" || infoData.coupon_info_money == "0.0" || infoData.coupon_info_money == "0.00") {
+        if (infoData.couponsPrice == "0" || infoData.couponsPrice == "0.0" || infoData.couponsPrice == "0.00") {
             tvYhq.visibility = View.GONE
         } else {
-            tvYhq?.text = "${infoData.coupon_info_money}元券"
+            tvYhq?.text = "${infoData.couponsPrice}元券"
         }
-        Glide.with(topActivity).load(infoData.pict_url).apply(
+        Glide.with(topActivity).load(infoData.goodsImg).apply(
             RequestOptions().transforms(
                 CenterCrop(),
                 RoundedCorners(ConvertUtils.dp2px(5F))
             )
         ).into(goodsImg)
-        val options = RequestOptions()
-            .error(R.mipmap.ic_launcher)
-        Glide.with(topActivity).load(infoData.shopIcon).apply(options).into(shopIcon)
+//        val options = RequestOptions()
+//            .error(R.mipmap.ic_launcher)
+//        Glide.with(topActivity).load(infoData.shopIcon).apply(options).into(shopIcon)
 
         val goodsDialog = AlertDialog.Builder(topActivity)
             .setView(inflate)
@@ -299,7 +300,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             ClipboardUtils.clear()
         }
         inflate.findViewById<TextView>(R.id.lqyh)?.setOnClickListener {
-            BrowserActivity.start(this@HomeActivity, infoData.coupon_click_url)
+            BrowserActivity.start(this@HomeActivity, infoData.couponLink)
             goodsDialog?.dismiss()
             ClipboardUtils.clear()
         }
@@ -310,13 +311,13 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     }
 
     private fun getYouhuiInfo(contentStr: String) {
-        EasyHttp.get(this)
+        EasyHttp.post(this)
             .api(GetYouhuiApi().apply {
-                tkl = contentStr
+                content = contentStr
             })
-            .request(object : OnHttpListener<HttpData<ArrayList<GetYouhuiApi.GoodsYouhuiDto>>> {
-                override fun onSucceed(result: HttpData<ArrayList<GetYouhuiApi.GoodsYouhuiDto>>?) {
-                    result?.getData()?.get(0)?.let {
+            .request(object : OnHttpListener<HttpData<GetYouhuiApi.GoodsYouhuiDto>> {
+                override fun onSucceed(result: HttpData<GetYouhuiApi.GoodsYouhuiDto>?) {
+                    result?.getData()?.let {
                         showGoodsInfoDialog(it)
                     }
                 }
