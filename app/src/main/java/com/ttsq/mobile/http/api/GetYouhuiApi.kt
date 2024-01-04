@@ -21,6 +21,8 @@ class GetYouhuiApi : IRequestApi {
         val originPrice: String,
         val currentPrice: String,
         val couponsPrice: String,
-        val couponLink: String
-        )
+        val couponLink: String,
+        //平台类型(1淘宝,2:京东,3:抖音)
+        val platformType: Int
+    )
 }

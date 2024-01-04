@@ -28,7 +28,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
  *    time   : 2018/10/18
  *    desc   : 浏览器界面
  */
-class BrowserActivity : AppActivity(), com.ttsq.mobile.action.StatusAction, OnRefreshListener {
+class BrowserActivity : AppActivity(), StatusAction, OnRefreshListener {
 
     companion object {
 
