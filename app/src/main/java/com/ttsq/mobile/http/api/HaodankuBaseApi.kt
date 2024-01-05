@@ -3,6 +3,7 @@ package com.ttsq.mobile.http.api
 import com.hjq.http.config.IRequestApi
 import com.hjq.http.config.IRequestServer
 import com.ttsq.mobile.other.AppConfig
+import java.text.SimpleDateFormat
 
 /**
  * Created with Android studio
