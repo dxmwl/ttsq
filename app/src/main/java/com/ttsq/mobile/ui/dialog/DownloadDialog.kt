@@ -32,7 +32,7 @@ import java.io.File
  *    time   : 2019/03/20
  *    desc   : 升级对话框
  */
-class UpdateDialog {
+class DownloadDialog {
 
     class Builder(context: Context) : BaseDialog.Builder<Builder>(context) {
 
@@ -41,9 +41,13 @@ class UpdateDialog {
         private val progressView: ProgressBar? by lazy { findViewById(R.id.pb_update_progress) }
         private val updateView: TextView? by lazy { findViewById(R.id.tv_update_update) }
         private val closeView: TextView? by lazy { findViewById(R.id.tv_update_close) }
+        private val app_name: TextView? by lazy { findViewById(R.id.app_name) }
 
         /** Apk 文件 */
         private var apkFile: File? = null
+
+        //app名称
+        private var appTitle: String? = null
 
         /** 下载地址 */
         private var downloadUrl: String? = null
@@ -61,7 +65,7 @@ class UpdateDialog {
         private var downloadComplete = false
 
         init {
-            setContentView(R.layout.update_dialog)
+            setContentView(R.layout.download_dialog)
             setAnimStyle(AnimAction.ANIM_BOTTOM)
             setCancelable(false)
             setOnClickListener(updateView, closeView)
@@ -83,6 +87,11 @@ class UpdateDialog {
         fun setUpdateLog(text: CharSequence?): Builder = apply {
             detailsView?.text = text
             detailsView?.visibility = if (text == null) View.GONE else View.VISIBLE
+        }
+
+        fun setTitle(title: String): Builder = apply {
+            appTitle = title
+            app_name?.text = title
         }
 
         /**
@@ -133,8 +142,15 @@ class UpdateDialog {
          * 下载 Apk
          */
         @CheckNet
-        @Permissions(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.REQUEST_INSTALL_PACKAGES)
+        @Permissions(
+            Permission.READ_MEDIA_IMAGES,
+            Permission.WRITE_EXTERNAL_STORAGE,
+            Permission.REQUEST_INSTALL_PACKAGES
+        )
         private fun downloadApk() {
+            if (appTitle == null) {
+                appTitle = "APP"
+            }
             // 设置对话框不能被取消
             setCancelable(false)
             val notificationManager = getSystemService(NotificationManager::class.java)
@@ -142,8 +158,11 @@ class UpdateDialog {
             var channelId = ""
             // 适配 Android 8.0 通知渠道新特性
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(getString(R.string.update_notification_channel_id),
-                    getString(R.string.update_notification_channel_name), NotificationManager.IMPORTANCE_LOW)
+                val channel = NotificationChannel(
+                    getString(R.string.update_notification_channel_id),
+                    getString(R.string.update_notification_channel_name),
+                    NotificationManager.IMPORTANCE_LOW
+                )
                 channel.enableLights(false)
                 channel.enableVibration(false)
                 channel.vibrationPattern = longArrayOf(0)
@@ -151,27 +170,35 @@ class UpdateDialog {
                 notificationManager.createNotificationChannel(channel)
                 channelId = channel.id
             }
-            val notificationBuilder: NotificationCompat.Builder = NotificationCompat.Builder(getContext(), channelId)
-                // 设置通知时间
-                .setWhen(System.currentTimeMillis())
-                // 设置通知标题
-                .setContentTitle(getString(R.string.app_name))
-                // 设置通知小图标
-                .setSmallIcon(R.mipmap.launcher_ic)
-                // 设置通知大图标
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.launcher_ic))
-                // 设置通知静音
-                .setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
-                // 设置震动频率
-                .setVibrate(longArrayOf(0))
-                // 设置声音文件
-                .setSound(null)
-                // 设置通知的优先级
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            val notificationBuilder: NotificationCompat.Builder =
+                NotificationCompat.Builder(getContext(), channelId)
+                    // 设置通知时间
+                    .setWhen(System.currentTimeMillis())
+                    // 设置通知标题
+                    .setContentTitle(appTitle)
+                    // 设置通知小图标
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    // 设置通知大图标
+                    .setLargeIcon(
+                        BitmapFactory.decodeResource(
+                            getResources(),
+                            R.mipmap.ic_launcher
+                        )
+                    )
+                    // 设置通知静音
+                    .setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
+                    // 设置震动频率
+                    .setVibrate(longArrayOf(0))
+                    // 设置声音文件
+                    .setSound(null)
+                    // 设置通知的优先级
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
             // 创建要下载的文件对象
-            apkFile = File(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
-                getString(R.string.app_name) + "_v" + nameView?.text.toString() + ".apk")
+            apkFile = File(
+                getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
+                getString(R.string.app_name) + "_v" + nameView?.text.toString() + ".apk"
+            )
 
             EasyHttp.download(getDialog())
                 .method(HttpMethod.GET)
@@ -192,13 +219,19 @@ class UpdateDialog {
                     }
 
                     override fun onProgress(file: File, progress: Int) {
-                        updateView?.text = String.format(getString(R.string.update_status_running)!!, progress)
+                        updateView?.text =
+                            String.format(getString(R.string.update_status_running)!!, progress)
                         progressView?.progress = progress
                         // 更新下载通知
                         notificationManager.notify(
                             notificationId, notificationBuilder
                                 // 设置通知的文本
-                                .setContentText(String.format(getString(R.string.update_status_running)!!, progress))
+                                .setContentText(
+                                    String.format(
+                                        getString(R.string.update_status_running)!!,
+                                        progress
+                                    )
+                                )
                                 // 设置下载的进度
                                 .setProgress(100, progress, false)
                                 // 设置点击通知后是否自动消失
@@ -215,12 +248,21 @@ class UpdateDialog {
                         notificationManager.notify(
                             notificationId, notificationBuilder
                                 // 设置通知的文本
-                                .setContentText(String.format(getString(R.string.update_status_successful)!!, 100))
+                                .setContentText(
+                                    String.format(
+                                        getString(R.string.update_status_successful)!!,
+                                        100
+                                    )
+                                )
                                 // 设置下载的进度
                                 .setProgress(100, 100, false)
                                 // 设置通知点击之后的意图
-                                .setContentIntent(PendingIntent.getActivity(getContext(), 1, getInstallIntent(),
-                                    Intent.FILL_IN_ACTION or PendingIntent.FLAG_IMMUTABLE))
+                                .setContentIntent(
+                                    PendingIntent.getActivity(
+                                        getContext(), 1, getInstallIntent(),
+                                        Intent.FILL_IN_ACTION or PendingIntent.FLAG_IMMUTABLE
+                                    )
+                                )
                                 // 设置点击通知后是否自动消失
                                 .setAutoCancel(true)
                                 // 是否正在交互中
@@ -272,7 +314,11 @@ class UpdateDialog {
             intent.action = Intent.ACTION_VIEW
             val uri: Uri?
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                uri = FileProvider.getUriForFile(getContext(), AppConfig.getPackageName() + ".provider", apkFile!!)
+                uri = FileProvider.getUriForFile(
+                    getContext(),
+                    AppConfig.getPackageName() + ".provider",
+                    apkFile!!
+                )
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             } else {
                 uri = Uri.fromFile(apkFile)

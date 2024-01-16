@@ -68,20 +68,7 @@ class ShengqianbaoActivity : AppActivity() {
                 getYouhuiInfo(true)
             }
             R.id.go_buy -> {
-                if (AppUtils.isAppInstalled("com.taobao.taobao")) {
-                    val intent = Intent()
-                    intent.setAction("Android.intent.action.VIEW");
-                    val uri = Uri.parse(youhuiUrl); // 商品地址
-                    intent.setData(uri);
-                    intent.setClassName(
-                        "com.taobao.taobao",
-                        "com.taobao.browser.BrowserActivity"
-                    );
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//在非activity类中调用startactivity方法必须添加标签
-                    startActivity(intent)
-                } else {
-                    BrowserActivity.start(this@ShengqianbaoActivity, youhuiUrl)
-                }
+                BrowserActivity.start(this@ShengqianbaoActivity, youhuiUrl)
             }
             R.id.clear_input -> {
                 shapeEditText?.text?.clear()
@@ -99,20 +86,20 @@ class ShengqianbaoActivity : AppActivity() {
             return
         }
         showDialog()
-        EasyHttp.get(this)
+        EasyHttp.post(this)
             .api(GetYouhuiApi().apply {
-                tkl = inputTklStr
+                content = inputTklStr
             })
-            .request(object : OnHttpListener<HttpData<ArrayList<GetYouhuiApi.GoodsYouhuiDto>>> {
-                override fun onSucceed(result: HttpData<ArrayList<GetYouhuiApi.GoodsYouhuiDto>>?) {
+            .request(object : OnHttpListener<HttpData<GetYouhuiApi.GoodsYouhuiDto>> {
+                override fun onSucceed(result: HttpData<GetYouhuiApi.GoodsYouhuiDto>?) {
                     hideDialog()
-                    result?.getData()?.get(0)?.let {
-                        youhuiUrl = it.coupon_click_url
-                        yuanjia?.text = it.size
-                        textView2?.text = it.tao_title
-                        youhuiquan?.text = "-${it.coupon_info_money}"
-                        shiji_pay?.text = it.quanhou_jiage
-                        go_buy?.text = "立即购买省\n¥${it.coupon_info_money}"
+                    result?.getData()?.let {
+                        youhuiUrl = it.couponLink
+                        yuanjia?.text = it.originPrice
+                        textView2?.text = it.title
+                        youhuiquan?.text = "-${it.couponsPrice}"
+                        shiji_pay?.text = it.currentPrice
+                        go_buy?.text = "立即购买省\n¥${it.couponsPrice}"
 
                         if (needShare) {
                             XXPermissions.with(this@ShengqianbaoActivity)

@@ -5,6 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.blankj.utilcode.util.ClipboardUtils
 import com.hjq.base.BaseDialog
+import com.hjq.http.EasyHttp
+import com.hjq.http.listener.OnHttpListener
 import com.hjq.shape.view.ShapeTextView
 import com.hjq.umeng.Platform
 import com.hjq.umeng.UmengShare
@@ -13,17 +15,22 @@ import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.app.AppFragment
+import com.ttsq.mobile.http.api.AppBannerApi
+import com.ttsq.mobile.http.api.HomeBannerApi
 import com.ttsq.mobile.http.api.UserInfoApi
+import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.ui.activity.InviteFriendsActivity
 import com.ttsq.mobile.ui.activity.LoginActivity
 import com.ttsq.mobile.ui.activity.MemberCenterActivity
 import com.ttsq.mobile.ui.activity.SettingActivity
+import com.ttsq.mobile.ui.adapter.AppBannerAdapter
 import com.ttsq.mobile.ui.dialog.MessageDialog
 import com.ttsq.mobile.ui.dialog.ShareDialog
 import com.ttsq.mobile.utils.livebus.LiveDataBus
 import com.umeng.socialize.media.UMWeb
+import com.youth.banner.Banner
 
 /**
  * @ClassName: LocalToolsFragment
@@ -43,6 +50,7 @@ class MeFragment : AppFragment<AppActivity>() {
     private val userAvatar: ImageView? by lazy { findViewById(R.id.user_avatar) }
     private val nickName: TextView? by lazy { findViewById(R.id.nick_name) }
     private val member_time: ShapeTextView? by lazy { findViewById(R.id.member_time) }
+    private val banner: Banner<AppBannerApi.BannerBean, AppBannerAdapter>? by lazy { findViewById(R.id.banner_me) }
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_me
@@ -53,6 +61,11 @@ class MeFragment : AppFragment<AppActivity>() {
             R.id.my_member, R.id.kefu_online, R.id.setting, R.id.nick_name,
             R.id.member_time,R.id.invite_friends,R.id.my_order
         )
+
+        banner?.let {
+//            it.setBannerGalleryEffect(39, 16)
+            it.addBannerLifecycleObserver(this)
+        }
     }
 
     override fun initData() {
@@ -64,6 +77,7 @@ class MeFragment : AppFragment<AppActivity>() {
             val userInfoDto = data as UserInfoApi.UserInfoDto
             setUserInfo(userInfoDto)
         }
+        getBannerList()
     }
 
     private fun setUserInfo(userInfoDto: UserInfoApi.UserInfoDto) {
@@ -123,4 +137,30 @@ class MeFragment : AppFragment<AppActivity>() {
             else -> {}
         }
     }
+
+    /**
+     * 获取轮播图数据
+     */
+    private fun getBannerList() {
+        EasyHttp.post(this)
+            .api(AppBannerApi())
+            .request(object : OnHttpListener<HttpData<ArrayList<AppBannerApi.BannerBean>>> {
+                override fun onSucceed(result: HttpData<ArrayList<AppBannerApi.BannerBean>>?) {
+                    result?.getData()?.let {
+                        val bannerListData = ArrayList<AppBannerApi.BannerBean>()
+                        it.forEach { bannerItem ->
+                            if (bannerItem.bannerImg.isNotBlank()) {
+                                bannerListData.add(bannerItem)
+                            }
+                        }
+                        banner?.setAdapter(AppBannerAdapter(bannerListData))
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+            })
+    }
+
 }

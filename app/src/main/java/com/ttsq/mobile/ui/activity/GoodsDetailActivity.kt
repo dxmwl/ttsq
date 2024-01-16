@@ -220,25 +220,10 @@ class GoodsDetailActivity : AppActivity() {
                         return
                     }
 
-                    if (AppUtils.isAppInstalled("com.taobao.taobao")) {
-                        val intent = Intent()
-                        intent.setAction("Android.intent.action.VIEW");
-                        val uri = Uri.parse(
-                            result?.getData()?.coupon_click_url.toString()
-                        ); // 商品地址
-                        intent.setData(uri);
-                        intent.setClassName(
-                            "com.taobao.taobao",
-                            "com.taobao.browser.BrowserActivity"
-                        );
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//在非activity类中调用startactivity方法必须添加标签
-                        startActivity(intent)
-                    } else {
-                        BrowserActivity.start(
-                            this@GoodsDetailActivity,
-                            result?.getData()?.coupon_click_url.toString()
-                        )
-                    }
+                    BrowserActivity.start(
+                        this@GoodsDetailActivity,
+                        result?.getData()?.coupon_click_url.toString()
+                    )
                 }
 
                 override fun onFail(e: java.lang.Exception?) {
