@@ -43,6 +43,7 @@ class FuliFragment : TitleBarFragment<AppActivity>() {
     override fun initData() {
         val fuliListData = ArrayList<FuliItemDto>()
         fuliListData.let {
+            it.add(FuliItemDto("http://img-haodanku-com.cdn.fudaiapp.com/Fre3oY9s6syf7Ewk187UEieMucin","快手充话费","https://kzurl10.cn/73TmJj"))
             it.add(FuliItemDto("http://img-haodanku-com.cdn.fudaiapp.com/Frhv8hvLKDaE-EB0Rr1KuUGY5AiV","低价包邮","https://4kma.cn/NXDo6"))
             it.add(FuliItemDto("http://img-haodanku-com.cdn.fudaiapp.com/Fr3XHytO-ADvM1IXADHnmdSAmgmo","福利清单","https://kzurl10.cn/Nnsu4"))
 //            it.add(FuliItemDto("http://img-haodanku-com.cdn.fudaiapp.com/FlO964brHnAPiJyWFuBUfTAcX3sd","小样种草机","https://kzurl16.cn/Nnsns"))
