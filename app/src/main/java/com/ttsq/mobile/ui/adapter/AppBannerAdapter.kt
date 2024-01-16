@@ -58,7 +58,6 @@ class AppBannerAdapter(bannerList: ArrayList<AppBannerApi.BannerBean>?) :
                         DownloadDialog.Builder(it.context)
                             .setDownloadUrl(data.params)
                             .setTitle(it1)
-                            .setForceUpdate(true)
                             .show()
                     }
                 }

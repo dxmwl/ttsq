@@ -10,8 +10,8 @@ android {
         minSdkVersion 21
         // 目标适配版本
         targetSdkVersion 33
-        versionName '1.1.0'
-        versionCode 16
+        versionName '1.2.0'
+        versionCode 17
     }
 
     // 支持 Java JDK 8
