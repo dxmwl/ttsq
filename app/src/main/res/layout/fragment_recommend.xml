@@ -186,6 +186,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/goods_list"
+                    android:layout_marginHorizontal="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/dp_10"

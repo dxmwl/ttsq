@@ -1,142 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hjq.shape.layout.ShapeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
-    app:cardCornerRadius="5dp">
+    android:orientation="vertical"
+    app:shape_radius="10dp"
+    app:shape_solidColor="@color/white">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/goods_img"
+        android:layout_width="match_parent"
+        android:layout_height="167dp"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp">
 
-        <ImageView
-            android:id="@+id/goods_img"
+
+        <TextView
+            android:id="@+id/goods_name"
             android:layout_width="match_parent"
-            android:layout_height="167dp"
-            android:scaleType="centerCrop" />
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#ff333333"
+            android:textSize="12sp"
+            tools:text="安踏不急男鞋2020年夏季新款官网男生休闲鞋鞋些…" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp">
-
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:id="@+id/goods_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="#ff333333"
-                android:textSize="12sp"
-                tools:text="安踏不急男鞋2020年夏季新款官网男生休闲鞋鞋些…" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥"
-                    android:textColor="#fffc383e"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/quanhoujia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fffc383e"
-                    android:textSize="18sp"
-                    tools:text="299" />>
-
-                <TextView
-                    android:id="@+id/yuanjia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ff999999"
-                    android:textSize="12sp"
-                    tools:text="3355" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/monthly_sales"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="#ff999999"
-                android:textSize="9sp"
-                tools:text="已售2000" />
+                android:text="￥"
+                android:textColor="#fffc383e"
+                android:textSize="13sp" />
 
-            <LinearLayout
-                android:layout_marginTop="6dp"
+            <TextView
+                android:id="@+id/quanhoujia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fffc383e"
+                android:textSize="18sp"
+                tools:text="299" />>
+
+            <TextView
+                android:id="@+id/yuanjia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff999999"
+                android:textSize="12sp"
+                tools:text="3355" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/monthly_sales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#ff999999"
+            android:textSize="9sp"
+            tools:text="已售2000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical">
+
+            <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/yhq_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="7dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="7dp"
+                android:paddingBottom="2dp"
+                android:textColor="#fffc383e"
+                android:textSize="11sp"
+                app:shape_radius="@dimen/dp_3"
+                app:shape_strokeColor="#fffc383e"
+                app:shape_strokeWidth="1dp"
+                tools:text="50元券" />
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:id="@+id/layout_fan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                app:shape_radius="2dp"
+                app:shape_solidColor="#33FC383E">
 
                 <com.hjq.shape.view.ShapeTextView
-                    android:id="@+id/yhq_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="7dp"
-                    android:paddingTop="2dp"
-                    android:paddingEnd="7dp"
-                    android:paddingBottom="2dp"
-                    android:textColor="#fffc383e"
-                    android:textSize="11sp"
-                    app:shape_radius="@dimen/dp_3"
-                    app:shape_strokeColor="#fffc383e"
-                    app:shape_strokeWidth="1dp"
-                    tools:text="50元券" />
-
-                <com.hjq.shape.layout.ShapeLinearLayout
-                    android:layout_width="wrap_content"
+                    android:padding="3dp"
+                    android:text="返"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
                     app:shape_radius="2dp"
-                    android:id="@+id/layout_fan"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    app:shape_solidColor="#33FC383E"
-                    android:layout_height="wrap_content">
+                    app:shape_solidColor="#fffc383e" />
 
-                    <com.hjq.shape.view.ShapeTextView
-                        app:shape_radius="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:text="返"
-                        android:textColor="@color/white"
-                        android:textSize="10sp"
-                        app:shape_solidColor="#fffc383e" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="¥"
+                    android:textColor="#fffc383e"
+                    android:textSize="10sp" />
 
-                    <TextView
-                        android:layout_marginStart="5dp"
-                        android:textSize="10sp"
-                        android:textColor="#fffc383e"
-                        android:text="¥"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:id="@+id/tv_fan_money"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="3dp"
-                        android:textSize="10sp"
-                        android:textColor="#fffc383e"
-                        tools:text="30"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </com.hjq.shape.layout.ShapeLinearLayout>
-            </LinearLayout>
-
+                <TextView
+                    android:id="@+id/tv_fan_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:textColor="#fffc383e"
+                    android:textSize="10sp"
+                    tools:text="30" />
+            </com.hjq.shape.layout.ShapeLinearLayout>
         </LinearLayout>
 
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+</com.hjq.shape.layout.ShapeLinearLayout>

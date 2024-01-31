@@ -104,7 +104,7 @@ class SearchResultActivity : AppActivity() {
             it.addItemDecoration(
                 GridSpacingItemDecoration(
                     2,
-                    ConversionUtils.dp2Px(5f),
+                    ConversionUtils.dp2Px(10f),
                     false
                 )
             )

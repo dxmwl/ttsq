@@ -59,7 +59,7 @@ class SearchGoodsListAdapter(val mContext: Context) :
         override fun onBindView(position: Int) {
             val goodsBean = getItem(position).data as GoodsDetailDto
             if (goodsImg != null) {
-                val pictUrl = goodsBean.itempic
+                val pictUrl = goodsBean.itempic + "_310x310.jpg"
                 if (pictUrl.startsWith("http") || pictUrl.startsWith("https")) {
                     GlideApp.with(mContext).load(pictUrl).into(goodsImg)
                 } else {
