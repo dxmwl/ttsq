@@ -6,15 +6,26 @@ import android.graphics.Paint
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.bumptech.glide.Glide
+import com.bytedance.sdk.openadsdk.AdSlot
+import com.bytedance.sdk.openadsdk.TTAdDislike
+import com.bytedance.sdk.openadsdk.TTAdNative
+import com.bytedance.sdk.openadsdk.TTAdSdk
+import com.bytedance.sdk.openadsdk.TTFeedAd
+import com.bytedance.sdk.openadsdk.TTNativeExpressAd
+import com.bytedance.sdk.openadsdk.mediation.ad.MediationExpressRenderListener
 import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.Log
 import com.ttsq.mobile.aop.SingleClick
@@ -34,7 +45,12 @@ import com.hjq.http.listener.OnHttpListener
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
+import com.orhanobut.logger.Logger
+import com.pdlbox.tools.utils.ConversionUtils
+import com.ttsq.mobile.http.model.AdDto
+import com.ttsq.mobile.http.model.DataType
 import com.ttsq.mobile.http.model.GoodsDetailDto
+import com.ttsq.mobile.other.GridSpacingItemDecoration
 import com.ttsq.mobile.other.PermissionInterceptor
 import com.ttsq.mobile.ui.fragment.HomeFragment
 import com.umeng.socialize.UMShareAPI
@@ -65,7 +81,7 @@ class GoodsDetailActivity : AppActivity() {
         }
     }
 
-    private lateinit var goodsListAdapter: SearchGoodsListAdapter
+    private var goodsListAdapter: SearchGoodsListAdapter? = null
     private val goods_price: TextView? by lazy { findViewById<TextView>(R.id.goods_price) }
     private val goods_title: TextView? by lazy { findViewById<TextView>(R.id.goods_title) }
     private val yuanjia: TextView? by lazy { findViewById<TextView>(R.id.yuanjia) }
@@ -90,9 +106,25 @@ class GoodsDetailActivity : AppActivity() {
     private val xqtList: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.xqt_list) }
     private val ll_lq: LinearLayout? by lazy { findViewById<LinearLayout>(R.id.ll_lq) }
     private val iv_lq: TextView? by lazy { findViewById(R.id.iv_lq) }
+    private val tv_fan_money: TextView? by lazy { findViewById(R.id.tv_fan_money) }
     private val ll_share: LinearLayout? by lazy { findViewById(R.id.ll_share) }
     private val goodsList: RecyclerView? by lazy { findViewById<RecyclerView>(R.id.goods_list) }
     private val banner: Banner<String, GoodsDetailBannerAdapter>? by lazy { findViewById(R.id.goods_banner) }
+    private val bannerContainer: FrameLayout? by lazy { findViewById(R.id.ad_view) }
+
+    //@[classname]
+    private var bannerAd: TTNativeExpressAd? = null
+    //@[classname]
+    private var adNativeLoader: TTAdNative? = null
+    //@[classname]
+    private var adSlot: AdSlot? = null
+    //@[classname]
+    private var nativeExpressAdListener: TTAdNative.NativeExpressAdListener? = null
+    //@[classname]
+    private var expressAdInteractionListener: TTNativeExpressAd.ExpressAdInteractionListener? = null
+    //@[classname]
+    private var dislikeInteractionCallback: TTAdDislike.DislikeInteractionCallback? = null
+    private var mFeedAdListener: TTAdNative.FeedAdListener? = null // 广告加载监听器
 
     override fun getLayoutId(): Int {
         return R.layout.activity_goods_detail
@@ -124,14 +156,21 @@ class GoodsDetailActivity : AppActivity() {
         }
 
         goodsList?.let {
-            it.layoutManager = GridLayoutManager(this, 2)
+            it.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             goodsListAdapter = SearchGoodsListAdapter(this)
             it.adapter = goodsListAdapter
+            it.addItemDecoration(
+                GridSpacingItemDecoration(
+                    2,
+                    ConversionUtils.dp2Px(5f),
+                    false
+                )
+            )
         }
     }
 
     override fun initData() {
-
+        loadAd()
         EasyHttp.get(this)
             .api(GoodsDetailApi().apply {
                 itemid = getString(GOODS_ID).toString()
@@ -158,7 +197,12 @@ class GoodsDetailActivity : AppActivity() {
             })
             .request(object : OnHttpListener<HttpData<ArrayList<GoodsDetailDto>>> {
                 override fun onSucceed(result: HttpData<ArrayList<GoodsDetailDto>>?) {
-                    goodsListAdapter.addData(result?.getData())
+                    val tempData = arrayListOf<AdDto>()
+                    result?.getData()?.forEachIndexed { index, goodsDetailDto ->
+                        tempData.add(AdDto(DataType.DATE, goodsDetailDto))
+                    }
+                    goodsListAdapter?.addData(tempData)
+                    loadFeedAd()
                 }
 
                 override fun onFail(e: java.lang.Exception?) {
@@ -247,6 +291,7 @@ class GoodsDetailActivity : AppActivity() {
         goods_price?.text = goodsInfo?.itemendprice
         yh_str?.text = "省${goodsInfo?.couponmoney}元"
         yhq_jine?.text = goodsInfo?.couponmoney
+        tv_fan_money?.text = goodsInfo?.tkmoney
         start_time?.text = "${
             goodsInfo?.couponstarttime?.let {
                 TimeUtils.millis2String(
@@ -310,5 +355,194 @@ class GoodsDetailActivity : AppActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun loadAd() {
+        bannerContainer?.removeAllViews()
+
+        /** 1、创建AdSlot对象 */
+        //@[classname]
+        adSlot = AdSlot.Builder()
+            .setCodeId("102652446")
+            .setImageAcceptedSize(ScreenUtils.getScreenWidth(), ConvertUtils.dp2px( 150f)) // 单位px
+            .build()
+
+        /** 2、创建TTAdNative对象 */
+        //@[classname]//@[methodname]
+        adNativeLoader = TTAdSdk.getAdManager().createAdNative(this)
+
+        /** 3、创建加载、展示监听器 */
+        initListeners()
+
+        /** 4、加载广告 */
+        adNativeLoader?.loadBannerExpressAd(adSlot, nativeExpressAdListener)
+    }
+
+    private fun showAd() {
+        if (bannerAd == null) {
+            Logger.d( "请先加载广告或等待广告加载完毕后再调用show方法")
+        }
+        bannerAd?.setExpressInteractionListener(expressAdInteractionListener)
+        bannerAd?.setDislikeCallback(this@GoodsDetailActivity, dislikeInteractionCallback)
+
+        /** 注意：使用融合功能时，load成功后可直接调用getExpressAdView获取广告view展示，而无需调用render等onRenderSuccess后 */
+        val bannerView: View? = bannerAd?.expressAdView
+        if (bannerView != null) {
+            bannerContainer?.removeAllViews()
+            bannerContainer?.visibility = View.VISIBLE
+            bannerContainer?.addView(bannerView)
+        }
+    }
+
+    private fun initListeners() {
+        // 广告加载监听器
+        mFeedAdListener = object : TTAdNative.FeedAdListener {
+            override fun onError(code: Int, message: String) {
+                Logger.d("onError: $code, $message")
+            }
+
+            override fun onFeedAdLoad(ads: List<TTFeedAd>) {
+                if (ads == null || ads.isEmpty()) {
+                    Logger.d("on FeedAdLoaded: ad is null!")
+                    return
+                }
+                for (ad in ads) {
+                    /** 5、加载成功后，添加到RecyclerView中展示广告  */
+                    if (ad != null) {
+                        val manager = ad.mediationManager
+                        if (manager != null && manager.isExpress) {
+                            ad.setExpressRenderListener(object : MediationExpressRenderListener {
+                                override fun onRenderFail(view: View, s: String, i: Int) {
+                                    Logger.d("feed express render fail, errCode: $i, errMsg: $s")
+                                }
+
+                                override fun onAdClick() {
+                                    Logger.d("feed express click")
+                                }
+
+                                override fun onAdShow() {
+                                    Logger.d("feed express show")
+                                }
+
+                                override fun onRenderSuccess(
+                                    view: View?,
+                                    v: Float,
+                                    v1: Float,
+                                    b: Boolean
+                                ) {
+                                    // 模板广告在renderSuccess后，添加到ListView中展示
+                                    Logger.d("onRenderSuccess: ${v} ${v1} ${b}}")
+                                    goodsListAdapter?.let {
+                                        var i = it.getCount() - 5
+                                        if (i < 0) {
+                                            i = it.getCount()
+                                        }
+                                        it.addItem(i, AdDto(DataType.AD, ads[0]))
+                                    }
+                                }
+                            })
+                            ad.render() // 调用render方法进行渲染
+                        }
+                    }
+                }
+            }
+        }
+        //@[classname]
+        nativeExpressAdListener = object : TTAdNative.NativeExpressAdListener {
+            //@[classname]
+            override fun onNativeExpressAdLoad(ads: MutableList<TTNativeExpressAd>?) {
+                if (ads != null) {
+                    Logger.d( "banner load success: " + ads.size)
+                }
+                ads?.let {
+                    if (it.size > 0) {
+                        //@[classname]
+                        val ad: TTNativeExpressAd = it[0]
+                        bannerAd = ad
+                    }
+                }
+                showAd()
+            }
+
+            override fun onError(code: Int, message: String?) {
+                Logger.d( "banner load fail: $code, $message")
+            }
+        }
+        // 广告展示监听器
+        expressAdInteractionListener = object :
+        //@[classname]
+            TTNativeExpressAd.ExpressAdInteractionListener {
+            override fun onAdClicked(view: View?, type: Int) {
+                Logger.d( "banner clicked")
+            }
+
+            override fun onAdShow(view: View?, type: Int) {
+                Logger.d( "banner show")
+            }
+
+            override fun onRenderFail(view: View?, msg: String?, code: Int) {
+                // 注意：使用融合功能时，无需调用render，load成功后可调用mBannerAd.getExpressAdView()进行展示。
+            }
+
+            override fun onRenderSuccess(view: View?, width: Float, height: Float) {
+                // 注意：使用融合功能时，无需调用render，load成功后可调用mBannerAd.getExpressAdView()获取view进行展示。
+                // 如果调用了render，则会直接回调onRenderSuccess，***** 参数view为null，请勿使用。*****
+            }
+        }
+
+        // dislike监听器，广告关闭时会回调onSelected
+        //@[classname]
+        dislikeInteractionCallback = object : TTAdDislike.DislikeInteractionCallback {
+            override fun onShow() {
+                Logger.d( "banner dislike show")
+            }
+
+            override fun onSelected(
+                position: Int,
+                value: String?,
+                enforce: Boolean
+            ) {
+                bannerContainer?.visibility = View.GONE
+                Logger.d( "banner dislike closed")
+                bannerContainer?.removeAllViews()
+            }
+
+            override fun onCancel() {
+                Logger.d( "banner dislike cancel")
+            }
+        }
+    }
+
+    private fun loadFeedAd() {
+        /** 1、创建AdSlot对象  */
+        val adSlot = AdSlot.Builder()
+            .setCodeId("102650196")
+            .setImageAcceptedSize(
+                ScreenUtils.getScreenWidth() / 2,
+                ConvertUtils.dp2px(340f)
+            ) // 单位px
+            .setAdCount(1) // 请求广告数量为1到3条 （优先采用平台配置的数量）
+            .build()
+
+        /** 2、创建TTAdNative对象  */
+        val adNativeLoader: TTAdNative = TTAdSdk.getAdManager().createAdNative(this)
+        /** 3、创建加载、展示监听器  */
+        initListeners()
+        /** 4、加载广告  */
+        adNativeLoader.loadFeedAd(adSlot, mFeedAdListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bannerAd?.destroy()
+        /** 6、在onDestroy中销毁广告  */
+        val mData = goodsListAdapter?.getData()
+        if (mData != null) {
+            for (itemData in mData) {
+                if (itemData.type == DataType.AD) {
+                    (itemData.data as TTFeedAd).destroy()
+                }
+            }
+        }
     }
 }

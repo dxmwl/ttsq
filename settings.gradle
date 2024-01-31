@@ -16,6 +16,10 @@ pluginManagement {
         google()
         // noinspection JcenterRepositoryObsolete
         jcenter()
+        //Gromore maven 仓库
+        maven {
+            url "https://artifact.bytedance.com/repository/pangle"
+        }
     }
 }
 dependencyResolutionManagement {
@@ -36,6 +40,10 @@ dependencyResolutionManagement {
         google()
         // noinspection JcenterRepositoryObsolete
         jcenter()
+        //Gromore maven 仓库
+        maven {
+            url "https://artifact.bytedance.com/repository/pangle"
+        }
     }
 }
 

@@ -5,6 +5,7 @@ import android.graphics.Paint
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.hjq.shape.layout.ShapeLinearLayout
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppAdapter
 import com.ttsq.mobile.http.api.PinpaiDetailApi
@@ -32,6 +33,8 @@ class PinpaiDetailGoodsListAdapter(val mContext: Context) :
         private val yuanjia = findViewById<TextView>(R.id.yuanjia)
         private val monthlySales = findViewById<TextView>(R.id.monthly_sales)
         private val yhqPrice = findViewById<TextView>(R.id.yhq_price)
+        private val layout_fan = findViewById<ShapeLinearLayout>(R.id.layout_fan)
+        private val tv_fan_money = findViewById<TextView>(R.id.tv_fan_money)
 
         override fun onBindView(position: Int) {
             val goodsBean = getItem(position)
@@ -51,6 +54,8 @@ class PinpaiDetailGoodsListAdapter(val mContext: Context) :
 
             //券后价
             quanhoujia?.text = "${goodsBean.itemendprice}"
+            //返现
+            tv_fan_money?.text = "${goodsBean.tkmoney}"
             //原价
             yuanjia?.text = "￥${goodsBean.itemprice}"
             yuanjia?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG

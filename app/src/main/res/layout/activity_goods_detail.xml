@@ -88,6 +88,45 @@
                         android:textSize="14sp"
                         tools:text="246.5" />
 
+                    <com.hjq.shape.layout.ShapeLinearLayout
+                        android:id="@+id/layout_fan"
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        app:shape_radius="2dp"
+                        app:shape_solidColor="#33FC383E">
+
+                        <com.hjq.shape.view.ShapeTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="返"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            app:shape_radius="2dp"
+                            app:shape_solidColor="#fffc383e" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="¥"
+                            android:textColor="#fffc383e"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_fan_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="#fffc383e"
+                            android:textSize="13sp"
+                            tools:text="30" />
+                    </com.hjq.shape.layout.ShapeLinearLayout>
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -383,6 +422,14 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/ad_view"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"/>
 
                 <View
                     android:layout_width="match_parent"

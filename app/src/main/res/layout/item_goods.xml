@@ -4,9 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="5dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginEnd="5dp"
     android:background="#FFFFFF"
     app:cardCornerRadius="5dp">
 
@@ -60,6 +57,7 @@
                     android:textColor="#fffc383e"
                     android:textSize="18sp"
                     tools:text="299" />>
+
                 <TextView
                     android:id="@+id/yuanjia"
                     android:layout_width="wrap_content"
@@ -78,21 +76,66 @@
                 android:textSize="9sp"
                 tools:text="已售2000" />
 
-            <com.hjq.shape.view.ShapeTextView
-                android:id="@+id/yhq_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
                 android:layout_marginTop="6dp"
-                app:shape_strokeColor="#fffc383e"
-                app:shape_radius="@dimen/dp_3"
-                app:shape_strokeWidth="1dp"
-                android:paddingLeft="7dp"
-                android:paddingTop="2dp"
-                android:paddingEnd="7dp"
-                android:paddingBottom="2dp"
-                android:textColor="#fffc383e"
-                android:textSize="11sp"
-                tools:text="50元券" />
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.hjq.shape.view.ShapeTextView
+                    android:id="@+id/yhq_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="7dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="#fffc383e"
+                    android:textSize="11sp"
+                    app:shape_radius="@dimen/dp_3"
+                    app:shape_strokeColor="#fffc383e"
+                    app:shape_strokeWidth="1dp"
+                    tools:text="50元券" />
+
+                <com.hjq.shape.layout.ShapeLinearLayout
+                    android:layout_width="wrap_content"
+                    app:shape_radius="2dp"
+                    android:id="@+id/layout_fan"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    app:shape_solidColor="#33FC383E"
+                    android:layout_height="wrap_content">
+
+                    <com.hjq.shape.view.ShapeTextView
+                        app:shape_radius="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="返"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        app:shape_solidColor="#fffc383e" />
+
+                    <TextView
+                        android:layout_marginStart="5dp"
+                        android:textSize="10sp"
+                        android:textColor="#fffc383e"
+                        android:text="¥"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tv_fan_money"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="3dp"
+                        android:textSize="10sp"
+                        android:textColor="#fffc383e"
+                        tools:text="30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </com.hjq.shape.layout.ShapeLinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
