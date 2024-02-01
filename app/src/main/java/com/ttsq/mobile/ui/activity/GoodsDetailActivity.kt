@@ -517,10 +517,10 @@ class GoodsDetailActivity : AppActivity() {
         /** 1、创建AdSlot对象  */
         val adSlot = AdSlot.Builder()
             .setCodeId("102650196")
-            .setImageAcceptedSize(
-                ScreenUtils.getScreenWidth() / 2,
-                ConvertUtils.dp2px(340f)
-            ) // 单位px
+            .setExpressViewAcceptedSize(
+                ConvertUtils.px2dp((ScreenUtils.getScreenWidth() / 2).toFloat()).toFloat(),
+                0f
+            )
             .setAdCount(1) // 请求广告数量为1到3条 （优先采用平台配置的数量）
             .build()
 
