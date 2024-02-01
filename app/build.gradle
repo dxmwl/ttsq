@@ -58,7 +58,7 @@ android {
 
         debug {
             // 给包名添加后缀
-            applicationIdSuffix '.debug'
+//            applicationIdSuffix '.debug'
             // 调试模式开关
             debuggable true
             jniDebuggable true
@@ -270,6 +270,12 @@ dependencies {
 
     implementation "com.pangle.cn:mediation-baidu-adapter:9.332.0"//baidu adapter
 
+    //支付宝支付 https://opendocs.alipay.com/common/02km9l
+    implementation 'com.alipay.sdk:alipaysdk-android:15.8.17@aar'
+
+    implementation 'com.alibaba:fastjson:1.2.78'
+
+    //阿里百川 https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7629140.0.0.4652be48BPIATs&treeId=129&articleId=118885&docType=1#1.1
     // 多语种：https://github.com/getActivity/MultiLanguages
     // 悬浮窗：https://github.com/getActivity/XToast
     // 日志输出：https://github.com/getActivity/Logcat

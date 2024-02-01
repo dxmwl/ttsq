@@ -95,6 +95,7 @@
 
             <com.youth.banner.Banner
                 android:id="@+id/banner_me"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="10dp"
@@ -125,6 +126,16 @@
                     app:bar_leftDrawable="@drawable/my_order"
                     app:bar_leftText="我的订单"
                     app:bar_rightDrawable="@drawable/icon_more_sanjiao" />
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/authorization_management"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:bar_leftDrawable="@drawable/yaoqing_friends"
+                    app:bar_leftText="授权管理"
+                    app:bar_rightDrawable="@drawable/icon_more_sanjiao"
+                    app:bar_rightTextHint="获取收益"
+                    app:bar_rightTextSize="14sp" />
 
                 <com.hjq.widget.layout.SettingBar
                     android:id="@+id/invite_friends"

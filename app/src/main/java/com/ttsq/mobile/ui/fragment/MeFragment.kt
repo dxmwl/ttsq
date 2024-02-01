@@ -21,6 +21,7 @@ import com.ttsq.mobile.http.api.UserInfoApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.AppConfig
+import com.ttsq.mobile.ui.activity.AuthorizationManagementActivity
 import com.ttsq.mobile.ui.activity.InviteFriendsActivity
 import com.ttsq.mobile.ui.activity.LoginActivity
 import com.ttsq.mobile.ui.activity.MemberCenterActivity
@@ -59,7 +60,7 @@ class MeFragment : AppFragment<AppActivity>() {
     override fun initView() {
         setOnClickListener(
             R.id.my_member, R.id.kefu_online, R.id.setting, R.id.nick_name,
-            R.id.member_time,R.id.invite_friends,R.id.my_order
+            R.id.member_time, R.id.invite_friends, R.id.my_order, R.id.authorization_management
         )
 
         banner?.let {
@@ -94,23 +95,31 @@ class MeFragment : AppFragment<AppActivity>() {
     override fun onClick(view: View) {
         super.onClick(view)
         when (view.id) {
-            R.id.my_order->{
+            R.id.authorization_management -> {
+                //授权管理
+                startActivity(AuthorizationManagementActivity::class.java)
+            }
+
+            R.id.my_order -> {
 
             }
-            R.id.invite_friends->{
+
+            R.id.invite_friends -> {
                 val umWeb = UMWeb(AppConfig.getDownloadUrl())
                 umWeb.title = "限时福利"
                 umWeb.description = "点击领取福利"
                 ShareDialog.Builder(requireActivity())
                     .setShareLink(umWeb)
-                   .show()
+                    .show()
 //                startActivity(InviteFriendsActivity::class.java)
             }
+
             R.id.nick_name -> {
                 if (UserManager.userInfo == null) {
                     startActivity(LoginActivity::class.java)
                 }
             }
+
             R.id.my_member, R.id.member_time -> {
                 if (UserManager.userInfo == null) {
                     startActivity(LoginActivity::class.java)
@@ -118,6 +127,7 @@ class MeFragment : AppFragment<AppActivity>() {
                 }
                 startActivity(MemberCenterActivity::class.java)
             }
+
             R.id.kefu_online -> {
                 MessageDialog.Builder(requireContext())
                     .setTitle("在线客服")
@@ -131,9 +141,11 @@ class MeFragment : AppFragment<AppActivity>() {
                     })
                     .show()
             }
+
             R.id.setting -> {
                 startActivity(SettingActivity::class.java)
             }
+
             else -> {}
         }
     }
@@ -147,6 +159,11 @@ class MeFragment : AppFragment<AppActivity>() {
             .request(object : OnHttpListener<HttpData<ArrayList<AppBannerApi.BannerBean>>> {
                 override fun onSucceed(result: HttpData<ArrayList<AppBannerApi.BannerBean>>?) {
                     result?.getData()?.let {
+                        if (it.size == 0) {
+                            banner?.visibility = View.GONE
+                        } else {
+                            banner?.visibility = View.VISIBLE
+                        }
                         val bannerListData = ArrayList<AppBannerApi.BannerBean>()
                         it.forEach { bannerItem ->
                             if (bannerItem.bannerImg.isNotBlank()) {

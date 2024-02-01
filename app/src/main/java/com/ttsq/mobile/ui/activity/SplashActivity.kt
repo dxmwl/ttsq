@@ -16,6 +16,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.airbnb.lottie.LottieAnimationView
+import com.alibaba.baichuan.trade.common.AlibcTradeCommon
+import com.baichuan.nb_trade.callback.AlibcTradeInitCallback
+import com.baichuan.nb_trade.core.AlibcTradeBiz
+import com.baichuan.nb_trade.core.AlibcTradeSDK
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SpanUtils
@@ -29,8 +33,6 @@ import com.bytedance.sdk.openadsdk.TTAdSdk
 import com.bytedance.sdk.openadsdk.mediation.init.MediationConfig
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonToken
-import com.ttsq.mobile.R
-import com.ttsq.mobile.app.AppActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.hjq.gson.factory.GsonFactory
@@ -40,13 +42,16 @@ import com.hjq.umeng.UmengClient
 import com.hjq.widget.view.SlantedTextView
 import com.orhanobut.logger.Logger
 import com.tencent.bugly.crashreport.CrashReport
+import com.ttsq.mobile.R
+import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.app.AppApplication
 import com.ttsq.mobile.manager.ActivityManager
 import com.ttsq.mobile.manager.UserManager
-import com.ttsq.mobile.other.*
+import com.ttsq.mobile.other.AppConfig
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
+import java.util.Locale
+
 
 /**
  *    author : Android 轮子哥
@@ -59,6 +64,7 @@ class SplashActivity : AppActivity() {
     private val lottieView: LottieAnimationView? by lazy { findViewById(R.id.lav_splash_lottie) }
     private val debugView: SlantedTextView? by lazy { findViewById(R.id.iv_splash_debug) }
     private val mSplashContainer: FrameLayout? by lazy { findViewById(R.id.ad_view) }
+
     //@[classname]
     private var csjSplashAdListener: TTAdNative.CSJSplashAdListener? = null
 
@@ -183,6 +189,7 @@ class SplashActivity : AppActivity() {
      * 初始化一些第三方框架
      */
     private fun checkLogin(application: Application) {
+        initBaichuan(application)
         initCsjSdk(application)
         // 友盟统计、登录、分享 SDK
         UmengClient.init(application, AppConfig.isLogEnable(), AppConfig.getChannelTag())
@@ -215,6 +222,36 @@ class SplashActivity : AppActivity() {
                 }
             })
         }
+    }
+
+    /**
+     * 初始化百川
+     */
+    private fun initBaichuan(application: Application) {
+        // 初始化扩展map（默认可传入空）
+        val params: Map<String, Any> = HashMap()
+        AlibcTradeSDK.asyncInit(application, params, object : AlibcTradeInitCallback {
+            override fun onSuccess() {
+                Logger.d("百川SDK初始化成功")
+            }
+
+            override fun onFailure(code: Int, msg: String) {
+                Logger.d("百川SDK初始化失败： code = $code, msg = $msg")
+            }
+        })
+        if (AppConfig.isDebug()) {
+            //开发阶段打开日志开关，方便排查错误信息
+            AlibcTradeCommon.turnOnDebug();
+            AlibcTradeCommon.openErrorLog();
+            AlibcTradeBiz.turnOnDebug();
+        } else {
+            // 默认是关闭的（也支持手动关闭）
+            AlibcTradeCommon.turnOffDebug();
+            AlibcTradeCommon.closeErrorLog();
+            AlibcTradeBiz.turnOffDebug();
+        }
+        //设置三方媒体应用版本号
+        AlibcTradeCommon.setIsvVersion(AppConfig.getVersionName())
     }
 
     /**
