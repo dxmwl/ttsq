@@ -652,7 +652,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#ffffffff"
                     android:textSize="12sp"
-                    tools:text="省27元" />
+                    tools:text="省0元" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -26,6 +26,7 @@ import com.bytedance.sdk.openadsdk.TTAdSdk
 import com.bytedance.sdk.openadsdk.TTFeedAd
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationExpressRenderListener
+import com.hjq.base.BaseDialog
 import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.Log
 import com.ttsq.mobile.aop.SingleClick
@@ -50,8 +51,10 @@ import com.pdlbox.tools.utils.ConversionUtils
 import com.ttsq.mobile.http.model.AdDto
 import com.ttsq.mobile.http.model.DataType
 import com.ttsq.mobile.http.model.GoodsDetailDto
+import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.GridSpacingItemDecoration
 import com.ttsq.mobile.other.PermissionInterceptor
+import com.ttsq.mobile.ui.dialog.MessageDialog
 import com.ttsq.mobile.ui.fragment.HomeFragment
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.media.UMWeb
@@ -114,14 +117,19 @@ class GoodsDetailActivity : AppActivity() {
 
     //@[classname]
     private var bannerAd: TTNativeExpressAd? = null
+
     //@[classname]
     private var adNativeLoader: TTAdNative? = null
+
     //@[classname]
     private var adSlot: AdSlot? = null
+
     //@[classname]
     private var nativeExpressAdListener: TTAdNative.NativeExpressAdListener? = null
+
     //@[classname]
     private var expressAdInteractionListener: TTNativeExpressAd.ExpressAdInteractionListener? = null
+
     //@[classname]
     private var dislikeInteractionCallback: TTAdDislike.DislikeInteractionCallback? = null
     private var mFeedAdListener: TTAdNative.FeedAdListener? = null // 广告加载监听器
@@ -131,7 +139,7 @@ class GoodsDetailActivity : AppActivity() {
     }
 
     override fun initView() {
-        setOnClickListener(iv_back2, ll_lq, iv_lq, ll_share,home)
+        setOnClickListener(iv_back2, ll_lq, iv_lq, ll_share, home)
         banner?.let {
 //            it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
@@ -214,18 +222,41 @@ class GoodsDetailActivity : AppActivity() {
     @SingleClick
     override fun onClick(view: View) {
         when (view) {
-            home->{
-                HomeActivity.start(this,HomeFragment::class.java)
+            home -> {
+                HomeActivity.start(this, HomeFragment::class.java)
             }
+
             iv_back2 -> {
                 finish()
             }
+
             iv_lq, ll_lq -> {
-                getLingquanUrl()
+                //判断是否授权绑定
+                UserManager.userInfo?.let {
+                    if (it.taobaoSpecialId == null) {
+                        MessageDialog.Builder(this)
+                            .setTitle("温馨提示")
+                            .setMessage("授权绑定淘宝，可以获得返利权益，是否立即绑定？")
+                            .setConfirm("立即绑定")
+                            .setCancel("直接购买")
+                            .setListener(object : MessageDialog.OnListener {
+                                override fun onConfirm(dialog: BaseDialog?) {
+                                    startActivity(AuthorizationManagementActivity::class.java)
+                                }
+
+                                override fun onCancel(dialog: BaseDialog?) {
+                                    getLingquanUrl()
+                                }
+                            })
+                            .show()
+                    }
+                }
             }
+
             ll_share -> {
                 getLingquanUrl(needShare = true)
             }
+
             else -> {}
         }
     }
@@ -364,7 +395,7 @@ class GoodsDetailActivity : AppActivity() {
         //@[classname]
         adSlot = AdSlot.Builder()
             .setCodeId("102652446")
-            .setImageAcceptedSize(ScreenUtils.getScreenWidth(), ConvertUtils.dp2px( 150f)) // 单位px
+            .setImageAcceptedSize(ScreenUtils.getScreenWidth(), ConvertUtils.dp2px(150f)) // 单位px
             .build()
 
         /** 2、创建TTAdNative对象 */
@@ -380,7 +411,7 @@ class GoodsDetailActivity : AppActivity() {
 
     private fun showAd() {
         if (bannerAd == null) {
-            Logger.d( "请先加载广告或等待广告加载完毕后再调用show方法")
+            Logger.d("请先加载广告或等待广告加载完毕后再调用show方法")
         }
         bannerAd?.setExpressInteractionListener(expressAdInteractionListener)
         bannerAd?.setDislikeCallback(this@GoodsDetailActivity, dislikeInteractionCallback)
@@ -452,7 +483,7 @@ class GoodsDetailActivity : AppActivity() {
             //@[classname]
             override fun onNativeExpressAdLoad(ads: MutableList<TTNativeExpressAd>?) {
                 if (ads != null) {
-                    Logger.d( "banner load success: " + ads.size)
+                    Logger.d("banner load success: " + ads.size)
                 }
                 ads?.let {
                     if (it.size > 0) {
@@ -465,7 +496,7 @@ class GoodsDetailActivity : AppActivity() {
             }
 
             override fun onError(code: Int, message: String?) {
-                Logger.d( "banner load fail: $code, $message")
+                Logger.d("banner load fail: $code, $message")
             }
         }
         // 广告展示监听器
@@ -473,11 +504,11 @@ class GoodsDetailActivity : AppActivity() {
         //@[classname]
             TTNativeExpressAd.ExpressAdInteractionListener {
             override fun onAdClicked(view: View?, type: Int) {
-                Logger.d( "banner clicked")
+                Logger.d("banner clicked")
             }
 
             override fun onAdShow(view: View?, type: Int) {
-                Logger.d( "banner show")
+                Logger.d("banner show")
             }
 
             override fun onRenderFail(view: View?, msg: String?, code: Int) {
@@ -494,7 +525,7 @@ class GoodsDetailActivity : AppActivity() {
         //@[classname]
         dislikeInteractionCallback = object : TTAdDislike.DislikeInteractionCallback {
             override fun onShow() {
-                Logger.d( "banner dislike show")
+                Logger.d("banner dislike show")
             }
 
             override fun onSelected(
@@ -503,12 +534,12 @@ class GoodsDetailActivity : AppActivity() {
                 enforce: Boolean
             ) {
                 bannerContainer?.visibility = View.GONE
-                Logger.d( "banner dislike closed")
+                Logger.d("banner dislike closed")
                 bannerContainer?.removeAllViews()
             }
 
             override fun onCancel() {
-                Logger.d( "banner dislike cancel")
+                Logger.d("banner dislike cancel")
             }
         }
     }
