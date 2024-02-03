@@ -233,7 +233,7 @@ class GoodsDetailActivity : AppActivity() {
             iv_lq, ll_lq -> {
                 //判断是否授权绑定
                 UserManager.userInfo?.let {
-                    if (it.taobaoSpecialId == null) {
+                    if (it.taobaoSpecialId.isNullOrBlank()) {
                         MessageDialog.Builder(this)
                             .setTitle("温馨提示")
                             .setMessage("授权绑定淘宝，可以获得返利权益，是否立即绑定？")
@@ -249,6 +249,8 @@ class GoodsDetailActivity : AppActivity() {
                                 }
                             })
                             .show()
+                    }else{
+                        getLingquanUrl()
                     }
                 }
             }

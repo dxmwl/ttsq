@@ -134,10 +134,9 @@
                     android:id="@+id/authorization_management"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:bar_leftDrawable="@drawable/yaoqing_friends"
+                    app:bar_leftDrawable="@drawable/icon_bind_account"
                     app:bar_leftText="授权管理"
                     app:bar_rightDrawable="@drawable/icon_more_sanjiao"
-                    app:bar_rightTextHint="获取收益"
                     app:bar_rightTextSize="14sp" />
 
                 <com.hjq.widget.layout.SettingBar
@@ -147,7 +146,6 @@
                     app:bar_leftDrawable="@drawable/yaoqing_friends"
                     app:bar_leftText="邀请好友"
                     app:bar_rightDrawable="@drawable/icon_more_sanjiao"
-                    app:bar_rightTextHint="获取收益"
                     app:bar_rightTextSize="14sp" />
 
                 <com.hjq.widget.layout.SettingBar

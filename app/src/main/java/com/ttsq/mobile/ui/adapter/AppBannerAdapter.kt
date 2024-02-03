@@ -1,15 +1,18 @@
 package com.ttsq.mobile.ui.adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ConvertUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.ttsq.mobile.http.api.AppBannerApi
 import com.ttsq.mobile.http.glide.GlideApp
-import com.ttsq.mobile.ui.dialog.DownloadDialog
+import com.ttsq.mobile.ui.activity.BrowserActivity
 import com.youth.banner.adapter.BannerAdapter
 
 
@@ -54,12 +57,13 @@ class AppBannerAdapter(bannerList: ArrayList<AppBannerApi.BannerBean>?) :
             when (data?.type) {
                 1 -> {
                     //下载APP
-                    data.title?.let { it1 ->
-                        DownloadDialog.Builder(it.context)
-                            .setDownloadUrl(data.params)
-                            .setTitle(it1)
-                            .show()
-                    }
+                    val url = data.params
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    ActivityUtils.startActivity(intent)
+                }
+
+                else -> {
+                    data?.params?.let { it1 -> BrowserActivity.start(it.context, it1) }
                 }
             }
         }
