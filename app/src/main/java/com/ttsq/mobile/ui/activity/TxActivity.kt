@@ -134,7 +134,7 @@ class TxActivity : AppActivity() {
             .request(object : HttpCallback<HttpData<Any>>(this) {
                 override fun onSucceed(result: HttpData<Any>?) {
                     toast("申请已提交，请等待审核")
-                    LiveDataBus.postValue("upDateUserInfo", "")
+                    LiveDataBus.postValue("updateWalletBalance", "")
                 }
             })
     }
