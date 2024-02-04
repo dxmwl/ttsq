@@ -94,6 +94,7 @@
     </com.hjq.shape.layout.ShapeLinearLayout>
 
     <TextView
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

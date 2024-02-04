@@ -13,6 +13,9 @@ class GetWalletBalanceChangeLogApi : IRequestApi {
         return "api/user/getWalletChangeLog"
     }
 
+    var pageNum = 1
+    val pageSize = 20
+
     data class WalletBalanceDto(
         val type: Int,
         val balance: String,

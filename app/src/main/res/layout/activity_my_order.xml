@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/red"
         app:tabIndicatorFullWidth="false"
+        android:background="@color/white"
         app:tabMode="auto"
         app:tabTextColor="#999"
         app:tabSelectedTextColor="@color/red" />
@@ -23,7 +24,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/order_vp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

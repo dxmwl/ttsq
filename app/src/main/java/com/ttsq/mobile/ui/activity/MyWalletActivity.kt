@@ -69,7 +69,9 @@ class MyWalletActivity : AppActivity() {
 
     private fun getWalletBalanceChangeLog() {
         EasyHttp.post(this)
-            .api(GetWalletBalanceChangeLogApi())
+            .api(GetWalletBalanceChangeLogApi().apply {
+                this.pageNum = this@MyWalletActivity.pageNum
+            })
             .request(object :
                 OnHttpListener<HttpData<ArrayList<GetWalletBalanceChangeLogApi.WalletBalanceDto>>> {
                 override fun onSucceed(result: HttpData<ArrayList<GetWalletBalanceChangeLogApi.WalletBalanceDto>>?) {
