@@ -15,8 +15,12 @@ import com.ttsq.mobile.app.AppAdapter
 import com.ttsq.mobile.http.api.CommodityScreeningApi
 import com.ttsq.mobile.http.api.HomeGoodsListApi
 import com.ttsq.mobile.http.glide.GlideApp
+import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
 import com.ttsq.mobile.utils.FormatUtils
+import com.ttsq.mobile.utils.RebateUtils
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 /**
  * @project : EasyBuy_Android
@@ -57,7 +61,7 @@ class GoodsListAdapter(val mContext: Context) :
             shop_name?.text = goodsBean.shopname
             yuanjia?.text = goodsBean.itemprice
             //返现
-            tv_fan_money?.text = "${goodsBean.tkmoney}"
+            tv_fan_money?.text = RebateUtils.calculateRebate(goodsBean.tkmoney)
             FormatUtils.formatSales(monthlySales, goodsBean.itemsale)
             yhqPrice?.text = "${goodsBean.couponmoney}元券"
 

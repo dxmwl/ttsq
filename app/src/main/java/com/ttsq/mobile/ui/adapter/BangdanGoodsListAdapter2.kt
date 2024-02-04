@@ -14,6 +14,8 @@ import com.ttsq.mobile.http.api.CommodityScreeningApi
 import com.ttsq.mobile.http.glide.GlideApp
 import com.ttsq.mobile.ui.activity.BrowserActivity
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
+import com.ttsq.mobile.utils.RebateUtils
+import java.math.BigDecimal
 
 /**
  * @project : EasyBuy_Android
@@ -64,7 +66,7 @@ class BangdanGoodsListAdapter2(val mContext: Context,val type:Int = 1) :
             //券后价
             quanhoujia?.text = "${goodsBean.itemendprice}"
             //返现
-            tv_fan_money?.text = "${goodsBean.tkmoney}"
+            tv_fan_money?.text = RebateUtils.calculateRebate(goodsBean.tkmoney)
             //原价
             yuanjia?.text = "￥${goodsBean.itemprice}"
             yuanjia?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG

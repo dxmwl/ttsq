@@ -16,7 +16,9 @@ import com.ttsq.mobile.http.model.AdDto
 import com.ttsq.mobile.http.model.DataType
 import com.ttsq.mobile.http.model.GoodsDetailDto
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
+import com.ttsq.mobile.utils.RebateUtils
 import com.ttsq.mobile.utils.UIUtils
+import java.math.BigDecimal
 import java.util.ArrayList
 
 
@@ -75,7 +77,7 @@ class SearchGoodsListAdapter(val mContext: Context) :
             //券后价
             quanhoujia?.text = "${goodsBean.itemendprice}"
             //返现
-            tv_fan_money?.text = "${goodsBean.tkmoney}"
+            tv_fan_money?.text = RebateUtils.calculateRebate(goodsBean.tkmoney)
             //原价
             yuanjia?.text = "￥${goodsBean.itemprice}"
             yuanjia?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG

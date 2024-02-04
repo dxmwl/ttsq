@@ -56,6 +56,7 @@ import com.ttsq.mobile.other.GridSpacingItemDecoration
 import com.ttsq.mobile.other.PermissionInterceptor
 import com.ttsq.mobile.ui.dialog.MessageDialog
 import com.ttsq.mobile.ui.fragment.HomeFragment
+import com.ttsq.mobile.utils.RebateUtils
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.media.UMWeb
 import com.youth.banner.Banner
@@ -324,7 +325,7 @@ class GoodsDetailActivity : AppActivity() {
         goods_price?.text = goodsInfo?.itemendprice
         yh_str?.text = "省${goodsInfo?.couponmoney}元"
         yhq_jine?.text = goodsInfo?.couponmoney
-        tv_fan_money?.text = goodsInfo?.tkmoney
+        tv_fan_money?.text = RebateUtils.calculateRebate(goodsInfo?.tkmoney)
         start_time?.text = "${
             goodsInfo?.couponstarttime?.let {
                 TimeUtils.millis2String(
