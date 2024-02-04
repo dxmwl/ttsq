@@ -102,6 +102,7 @@
             android:layout_weight="1"
             app:tabIndicatorColor="@color/red"
             app:tabMode="auto"
+            app:tabTextColor="#999"
             app:tabSelectedTextColor="@color/red" />
 
         <ImageView

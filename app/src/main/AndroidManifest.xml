@@ -71,7 +71,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-<!--        阿里百川 start-->
+        <!--        阿里百川 start-->
         <activity
             android:name="com.alibaba.alibclinkpartner.smartlink.ALPEntranceActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
@@ -87,13 +87,15 @@
                     android:scheme="tbopen" />
             </intent-filter>
         </activity>
-        <service android:name="com.alibaba.triver.TRACCSService"
+        <service
+            android:name="com.alibaba.triver.TRACCSService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.taobao.accs.intent.action.RECEIVE" />
             </intent-filter>
         </service>
-        <receiver android:name="com.alibaba.alibclogin.listener.LoginBroadcastReceiver"
+        <receiver
+            android:name="com.alibaba.alibclogin.listener.LoginBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="NOTIFY_LOGIN_SUCCESS" />
@@ -102,7 +104,7 @@
                 <action android:name="NOTIFY_LOGOUT" />
             </intent-filter>
         </receiver>
-<!--        阿里百川 end-->
+        <!--        阿里百川 end-->
 
         <!-- 闪屏页 -->
         <activity
@@ -324,6 +326,18 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AuthorizationManagementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MyWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.TxAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.TxActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MyOrderActivity"
             android:screenOrientation="portrait" />
 
     </application>

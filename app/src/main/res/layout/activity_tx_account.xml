@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hjq.bar.TitleBar
+        app:title="提现账号"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:layout_width="match_parent"
+        app:shape_solidColor="@color/white"
+        app:shape_radius="10dp"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+
+        <com.hjq.widget.layout.SettingBar
+            android:id="@+id/input_zhifubao_account"
+            app:bar_leftText="支付宝账号"
+            android:background="@color/transparent"
+            app:bar_rightTextHint="请输入支付宝账号"
+            app:bar_rightDrawable="@drawable/icon_more_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.hjq.widget.layout.SettingBar
+            app:bar_leftText="真实姓名"
+            android:id="@+id/input_real_name"
+            android:background="@color/transparent"
+            app:bar_rightTextHint="仅用于提现验证"
+            app:bar_rightDrawable="@drawable/icon_more_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.hjq.shape.layout.ShapeLinearLayout>
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/btn_commit"
+        android:text="保存"
+        android:layout_marginTop="20dp"
+        android:paddingVertical="10dp"
+        app:shape_radius="25dp"
+        android:textColor="@color/white"
+        app:shape_solidColor="#F44336"
+        android:layout_marginHorizontal="20dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

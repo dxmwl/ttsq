@@ -15,6 +15,7 @@
         app:tabIndicatorColor="@color/red"
         app:tabIndicatorFullWidth="false"
         app:tabMode="auto"
+        app:tabTextColor="#999"
         app:tabSelectedTextColor="@color/red" />
 
     <androidx.viewpager.widget.ViewPager
