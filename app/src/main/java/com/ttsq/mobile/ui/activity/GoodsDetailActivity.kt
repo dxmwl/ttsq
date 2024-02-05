@@ -14,6 +14,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.alibaba.alibcprotocol.callback.AlibcTradeCallback
+import com.baichuan.nb_trade.AlibcTrade
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.ScreenUtils
@@ -250,7 +252,7 @@ class GoodsDetailActivity : AppActivity() {
                                 }
                             })
                             .show()
-                    }else{
+                    } else {
                         getLingquanUrl()
                     }
                 }
