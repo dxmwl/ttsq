@@ -18,6 +18,7 @@ import com.bytedance.sdk.openadsdk.TTAdSdk
 import com.bytedance.sdk.openadsdk.TTFeedAd
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationExpressRenderListener
 import com.hjq.base.BaseAdapter
+import com.hjq.base.BaseDialog
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.orhanobut.logger.Logger
@@ -47,6 +48,7 @@ import com.ttsq.mobile.ui.adapter.HomeFreeGoodsListAdapter
 import com.ttsq.mobile.ui.adapter.HomeMenuListAdapter
 import com.ttsq.mobile.ui.adapter.PinpaiGoodsAdapter
 import com.ttsq.mobile.ui.adapter.SearchGoodsListAdapter
+import com.ttsq.mobile.ui.dialog.FreeGoodsDialog
 import com.youth.banner.Banner
 
 
@@ -248,6 +250,9 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                     result?.getData()?.let {
                         if (it.hasFreeGoods){
                             layout_free_goods?.visibility = View.VISIBLE
+
+                            FreeGoodsDialog.Builder(requireContext())
+                                .show()
                         }else{
                             layout_free_goods?.visibility = View.GONE
                         }
