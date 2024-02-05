@@ -1,3 +1,9 @@
+buildscript {
+    dependencies {
+        //Gromore自动拉取 Adapre AAR 插件脚本
+        classpath 'com.pangle.cn:mediation-auto-adapter:1.0.3'
+    }
+}
 // AndroidProject-Kotlin 版本：v13.1
 plugins {
     id 'com.android.application' version '7.1.0' apply false

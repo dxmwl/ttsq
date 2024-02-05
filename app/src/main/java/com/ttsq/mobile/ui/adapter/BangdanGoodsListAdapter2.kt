@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.hjq.shape.layout.ShapeLinearLayout
 import com.hjq.shape.view.ShapeTextView
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppAdapter
@@ -13,6 +14,8 @@ import com.ttsq.mobile.http.api.CommodityScreeningApi
 import com.ttsq.mobile.http.glide.GlideApp
 import com.ttsq.mobile.ui.activity.BrowserActivity
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
+import com.ttsq.mobile.utils.RebateUtils
+import java.math.BigDecimal
 
 /**
  * @project : EasyBuy_Android
@@ -39,6 +42,8 @@ class BangdanGoodsListAdapter2(val mContext: Context,val type:Int = 1) :
         private val paiming = findViewById<TextView>(R.id.paiming)
         private val tips = findViewById<TextView>(R.id.tips)
         private val sale_num = findViewById<TextView>(R.id.sale_num)
+        private val layout_fan = findViewById<ShapeLinearLayout>(R.id.layout_fan)
+        private val tv_fan_money = findViewById<TextView>(R.id.tv_fan_money)
 
         override fun onBindView(position: Int) {
             val goodsBean = getItem(position)
@@ -60,6 +65,8 @@ class BangdanGoodsListAdapter2(val mContext: Context,val type:Int = 1) :
 
             //券后价
             quanhoujia?.text = "${goodsBean.itemendprice}"
+            //返现
+            tv_fan_money?.text = RebateUtils.calculateRebate(goodsBean.tkmoney)
             //原价
             yuanjia?.text = "￥${goodsBean.itemprice}"
             yuanjia?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG

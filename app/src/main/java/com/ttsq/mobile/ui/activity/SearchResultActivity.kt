@@ -6,6 +6,14 @@ import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.bytedance.sdk.openadsdk.AdSlot
+import com.bytedance.sdk.openadsdk.TTAdNative
+import com.bytedance.sdk.openadsdk.TTAdSdk
+import com.bytedance.sdk.openadsdk.TTFeedAd
+import com.bytedance.sdk.openadsdk.mediation.ad.MediationExpressRenderListener
 import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.app.AppActivity
@@ -20,8 +28,13 @@ import com.google.android.material.tabs.TabLayout
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.hjq.shape.view.ShapeCheckBox
+import com.orhanobut.logger.Logger
+import com.pdlbox.tools.utils.ConversionUtils
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.ttsq.mobile.http.model.AdDto
+import com.ttsq.mobile.http.model.DataType
 import com.ttsq.mobile.http.model.GoodsDetailDto
+import com.ttsq.mobile.other.GridSpacingItemDecoration
 
 /**
  * @project : EasyBuy_Android
@@ -43,6 +56,7 @@ class SearchResultActivity : AppActivity() {
     private var zonghePopupView: ZongheShadowPopupView? = null
     private var isYouquan: Int = 1
     private var paixu: String = "0"
+    private var mFeedAdListener: TTAdNative.FeedAdListener? = null // 广告加载监听器
 
     override fun getLayoutId(): Int {
         return R.layout.activity_search_result
@@ -84,9 +98,16 @@ class SearchResultActivity : AppActivity() {
         })
 
         goodsList?.let {
-            it.layoutManager = GridLayoutManager(this, 2)
+            it.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             homeGoodsListAdapter = SearchGoodsListAdapter(this)
             it.adapter = homeGoodsListAdapter
+            it.addItemDecoration(
+                GridSpacingItemDecoration(
+                    2,
+                    ConversionUtils.dp2Px(10f),
+                    false
+                )
+            )
         }
 
         refresh?.setOnRefreshListener {
@@ -129,7 +150,12 @@ class SearchResultActivity : AppActivity() {
                     if (pageIndex == 1) {
                         homeGoodsListAdapter?.clearData()
                     }
-                    homeGoodsListAdapter?.addData(result?.getData())
+                    val tempData = arrayListOf<AdDto>()
+                    result?.getData()?.forEachIndexed { index, goodsDetailDto ->
+                        tempData.add(AdDto(DataType.DATE, goodsDetailDto))
+                    }
+                    homeGoodsListAdapter?.addData(tempData)
+                    loadFeedAd()
                 }
 
                 override fun onFail(e: Exception?) {
@@ -193,4 +219,93 @@ class SearchResultActivity : AppActivity() {
 //        }
 //        zonghePopupView?.show()
 //    }
+
+
+
+    private fun loadFeedAd() {
+        /** 1、创建AdSlot对象  */
+        val adSlot = AdSlot.Builder()
+            .setCodeId("102650196")
+            .setExpressViewAcceptedSize(
+                ConvertUtils.px2dp((ScreenUtils.getScreenWidth() / 2).toFloat()).toFloat(),
+                0f
+            )
+            .setAdCount(1) // 请求广告数量为1到3条 （优先采用平台配置的数量）
+            .build()
+
+        /** 2、创建TTAdNative对象  */
+        val adNativeLoader: TTAdNative = TTAdSdk.getAdManager().createAdNative(this)
+        /** 3、创建加载、展示监听器  */
+        initListeners()
+        /** 4、加载广告  */
+        adNativeLoader.loadFeedAd(adSlot, mFeedAdListener)
+    }
+
+    private fun initListeners() {
+        // 广告加载监听器
+        mFeedAdListener = object : TTAdNative.FeedAdListener {
+            override fun onError(code: Int, message: String) {
+                Logger.d("onError: $code, $message")
+            }
+
+            override fun onFeedAdLoad(ads: List<TTFeedAd>) {
+                if (ads == null || ads.isEmpty()) {
+                    Logger.d("on FeedAdLoaded: ad is null!")
+                    return
+                }
+                for (ad in ads) {
+                    /** 5、加载成功后，添加到RecyclerView中展示广告  */
+                    if (ad != null) {
+                        val manager = ad.mediationManager
+                        if (manager != null && manager.isExpress) {
+                            ad.setExpressRenderListener(object : MediationExpressRenderListener {
+                                override fun onRenderFail(view: View, s: String, i: Int) {
+                                    Logger.d("feed express render fail, errCode: $i, errMsg: $s")
+                                }
+
+                                override fun onAdClick() {
+                                    Logger.d("feed express click")
+                                }
+
+                                override fun onAdShow() {
+                                    Logger.d("feed express show")
+                                }
+
+                                override fun onRenderSuccess(
+                                    view: View?,
+                                    v: Float,
+                                    v1: Float,
+                                    b: Boolean
+                                ) {
+                                    // 模板广告在renderSuccess后，添加到ListView中展示
+                                    Logger.d("onRenderSuccess: ${v} ${v1} ${b}}")
+                                    homeGoodsListAdapter?.let {
+                                        var i = it.getCount() - 5
+                                        if (i < 0) {
+                                            i = it.getCount()
+                                        }
+                                        it.addItem(i, AdDto(DataType.AD, ads[0]))
+                                    }
+                                }
+                            })
+                            ad.render() // 调用render方法进行渲染
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        /** 6、在onDestroy中销毁广告  */
+        val mData = homeGoodsListAdapter?.getData()
+        if (mData != null) {
+            for (itemData in mData) {
+                if (itemData.type == DataType.AD) {
+                    (itemData.data as TTFeedAd).destroy()
+                }
+            }
+        }
+    }
 }

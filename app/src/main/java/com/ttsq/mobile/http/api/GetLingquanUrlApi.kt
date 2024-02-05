@@ -1,5 +1,7 @@
 package com.ttsq.mobile.http.api
 
+import com.ttsq.mobile.manager.UserManager
+
 /**
  * @project : EasyBuy_Android
  * @Description : 项目描述
@@ -15,6 +17,8 @@ class GetLingquanUrlApi : HaodankuBaseApi() {
     var itemid: String = ""
     var get_taoword: String = "1"
     var title: String = ""
+
+    val special_id = UserManager.userInfo?.taobaoSpecialId
 
     //	signurl=5，返回结果整合高佣转链API、解析商品编号API、全网商品详情API、淘口令创建API，已经自动判断和拼接使用全网G券还是全网S券。
     //signurl=4，返回结果整合高佣转链API、解析商品编号API、商品简版详情API、淘口令创建API，已经自动判断和拼接使用全网G券还是全网S券。

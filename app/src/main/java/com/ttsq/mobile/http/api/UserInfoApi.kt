@@ -21,5 +21,7 @@ class UserInfoApi : IRequestApi {
         val phonenumber: String,
         val memberStatus: Boolean,
         val memberTime: String,
+        var taobaoSpecialId: String?,
+        var taobaoAccountName: String?,
     )
 }

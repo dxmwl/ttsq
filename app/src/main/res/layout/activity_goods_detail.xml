@@ -88,6 +88,45 @@
                         android:textSize="14sp"
                         tools:text="246.5" />
 
+                    <com.hjq.shape.layout.ShapeLinearLayout
+                        android:id="@+id/layout_fan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="5dp"
+                        app:shape_radius="2dp"
+                        app:shape_solidColor="#33FC383E">
+
+                        <com.hjq.shape.view.ShapeTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="返"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            app:shape_radius="2dp"
+                            app:shape_solidColor="#fffc383e" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="¥"
+                            android:textColor="#fffc383e"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_fan_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="#fffc383e"
+                            android:textSize="13sp"
+                            tools:text="30" />
+                    </com.hjq.shape.layout.ShapeLinearLayout>
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -123,30 +162,30 @@
 
                     <TextView
                         android:id="@+id/textView"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="￥"
                         android:textColor="#ffffffff"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        app:layout_constraintBottom_toBottomOf="@id/textView"
-                        app:layout_constraintStart_toEndOf="@id/textView"
                         android:id="@+id/yhq_jine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffffff"
                         android:textSize="30sp"
+                        app:layout_constraintBottom_toBottomOf="@id/textView"
+                        app:layout_constraintStart_toEndOf="@id/textView"
                         tools:text="45" />
 
                     <LinearLayout
-                        app:layout_constraintTop_toBottomOf="@id/textView"
-                        app:layout_constraintStart_toStartOf="@id/textView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@id/textView"
+                        app:layout_constraintTop_toBottomOf="@id/textView">
 
                         <TextView
                             android:id="@+id/start_time"
@@ -173,16 +212,16 @@
 
 
                     <TextView
-                        android:textColor="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:textSize="@dimen/sp_18"
-                        android:text="立即领券"
                         android:id="@+id/iv_lq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_ljlq" />
+                        android:src="@drawable/icon_ljlq"
+                        android:text="立即领券"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_18"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
@@ -234,11 +273,11 @@
                     android:background="#F2F2F2" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:id="@+id/shop_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/shop_logo"
@@ -313,9 +352,9 @@
                                     android:layout_marginStart="4dp"
                                     android:background="@drawable/shape_manjian_bg"
                                     android:padding="2dp"
+                                    android:text="高"
                                     android:textColor="#ffffffff"
-                                    android:textSize="9sp"
-                                    android:text="高" />
+                                    android:textSize="9sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -344,9 +383,9 @@
                                     android:layout_marginStart="4dp"
                                     android:background="@drawable/shape_manjian_bg"
                                     android:padding="2dp"
+                                    android:text="高"
                                     android:textColor="#ffffffff"
-                                    android:textSize="9sp"
-                                    android:text="高" />
+                                    android:textSize="9sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -376,13 +415,21 @@
                                     android:layout_marginStart="4dp"
                                     android:background="@drawable/shape_manjian_bg"
                                     android:padding="2dp"
+                                    android:text="高"
                                     android:textColor="#ffffffff"
-                                    android:textSize="9sp"
-                                    android:text="高" />
+                                    android:textSize="9sp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/ad_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
 
                 <View
                     android:layout_width="match_parent"
@@ -440,6 +487,7 @@
                     android:id="@+id/goods_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginHorizontal="15dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="2"
                     tools:listitem="@layout/item_home_goods" />
@@ -604,7 +652,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#ffffffff"
                     android:textSize="12sp"
-                    tools:text="省27元" />
+                    tools:text="省0元" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

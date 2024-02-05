@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh"
+    android:layout_height="match_parent">
+
+    <com.ttsq.mobile.widget.StatusLayout
+        android:id="@+id/status_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/order_list"
+            tools:listitem="@layout/item_order"
+            android:layout_height="match_parent"/>
+    </com.ttsq.mobile.widget.StatusLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>

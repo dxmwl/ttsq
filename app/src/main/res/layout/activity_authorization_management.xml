@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hjq.bar.TitleBar
+        app:title="授权管理"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/type_taobao"
+        app:bar_leftText="淘宝"
+        app:bar_rightTextHint="点击授权"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

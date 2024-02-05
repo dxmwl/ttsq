@@ -35,11 +35,13 @@ import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.app.AppHelper
 import com.ttsq.mobile.eventbus.RefreshClass
 import com.ttsq.mobile.http.api.ClassApi
+import com.ttsq.mobile.http.api.GetCommonConfigApi
 import com.ttsq.mobile.http.api.GetYouhuiApi
 import com.ttsq.mobile.http.api.UserInfoApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.manager.ActivityManager
 import com.ttsq.mobile.manager.UserManager
+import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.other.DoubleClickHelper
 import com.ttsq.mobile.ui.adapter.NavigationAdapter
 import com.ttsq.mobile.ui.fragment.*
@@ -144,11 +146,32 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         }
         onNewIntent(intent)
 
+        getCommonConfig()
         getClassData()
 
         LiveDataBus.subscribe("refreshUserInfo", this) { data ->
             getUserInfo()
         }
+    }
+
+    /**
+     * 获取系统配置
+     */
+    private fun getCommonConfig() {
+        EasyHttp.post(this)
+            .api(GetCommonConfigApi())
+            .request(object : OnHttpListener<HttpData<GetCommonConfigApi.AppConfigDto>> {
+                override fun onSucceed(result: HttpData<GetCommonConfigApi.AppConfigDto>?) {
+                    result?.getData()?.let {
+                        AppConfig.rebateRate = it.rebateRate
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+
+                }
+
+            })
     }
 
     override fun onNewIntent(intent: Intent?) {

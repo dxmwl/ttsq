@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginEnd="@dimen/dp_10"
     android:layout_height="wrap_content">
 
@@ -67,6 +68,47 @@
         app:shape_solidColor="#FFE8E8"
         app:shape_strokeColor="@color/red"
         app:shape_strokeWidth="0.5dp" />
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:id="@+id/layout_fan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/shapeTextView2"
+        app:layout_constraintStart_toEndOf="@+id/shapeTextView2"
+        app:layout_constraintTop_toTopOf="@+id/shapeTextView2"
+        app:shape_radius="2dp"
+        app:shape_solidColor="#33FC383E">
+
+        <com.hjq.shape.view.ShapeTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="返"
+            android:textColor="@color/white"
+            android:textSize="8sp"
+            app:shape_radius="2dp"
+            app:shape_solidColor="#fffc383e" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="¥"
+            android:textColor="#fffc383e"
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/tv_fan_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="5dp"
+            android:textColor="#fffc383e"
+            android:textSize="8sp"
+            tools:text="30" />
+    </com.hjq.shape.layout.ShapeLinearLayout>
 
     <TextView
         android:id="@+id/textView13"

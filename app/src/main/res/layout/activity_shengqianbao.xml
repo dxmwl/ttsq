@@ -59,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:gravity="start"
+            android:textColor="@color/black"
             android:hint="请将商品链接复制在这里,省钱宝将为您查询优惠信息"
             android:lines="3"
             android:textSize="@dimen/sp_12"

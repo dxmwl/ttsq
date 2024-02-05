@@ -124,4 +124,9 @@ object AppConfig {
     fun getDownloadUrl(): String {
         return URL_DOWNLOAD
     }
+
+    /**
+     * 返利比例
+     */
+    var rebateRate:String = "0.70"
 }

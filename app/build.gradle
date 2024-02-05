@@ -4,6 +4,7 @@ plugins {
     id 'io.github.wurensen.android-aspectjx'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'mediation-auto-adapter'
 }
 
 apply from: '../common.gradle'
@@ -57,7 +58,7 @@ android {
 
         debug {
             // 给包名添加后缀
-//            applicationIdSuffix '.debug'
+            applicationIdSuffix '.debug'
             // 调试模式开关
             debuggable true
             jniDebuggable true
@@ -132,6 +133,16 @@ android {
             outputFileName += '.apk'
         }
     }
+}
+
+mediationAutoAdapter {
+    //自动适配adn 所有adn adapter，默认值为true，如果为false脚本功能全部关闭
+    autoUpdate true
+    //如果不想全部自动适配，可选择此项，默认值为空[]，可以不填写
+    //如果autoUpdate设置成false，此项不生效，不会自动适配adn adapter
+    //如果autoUpdate设置成true，autoUpdateAdn配置了adn，则生效配置的adn。
+    //autoUpdateAdn没有配置adn，自动适配所有的adn
+    autoUpdateAdn = ["gdt","baidu","ks"]
 }
 
 // 添加构建依赖项：https://developer.android.google.cn/studio/build/dependencies
@@ -250,6 +261,21 @@ dependencies {
     //圆角图片 https://github.com/vinc3m1/RoundedImageView
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
+    //穿山甲广告 https://www.csjplatform.com/union/media/union/quicksdk/?sdk_name=csj&platform=android&version=5.7.0.5
+    implementation "com.pangle.cn:mediation-sdk:5.9.0.8"  //融合SDK
+
+    implementation "com.pangle.cn:mediation-ks-adapter:3.3.57.0"//ks adapter
+
+    implementation "com.pangle.cn:mediation-gdt-adapter:4.561.1431.0" //gdt adapter
+
+    implementation "com.pangle.cn:mediation-baidu-adapter:9.332.0"//baidu adapter
+
+    //支付宝支付 https://opendocs.alipay.com/common/02km9l
+    implementation 'com.alipay.sdk:alipaysdk-android:15.8.17@aar'
+
+    implementation 'com.alibaba:fastjson:1.2.78'
+
+    //阿里百川 https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7629140.0.0.4652be48BPIATs&treeId=129&articleId=118885&docType=1#1.1
     // 多语种：https://github.com/getActivity/MultiLanguages
     // 悬浮窗：https://github.com/getActivity/XToast
     // 日志输出：https://github.com/getActivity/Logcat

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="提现" />
+
+    <com.hjq.shape.layout.ShapeConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        app:shape_angle="45"
+        app:shape_endColor="#FF497D"
+        app:shape_radius="10dp"
+        app:shape_startColor="#FF3020">
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="可提现金额"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/textView16"
+            app:layout_constraintStart_toStartOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    </com.hjq.shape.layout.ShapeConstraintLayout>
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="15dp"
+        android:layout_marginHorizontal="15dp"
+        android:orientation="vertical"
+        app:shape_radius="10dp"
+        app:shape_solidColor="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提现金额"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥"
+                android:textSize="18sp" />
+
+            <com.hjq.shape.view.ShapeEditText
+                android:id="@+id/input_money"
+                android:layout_width="0dp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_weight="1"
+                android:hint="最低可提现1元"
+                android:inputType="numberDecimal"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/btn_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全部"
+                android:textColor="@color/red"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="5"
+                android:text="到账支付宝"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/account_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:textColor="#ccc"
+                android:textSize="12sp"
+                tools:text="17600666666" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/change_zhifubao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="3dp"
+                android:text="修改"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:shape_radius="15dp"
+                app:shape_solidColor="@color/red" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="5"
+                android:text="真实姓名"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/real_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:textColor="#ccc"
+                android:textSize="12sp"
+                tools:text="严**" />
+
+        </LinearLayout>
+    </com.hjq.shape.layout.ShapeLinearLayout>
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/btn_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:paddingVertical="10dp"
+        android:text="提交申请"
+        android:textColor="@color/white"
+        app:shape_radius="25dp"
+        app:shape_solidColor="#F44336" />
+</LinearLayout>
