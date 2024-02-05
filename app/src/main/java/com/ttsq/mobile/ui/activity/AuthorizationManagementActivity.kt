@@ -124,6 +124,7 @@ class AuthorizationManagementActivity : AppActivity() {
 
                 override fun onError(code: String, msg: String) {
                     Logger.e("授权失败：$code $msg")
+                    toast(msg)
                 }
             })
     }

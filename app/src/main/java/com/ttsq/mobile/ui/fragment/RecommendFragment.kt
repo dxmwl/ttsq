@@ -39,6 +39,7 @@ import com.ttsq.mobile.http.model.AdDto
 import com.ttsq.mobile.http.model.DataType
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.http.model.MenuDto
+import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.other.GridSpaceDecoration
 import com.ttsq.mobile.other.GridSpacingItemDecoration
 import com.ttsq.mobile.ui.activity.*
@@ -254,7 +255,12 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                             FreeGoodsDialog.Builder(requireContext())
                                 .show()
                         }else{
-                            layout_free_goods?.visibility = View.GONE
+                            //测试用
+                            if (AppConfig.isDebug()) {
+                                layout_free_goods?.visibility = View.VISIBLE
+                            }else{
+                                layout_free_goods?.visibility = View.GONE
+                            }
                         }
                     }
                 }

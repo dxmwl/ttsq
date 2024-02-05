@@ -2,9 +2,12 @@ package com.ttsq.mobile.ui.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.alibcprotocol.callback.AlibcTradeCallback
+import com.baichuan.nb_trade.AlibcTrade
 import com.hjq.base.BaseDialog
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
+import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppActivity
@@ -13,6 +16,7 @@ import com.ttsq.mobile.http.api.GetFreeGoodsListApi
 import com.ttsq.mobile.http.api.GetLingquanUrlApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.manager.UserManager
+import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.ui.adapter.FreeGoodsListAdapter
 import com.ttsq.mobile.ui.dialog.MessageDialog
 import java.lang.Exception
@@ -45,6 +49,10 @@ class FreeGoodsActivity : AppActivity() {
 
             freeGoodsListAdapter.setClickListener(object :FreeGoodsListAdapter.OnFreeGoodsClick{
                 override fun buyFreeGoods(goodsId:String,goodsName:String) {
+                    if (AppConfig.isDebug()){
+                        //测试用
+                        hasFreeGoods = true
+                    }
                     if (hasFreeGoods.not()){
                         MessageDialog.Builder(this@FreeGoodsActivity)
                             .setTitle("非常抱歉")

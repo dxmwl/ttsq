@@ -67,7 +67,7 @@ android {
             // 移除无用的资源
             shrinkResources false
             // 代码混淆开关
-            minifyEnabled false
+            minifyEnabled true
             // 签名信息配置
             signingConfig signingConfigs.config
             // 添加清单占位符
@@ -85,9 +85,9 @@ android {
             debuggable false
             jniDebuggable false
             // 压缩对齐开关
-            zipAlignEnabled true
+            zipAlignEnabled false
             // 移除无用的资源
-            shrinkResources true
+            shrinkResources false
             // 代码混淆开关
             minifyEnabled true
             // 签名信息配置

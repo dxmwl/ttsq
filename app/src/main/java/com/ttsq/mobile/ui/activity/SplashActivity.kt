@@ -237,6 +237,7 @@ class SplashActivity : AppActivity() {
 
             override fun onFailure(code: Int, msg: String) {
                 Logger.d("百川SDK初始化失败： code = $code, msg = $msg")
+                toast("百川SDK初始化失败： code = $code, msg = $msg")
             }
         })
         if (AppConfig.isDebug()) {
