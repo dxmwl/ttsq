@@ -381,6 +381,9 @@
         <intent>
             <action android:name="android.intent.action.GET_CONTENT" />
         </intent>
+
+<!--        淘宝包名-->
+        <package android:name="com.taobao.taobao" />
     </queries>
 
 </manifest>
