@@ -49,6 +49,77 @@
                     tools:listitem="@layout/item_home_menu" />
 
                 <com.hjq.shape.layout.ShapeConstraintLayout
+                    android:id="@+id/layout_free_goods"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    app:shape_radius="@dimen/dp_10"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="5dp"
+                    android:paddingVertical="5dp"
+                    app:shape_startColor="@color/red"
+                    app:shape_endColor="#FFCCCC"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="首单0元"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView24"
+                        app:layout_constraintEnd_toEndOf="@+id/btn_lingqu"
+                        app:layout_constraintStart_toStartOf="@+id/btn_lingqu"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="新人免单"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toTopOf="@+id/btn_lingqu"
+                        app:layout_constraintEnd_toEndOf="@+id/btn_lingqu"
+                        app:layout_constraintStart_toStartOf="@+id/btn_lingqu" />
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/btn_lingqu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="2dp"
+                        android:text="立即领取"
+                        android:textColor="@color/red"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:shape_radius="10dp"
+                        app:shape_solidColor="@color/white" />
+
+                    <com.hjq.shape.layout.ShapeRecyclerView
+                        android:layout_width="0dp"
+                        android:id="@+id/free_goods_list"
+                        tools:listitem="@layout/item_free_goods"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/btn_lingqu"
+                        app:shape_radius="10dp"
+                        app:shape_solidColor="@color/white"
+                        tools:layout_editor_absoluteY="5dp" />
+                </com.hjq.shape.layout.ShapeConstraintLayout>
+
+                <com.hjq.shape.layout.ShapeConstraintLayout
                     android:id="@+id/layout_pinpai"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

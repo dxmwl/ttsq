@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.app.Constants
+import com.ttsq.mobile.http.api.CheckUserFreeGoodsApi
+import com.ttsq.mobile.http.api.GetFreeGoodsListApi
 import com.ttsq.mobile.http.api.HomeBannerApi
 import com.ttsq.mobile.http.api.HomeGoodsListApi
 import com.ttsq.mobile.http.api.RecommendPinpaiApi
@@ -39,6 +42,8 @@ import com.ttsq.mobile.other.GridSpaceDecoration
 import com.ttsq.mobile.other.GridSpacingItemDecoration
 import com.ttsq.mobile.ui.activity.*
 import com.ttsq.mobile.ui.adapter.BannerAdapter
+import com.ttsq.mobile.ui.adapter.FreeGoodsListAdapter
+import com.ttsq.mobile.ui.adapter.HomeFreeGoodsListAdapter
 import com.ttsq.mobile.ui.adapter.HomeMenuListAdapter
 import com.ttsq.mobile.ui.adapter.PinpaiGoodsAdapter
 import com.ttsq.mobile.ui.adapter.SearchGoodsListAdapter
@@ -47,6 +52,7 @@ import com.youth.banner.Banner
 
 class RecommendFragment : AppFragment<HomeActivity>() {
 
+    private lateinit var homFreeGoodsListAdapter: HomeFreeGoodsListAdapter
     private lateinit var pinpaiGoodsAdapter: PinpaiGoodsAdapter
     private val banner: Banner<HomeBannerApi.BannerBean, BannerAdapter>? by lazy { findViewById(R.id.banner) }
     private val menuList: RecyclerView? by lazy { findViewById(R.id.menu_list) }
@@ -58,6 +64,8 @@ class RecommendFragment : AppFragment<HomeActivity>() {
     private val textView11: TextView? by lazy { findViewById(R.id.textView11) }
     private val pinpai_biaoyu: TextView? by lazy { findViewById(R.id.pinpai_biaoyu) }
     private val pinpai_goods_list: RecyclerView? by lazy { findViewById(R.id.pinpai_goods_list) }
+    private val free_goods_list: RecyclerView? by lazy { findViewById(R.id.free_goods_list) }
+    private val layout_free_goods: ConstraintLayout? by lazy { findViewById(R.id.layout_free_goods) }
 
     private var mFeedAdListener: TTAdNative.FeedAdListener? = null // 广告加载监听器
 
@@ -73,7 +81,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
     }
 
     override fun initView() {
-        setOnClickListener(R.id.layout_pinpai)
+        setOnClickListener(R.id.layout_pinpai,R.id.layout_free_goods)
         banner?.let {
 //            it.setBannerGalleryEffect(39, 16)
             it.addBannerLifecycleObserver(this)
@@ -213,6 +221,11 @@ class RecommendFragment : AppFragment<HomeActivity>() {
             it.adapter = pinpaiGoodsAdapter
         }
 
+        free_goods_list?.also {
+            it.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            homFreeGoodsListAdapter = HomeFreeGoodsListAdapter(requireContext())
+            it.adapter = homFreeGoodsListAdapter
+        }
     }
 
     private var pageIndex = 1
@@ -221,7 +234,52 @@ class RecommendFragment : AppFragment<HomeActivity>() {
         getBannerList()
         getPinpaiList()
         getGoodsList()
+        getFreeGoodsList()
+        checkUserFreeGoods()
     }
+
+
+    private fun checkUserFreeGoods() {
+        EasyHttp.post(this)
+            .api(CheckUserFreeGoodsApi())
+            .request(object :
+                OnHttpListener<HttpData<CheckUserFreeGoodsApi.CheckUserFreeGoodsDto>> {
+                override fun onSucceed(result: HttpData<CheckUserFreeGoodsApi.CheckUserFreeGoodsDto>?) {
+                    result?.getData()?.let {
+                        if (it.hasFreeGoods){
+                            layout_free_goods?.visibility = View.VISIBLE
+                        }else{
+                            layout_free_goods?.visibility = View.GONE
+                        }
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+            })
+    }
+
+    private fun getFreeGoodsList() {
+        EasyHttp.post(this)
+            .api(GetFreeGoodsListApi().apply {
+
+            })
+            .request(object :
+                OnHttpListener<HttpData<ArrayList<GetFreeGoodsListApi.FreeGoodsDeo>>> {
+                override fun onSucceed(result: HttpData<ArrayList<GetFreeGoodsListApi.FreeGoodsDeo>>?) {
+                    result?.getData()?.let {
+                        homFreeGoodsListAdapter.addData(it)
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+
+            })
+    }
+
 
     private fun getPinpaiList() {
         EasyHttp.get(this)
@@ -344,6 +402,9 @@ class RecommendFragment : AppFragment<HomeActivity>() {
         when (view.id) {
             R.id.layout_pinpai -> {
                 startActivity(PinpaiGoodsActivity::class.java)
+            }
+            R.id.layout_free_goods->{
+                startActivity(FreeGoodsActivity::class.java)
             }
 
             else -> {}

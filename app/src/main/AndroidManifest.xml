@@ -339,6 +339,9 @@
         <activity
             android:name=".ui.activity.MyOrderActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.FreeGoodsActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
