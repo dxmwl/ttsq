@@ -363,7 +363,6 @@
                     app:bar_leftDrawable="@drawable/kefu_icon"
                     app:bar_leftText="在线客服"
                     app:bar_rightDrawable="@drawable/icon_more_sanjiao"
-                    app:bar_rightTextHint="一对一沟通"
                     app:bar_rightTextSize="14sp" />
 
                 <com.hjq.widget.layout.SettingBar

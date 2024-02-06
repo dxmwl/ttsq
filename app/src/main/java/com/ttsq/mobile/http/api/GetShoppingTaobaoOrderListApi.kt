@@ -23,7 +23,7 @@ class GetShoppingTaobaoOrderListApi : IRequestApi {
         val itemImg: String,
         val itemTitle: String,
         val alipayTotalPrice: String,
-        val rebateRate: String,
+        val rebatePrice: String,
         val createTime: String,
     )
 }

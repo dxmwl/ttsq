@@ -62,7 +62,7 @@ class FreeGoodsActivity : AppActivity() {
                     }
                     MessageDialog.Builder(this@FreeGoodsActivity)
                         .setTitle("恭喜您，可参与0元购")
-                        .setMessage("1.付款金额务必与补贴金额一致，付款时不要使用淘金币、红包，否则无法返现。\n2.所有商品均包邮，如遇商家设置运费，请购买其他物品")
+                        .setMessage("1.付款金额务必与补贴金额一致，付款时不要使用淘金币、红包，否则无法返现。\n2.所有商品均包邮，如遇商家设置运费，请购买其他物品\n3.下单后如补贴金额不正确，可联系客服修改")
                         .setConfirm("去购买")
                         .setListener(object :MessageDialog.OnListener{
                             override fun onConfirm(dialog: BaseDialog?) {

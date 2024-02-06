@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.alibaba.alibcprotocol.callback.AlibcTradeCallback
+import com.alibaba.alibcprotocol.param.AlibcTaokeParams
 import com.baichuan.nb_trade.AlibcTrade
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ConvertUtils
@@ -299,6 +300,20 @@ class GoodsDetailActivity : AppActivity() {
 
                         return
                     }
+
+//                    AlibcTrade.openByUrl(this@GoodsDetailActivity, result?.getData()?.coupon_click_url,null,
+//                        AlibcTaokeParams("mm_111203980_2833850012_115618900286"),null,object :AlibcTradeCallback{
+//                            override fun onSuccess(p0: Int, p1: Any?) {
+//                                Logger.d("onSuccess",p0.toString())
+//                            }
+//
+//                            override fun onFailure(p0: Int, p1: String?) {
+//                                toast("${p0},${p1}")
+//                                Logger.d("onFailure:${p0},${p1}")
+//                            }
+//
+//                        }
+//                    )
 
                     BrowserActivity.start(
                         this@GoodsDetailActivity,
