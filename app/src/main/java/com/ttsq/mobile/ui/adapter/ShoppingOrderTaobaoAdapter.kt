@@ -35,7 +35,7 @@ class ShoppingOrderTaobaoAdapter(val mContext: Context) :
             goods_img?.let { Glide.with(mContext).load(item.itemImg).into(it) }
             textView21?.text = item.itemTitle
             textView23?.text = item.alipayTotalPrice
-            tv_fan_money?.text = item.rebateRate
+            tv_fan_money?.text = item.rebatePrice
             tv_time?.text = item.createTime
 
             getItemView().setOnClickListener {
