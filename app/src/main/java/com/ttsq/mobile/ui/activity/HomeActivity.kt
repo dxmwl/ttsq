@@ -105,7 +105,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             )
             addItem(
                 NavigationAdapter.MenuItem(
-                    getString(R.string.home_nav_fuli),
+                    getString(R.string.home_nav_bdsh),
                     ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_fuli_selector)
                 )
             )
