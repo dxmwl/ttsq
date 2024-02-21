@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.didichuxing.doraemonkit.DoKit
+//import com.didichuxing.doraemonkit.DoKit
 import com.gyf.immersionbar.ImmersionBar
 import com.hjq.base.FragmentPagerAdapter
 import com.hjq.http.EasyHttp
@@ -125,9 +125,9 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             navigationView?.adapter = this
         }
 
-        DoKit.Builder(AppApplication.getApp())
-            .productId("2f3d442feec5bff93d8c643c6612d833")
-            .build()
+//        DoKit.Builder(AppApplication.getApp())
+//            .productId("2f3d442feec5bff93d8c643c6612d833")
+//            .build()
 
         //展示插屏消息
         InAppMessageManager.getInstance(this).showCardMessage(

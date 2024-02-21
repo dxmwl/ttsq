@@ -58,7 +58,7 @@ android {
 
         debug {
             // 给包名添加后缀
-            applicationIdSuffix '.debug'
+//            applicationIdSuffix '.debug'
             // 调试模式开关
             debuggable true
             jniDebuggable true
@@ -245,9 +245,9 @@ dependencies {
     def kitVer = "3.7.1"
 
     //核心模块
-    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
     //no-op 模块
-    releaseImplementation "io.github.didi.dokit:dokitx-no-op:$kitVer"
+//    releaseImplementation "io.github.didi.dokit:dokitx-no-op:$kitVer"
 //    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
 //    debugImplementation "io.github.didi.dokit:dokitx-rpc:$kitVer"
 //    debugImplementation "io.github.didi.dokit:dokitx-mc:$kitVer"
@@ -274,6 +274,12 @@ dependencies {
     implementation 'com.alipay.sdk:alipaysdk-android:15.8.17@aar'
 
     implementation 'com.alibaba:fastjson:1.2.78'
+
+    //友盟一件登录 https://developer.umeng.com/docs/143070/detail/144780#h2-5-5-token-getverifytoken-11
+    implementation 'com.umeng.umsdk:uverify:2.5.9'// 必选
+    implementation 'com.umeng.umsdk:uverify-main:2.1.4'// 必选
+    implementation 'com.umeng.umsdk:uverify-logger:2.1.4'// 必选
+    implementation 'com.umeng.umsdk:uverify-crashshield:2.1.4'// 必选
 
     //阿里百川 https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7629140.0.0.4652be48BPIATs&treeId=129&articleId=118885&docType=1#1.1
     // 多语种：https://github.com/getActivity/MultiLanguages
