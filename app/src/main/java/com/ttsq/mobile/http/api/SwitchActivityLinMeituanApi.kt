@@ -6,7 +6,7 @@ package com.ttsq.mobile.http.api
  * @Author: 常利兵
  * @Date: 2024/2/21 0021 16:28
  **/
-class SwitchActivityLinkApi : HaodankuV3BaseApi() {
+class SwitchActivityLinMeituanApi : HaodankuV3BaseApi() {
     override fun getApi(): String {
         return "meituan_ratesurl"
     }
@@ -23,6 +23,7 @@ class SwitchActivityLinkApi : HaodankuV3BaseApi() {
     val link_type = 1
 
     data class SwitchActivityLinkDto(
-        val url: String
+        val url: String,
+        val h5_short_link: String
     )
 }

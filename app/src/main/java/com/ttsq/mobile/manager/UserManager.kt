@@ -1,5 +1,6 @@
 package com.ttsq.mobile.manager
 
+import com.amap.api.location.AMapLocation
 import com.pdlbox.tools.utils.GsonUtils
 import com.pdlbox.tools.utils.SpUtils
 import com.ttsq.mobile.http.api.LoginApi
@@ -7,6 +8,11 @@ import com.ttsq.mobile.http.api.UserInfoApi
 
 
 object UserManager {
+
+    /**
+     * 用户当前位置
+     */
+    var currentLocation: AMapLocation? = null
 
     //登录状态
     var loginStatus = false

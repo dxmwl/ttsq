@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/tv_goods_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="1dp"
+        android:text="免预约"
+        android:textColor="#606060"
+        android:textSize="10sp"
+        app:shape_radius="3dp"
+        app:shape_solidColor="#ECECEC"
+        tools:showIn="@layout/item_dy_goods" />
+</LinearLayout>

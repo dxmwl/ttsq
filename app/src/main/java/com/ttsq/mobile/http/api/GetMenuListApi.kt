@@ -14,7 +14,7 @@ class GetMenuListApi : IRequestApi {
     }
 
     /**
-     * （0：本地生活，1：首页）
+     * （0：周边优惠，1：首页）
      */
     var type: Int? = null
 
@@ -23,7 +23,7 @@ class GetMenuListApi : IRequestApi {
         val menuTitle: String,
         val menuIcon: String,
         val menuLabel: String?,
-        //1：链接，2：小程序，3：app，4：app页面，5：本地生活
+        //1：链接，2：小程序，3：app，4：app页面，5：周边优惠
         val type: Int,
         val paramsValue: String,
     )

@@ -142,7 +142,7 @@ mediationAutoAdapter {
     //如果autoUpdate设置成false，此项不生效，不会自动适配adn adapter
     //如果autoUpdate设置成true，autoUpdateAdn配置了adn，则生效配置的adn。
     //autoUpdateAdn没有配置adn，自动适配所有的adn
-    autoUpdateAdn = ["gdt","baidu","ks"]
+    autoUpdateAdn = ["gdt", "baidu", "ks"]
 }
 
 // 添加构建依赖项：https://developer.android.google.cn/studio/build/dependencies
@@ -286,6 +286,9 @@ dependencies {
 
     // 嵌套滚动容器：https://github.com/donkingliang/ConsecutiveScroller
     implementation 'com.github.donkingliang:ConsecutiveScroller:4.6.3'
+
+//    定位
+    implementation 'com.amap.api:location:latest.integration'
 
     //阿里百川 https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7629140.0.0.4652be48BPIATs&treeId=129&articleId=118885&docType=1#1.1
     // 多语种：https://github.com/getActivity/MultiLanguages

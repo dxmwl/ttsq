@@ -54,6 +54,10 @@
         tools:replace="android:allowBackup,android:supportsRtl,android:label"
         tools:targetApi="n">
 
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="87ec22e5641d75e5857bf34148d3a1e6"/>
+
         <!-- 表示当前已经适配了分区存储 -->
         <meta-data
             android:name="ScopedStorage"

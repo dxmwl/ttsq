@@ -17,6 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.airbnb.lottie.LottieAnimationView
 import com.alibaba.baichuan.trade.common.AlibcTradeCommon
+import com.amap.api.location.AMapLocationClient
 import com.baichuan.nb_trade.callback.AlibcTradeInitCallback
 import com.baichuan.nb_trade.core.AlibcTradeBiz
 import com.baichuan.nb_trade.core.AlibcTradeSDK
@@ -189,6 +190,9 @@ class SplashActivity : AppActivity() {
      * 初始化一些第三方框架
      */
     private fun checkLogin(application: Application) {
+        //高德地图
+        AMapLocationClient.updatePrivacyShow(application,true,true)
+        AMapLocationClient.updatePrivacyAgree(application,true)
         initBaichuan(application)
         initCsjSdk(application)
         // 友盟统计、登录、分享 SDK
