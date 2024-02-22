@@ -10,7 +10,6 @@ import com.hjq.shape.view.ShapeTextView
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppAdapter
 import com.ttsq.mobile.http.api.ArticleDetailApi
-import com.ttsq.mobile.http.api.CommodityScreeningApi
 import com.ttsq.mobile.http.glide.GlideApp
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
 

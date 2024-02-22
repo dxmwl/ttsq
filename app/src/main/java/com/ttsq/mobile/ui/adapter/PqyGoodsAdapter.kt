@@ -16,7 +16,6 @@ import com.hjq.toast.ToastUtils
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppAdapter
 import com.ttsq.mobile.http.api.PyqGoodsApi
-import com.ttsq.mobile.ui.activity.BrowserActivity
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
 
 /**

@@ -6,7 +6,7 @@ package com.ttsq.mobile.http.api
  * @author : clb
  * @time : 2022/6/23
  */
-class HomeBannerApi : HaodankuBaseApi() {
+class HomeBannerApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "get_index_activity_data"
     }

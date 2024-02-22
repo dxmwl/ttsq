@@ -32,6 +32,7 @@ import com.ttsq.mobile.ui.dialog.TipsDialog
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.hjq.widget.layout.NestedScrollWebView
+import com.orhanobut.logger.Logger
 import com.ttsq.mobile.other.PermissionInterceptor
 import timber.log.Timber
 import java.io.File
@@ -79,6 +80,8 @@ class BrowserView  @JvmOverloads constructor(
             // 解决 Android 5.0 上 WebView 默认不允许加载 Http 与 Https 混合内容
             settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
+        settings.useWideViewPort = true; // 支持viewport属性
+        settings.loadWithOverviewMode = true; // 缩放至屏幕大小
 
         // 不显示滚动条
         isVerticalScrollBarEnabled = false
@@ -217,7 +220,10 @@ class BrowserView  @JvmOverloads constructor(
          */
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             Timber.i("WebView shouldOverrideUrlLoading：%s", url)
-            val scheme: String = Uri.parse(url).scheme ?: return false
+            val scheme1 = Uri.parse(url).scheme
+            Logger.d("scheme1：%s", scheme1)
+            val scheme: String = scheme1 ?: return false
+            Logger.d("scheme：%s", scheme)
             when (scheme) {
                 "http", "https" -> view.loadUrl(url)
                 "tel" -> dialing(view, url)
@@ -229,6 +235,7 @@ class BrowserView  @JvmOverloads constructor(
         }
 
         private fun jumpApp(view: WebView, url: String) {
+            Logger.d("跳转App：${url}")
             val intent: Intent
             try {
                 intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
@@ -241,6 +248,7 @@ class BrowserView  @JvmOverloads constructor(
                     view.context.startActivity(intent)
                 }
             } catch (e: URISyntaxException) {
+                Logger.e(e.message.toString())
                 e.printStackTrace()
             }
         }

@@ -1,6 +1,6 @@
 package com.ttsq.mobile.http.api
 
-class ZhutiPinpaiApi : HaodankuBaseApi() {
+class ZhutiPinpaiApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "brand_subjectitems"
     }

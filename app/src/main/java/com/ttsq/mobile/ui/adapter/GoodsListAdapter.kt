@@ -9,18 +9,13 @@ import com.blankj.utilcode.util.ConvertUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.hjq.shape.layout.ShapeLinearLayout
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppAdapter
 import com.ttsq.mobile.http.api.CommodityScreeningApi
-import com.ttsq.mobile.http.api.HomeGoodsListApi
 import com.ttsq.mobile.http.glide.GlideApp
-import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
 import com.ttsq.mobile.utils.FormatUtils
 import com.ttsq.mobile.utils.RebateUtils
-import java.math.BigDecimal
-import java.math.RoundingMode
 
 /**
  * @project : EasyBuy_Android

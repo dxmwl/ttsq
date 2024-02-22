@@ -3,7 +3,7 @@ package com.ttsq.mobile.http.api
 /**
  * 限时抢购
  */
-class XsqgApi : HaodankuBaseApi() {
+class XsqgApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "fastbuy"
     }

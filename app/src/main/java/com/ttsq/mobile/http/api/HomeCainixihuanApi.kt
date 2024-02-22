@@ -3,7 +3,7 @@ package com.ttsq.mobile.http.api
 /**
  * 猜你喜欢
  */
-class HomeCainixihuanApi : HaodankuBaseApi() {
+class HomeCainixihuanApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "api/open_item_guess_like2.ashx"
     }

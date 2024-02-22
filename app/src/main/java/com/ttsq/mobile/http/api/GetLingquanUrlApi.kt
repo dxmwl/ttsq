@@ -8,7 +8,7 @@ import com.ttsq.mobile.manager.UserManager
  * @author : clb
  * @time : 2022/6/23
  */
-class GetLingquanUrlApi : HaodankuBaseApi() {
+class GetLingquanUrlApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "ratesurl"
     }

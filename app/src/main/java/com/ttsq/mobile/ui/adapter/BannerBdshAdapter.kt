@@ -7,10 +7,9 @@ import com.blankj.utilcode.util.ConvertUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.ttsq.mobile.http.api.HomeBannerApi
+import com.ttsq.mobile.http.api.GetBdshBannerApi
 import com.ttsq.mobile.http.glide.GlideApp
-import com.ttsq.mobile.ui.activity.GoodsListActivity
-import com.ttsq.mobile.ui.adapter.BannerAdapter.BannerViewHolder
+import com.ttsq.mobile.ui.adapter.BannerBdshAdapter.BannerViewHolder
 import com.youth.banner.adapter.BannerAdapter
 
 
@@ -20,8 +19,8 @@ import com.youth.banner.adapter.BannerAdapter
  * @author : clb
  * @time : 2022/5/31
  */
-class BannerAdapter(bannerList: ArrayList<HomeBannerApi.BannerBean>?) :
-    BannerAdapter<HomeBannerApi.BannerBean, BannerViewHolder>(bannerList) {
+class BannerBdshAdapter(bannerList: ArrayList<GetBdshBannerApi.TimeActivity>?) :
+    BannerAdapter<GetBdshBannerApi.TimeActivity, BannerViewHolder>(bannerList) {
 
     inner class BannerViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)
 
@@ -39,12 +38,12 @@ class BannerAdapter(bannerList: ArrayList<HomeBannerApi.BannerBean>?) :
 
     override fun onBindView(
         holder: BannerViewHolder?,
-        data: HomeBannerApi.BannerBean?,
+        data: GetBdshBannerApi.TimeActivity?,
         position: Int,
         size: Int
     ) {
         holder?.let {
-            GlideApp.with(holder.itemView).load(data?.image).transform(
+            GlideApp.with(holder.itemView).load(data?.activity_image).transform(
                 MultiTransformation(
                     CenterCrop(), RoundedCorners(ConvertUtils.dp2px(8F))
                 )
@@ -52,7 +51,17 @@ class BannerAdapter(bannerList: ArrayList<HomeBannerApi.BannerBean>?) :
         }
 
         holder?.imageView?.setOnClickListener {
-            GoodsListActivity.start(holder.itemView.context, data?.activity_id, data?.activity_title)
+            listener?.clickItem(data)
         }
+    }
+
+    private var listener: OnItemClick? = null
+
+    interface OnItemClick {
+        fun clickItem(data: GetBdshBannerApi.TimeActivity?)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClick) {
+        this.listener = listener
     }
 }

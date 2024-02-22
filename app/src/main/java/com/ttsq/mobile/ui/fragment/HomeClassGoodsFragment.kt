@@ -7,7 +7,6 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.bytedance.sdk.openadsdk.AdSlot
@@ -20,7 +19,6 @@ import com.google.android.material.tabs.TabLayout
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.orhanobut.logger.Logger
-import com.pdlbox.tools.utils.ConversionUtils
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppFragment
@@ -30,11 +28,9 @@ import com.ttsq.mobile.http.model.AdDto
 import com.ttsq.mobile.http.model.DataType
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.http.model.MenuDto
-import com.ttsq.mobile.other.GridSpacingItemDecoration
 import com.ttsq.mobile.ui.activity.HomeActivity
 import com.ttsq.mobile.ui.activity.SearchResultActivity
 import com.ttsq.mobile.ui.adapter.HdkTwoClassAdapter
-import com.ttsq.mobile.ui.adapter.SearchGoodsListAdapter
 import com.ttsq.mobile.ui.adapter.ShaixuanGoodsListAdapter
 import java.lang.Exception
 
@@ -49,7 +45,7 @@ class HomeClassGoodsFragment : AppFragment<HomeActivity>(), HdkTwoClassAdapter.O
         val DATAFLAG = "DATAFLAG"
         val CIDFLAG = "cid"
 
-        fun newInstance(data: ArrayList<ClassApi.Data>,cid:String): HomeClassGoodsFragment {
+        fun newInstance(data: ArrayList<ClassApi.Data>, cid:String): HomeClassGoodsFragment {
             val homeClassGoodsFragment = HomeClassGoodsFragment()
             val bundle = Bundle()
             bundle.putParcelableArrayList(DATAFLAG, data)

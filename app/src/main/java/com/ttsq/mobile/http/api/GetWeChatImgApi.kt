@@ -3,7 +3,7 @@ package com.ttsq.mobile.http.api
 /**
  * 二维码发单图
  */
-class GetWeChatImgApi : HaodankuBaseApi() {
+class GetWeChatImgApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "api/open_qrpic.ashx"
     }

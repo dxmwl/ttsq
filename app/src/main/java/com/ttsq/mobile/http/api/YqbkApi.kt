@@ -3,7 +3,7 @@ package com.ttsq.mobile.http.api
 /**
  * 友圈爆款
  */
-class YqbkApi : HaodankuBaseApi() {
+class YqbkApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "api/api_all.ashx"
     }

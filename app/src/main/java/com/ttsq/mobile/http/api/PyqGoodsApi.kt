@@ -3,7 +3,7 @@ package com.ttsq.mobile.http.api
 /**
  * 朋友圈
  */
-class PyqGoodsApi : HaodankuBaseApi() {
+class PyqGoodsApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "selected_item"
     }

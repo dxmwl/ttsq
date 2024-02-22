@@ -10,10 +10,8 @@ import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppAdapter
 import com.ttsq.mobile.http.api.PinpaiDetailApi
 import com.ttsq.mobile.http.glide.GlideApp
-import com.ttsq.mobile.http.model.GoodsDetailDto
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
 import com.ttsq.mobile.utils.RebateUtils
-import java.math.BigDecimal
 
 /**
  * @project : EasyBuy_Android

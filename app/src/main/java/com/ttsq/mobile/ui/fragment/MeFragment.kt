@@ -8,9 +8,6 @@ import com.hjq.base.BaseDialog
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.hjq.shape.view.ShapeTextView
-import com.hjq.umeng.Platform
-import com.hjq.umeng.UmengShare
-import com.pdlbox.tools.utils.GlideUtils
 import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.app.AppActivity
@@ -18,13 +15,11 @@ import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.http.api.AppBannerApi
 import com.ttsq.mobile.http.api.GetTxAccountApi
 import com.ttsq.mobile.http.api.GetWalletBalanceApi
-import com.ttsq.mobile.http.api.HomeBannerApi
 import com.ttsq.mobile.http.api.UserInfoApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.ui.activity.AuthorizationManagementActivity
-import com.ttsq.mobile.ui.activity.InviteFriendsActivity
 import com.ttsq.mobile.ui.activity.LoginActivity
 import com.ttsq.mobile.ui.activity.MemberCenterActivity
 import com.ttsq.mobile.ui.activity.MyOrderActivity

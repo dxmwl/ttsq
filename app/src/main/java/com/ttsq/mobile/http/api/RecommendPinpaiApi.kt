@@ -1,6 +1,6 @@
 package com.ttsq.mobile.http.api
 
-class RecommendPinpaiApi : HaodankuBaseApi() {
+class RecommendPinpaiApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "brand_todayrecommend"
     }

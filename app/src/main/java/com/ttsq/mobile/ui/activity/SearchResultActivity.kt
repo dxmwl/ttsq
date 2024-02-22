@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
@@ -19,7 +18,6 @@ import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.app.AppHelper
-import com.ttsq.mobile.http.api.HomeGoodsListApi
 import com.ttsq.mobile.http.api.SearchGoodsApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.http.model.MenuDto

@@ -3,7 +3,6 @@ package com.ttsq.mobile.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
-import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -11,13 +10,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.alibaba.alibcprotocol.callback.AlibcTradeCallback
-import com.alibaba.alibcprotocol.param.AlibcTaokeParams
-import com.baichuan.nb_trade.AlibcTrade
-import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.TimeUtils
@@ -36,9 +30,7 @@ import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.http.api.GetLingquanUrlApi
 import com.ttsq.mobile.http.api.GoodsDetailApi
-import com.ttsq.mobile.http.api.HomeGoodsListApi
 import com.ttsq.mobile.http.api.SameClassGoodsApi
-import com.ttsq.mobile.http.glide.GlideApp
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.ui.adapter.GoodsDetailBannerAdapter
 import com.ttsq.mobile.ui.adapter.SearchGoodsListAdapter
@@ -46,7 +38,6 @@ import com.ttsq.mobile.ui.dialog.ShareDialog
 import com.ttsq.mobile.utils.FormatUtils
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
-import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.orhanobut.logger.Logger

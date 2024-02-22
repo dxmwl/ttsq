@@ -33,8 +33,8 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <!-- 定位权限（用于 WebView 定位）-->
-    <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
-    <!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- Application 节点详解：https://developer.android.google.cn/guide/topics/manifest/application-element -->
     <!-- Activity 节点详解：https://developer.android.google.cn/guide/topics/manifest/activity-element -->
@@ -382,8 +382,30 @@
             <action android:name="android.intent.action.GET_CONTENT" />
         </intent>
 
-<!--        淘宝包名-->
+        <!--        淘宝包名-->
         <package android:name="com.taobao.taobao" />
+        <!--        支付宝-->
+        <package android:name="com.eg.android.AlipayGphone" />
+        <!--        京东-->
+        <package android:name="com.jingdong.app.mall" />
+        <!--        拼多多-->
+        <package android:name="com.xunmeng.pinduoduo" />
+        <!--        抖音-->
+        <package android:name="com.ss.android.ugc.aweme" />
+        <!--        今日头条-->
+        <package android:name="com.ss.android.article.news" />
+        <!--        唯品会-->
+        <package android:name="com.achievo.vipshop" />
+        <!--      苏宁易购  -->
+        <package android:name="com.suning.mobile.ebuy" />
+        <!--        美团-->
+        <package android:name="com.sankuai.meituan" />
+        <!--        美团外卖-->
+        <package android:name="com.sankuai.meituan.takeoutnew" />
+        <!--        菜鸟裹裹-->
+        <package android:name="com.cainiao.wireless" />
+        <!--        微信-->
+        <package android:name="com.tencent.mm" />
     </queries>
 
 </manifest>

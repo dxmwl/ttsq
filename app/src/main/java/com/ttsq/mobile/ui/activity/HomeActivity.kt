@@ -30,7 +30,6 @@ import com.hjq.http.listener.OnHttpListener
 import com.orhanobut.logger.Logger
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppActivity
-import com.ttsq.mobile.app.AppApplication
 import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.app.AppHelper
 import com.ttsq.mobile.eventbus.RefreshClass
@@ -106,7 +105,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             addItem(
                 NavigationAdapter.MenuItem(
                     getString(R.string.home_nav_bdsh),
-                    ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_fuli_selector)
+                    ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_bdsh_selector)
                 )
             )
             addItem(
@@ -139,7 +138,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         pagerAdapter = FragmentPagerAdapter<AppFragment<*>>(this).apply {
             addFragment(HomeFragment.newInstance())
             addFragment(BangdanFragment.newInstance())
-            addFragment(FuliFragment.newInstance())
+            addFragment(BdshFragment.newInstance())
             addFragment(YqbkFragment.newInstance())
             addFragment(MeFragment.newInstance())
             viewPager?.adapter = this

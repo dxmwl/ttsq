@@ -2,12 +2,9 @@ package com.ttsq.mobile.ui.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.alibcprotocol.callback.AlibcTradeCallback
-import com.baichuan.nb_trade.AlibcTrade
 import com.hjq.base.BaseDialog
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
-import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppActivity

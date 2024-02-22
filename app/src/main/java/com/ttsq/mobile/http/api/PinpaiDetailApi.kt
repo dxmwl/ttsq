@@ -3,7 +3,7 @@ package com.ttsq.mobile.http.api
 /**
  * 品牌详情
  */
-class PinpaiDetailApi : HaodankuBaseApi() {
+class PinpaiDetailApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "singlebrand"
     }

@@ -281,6 +281,12 @@ dependencies {
     implementation 'com.umeng.umsdk:uverify-logger:2.1.4'// 必选
     implementation 'com.umeng.umsdk:uverify-crashshield:2.1.4'// 必选
 
+    //Tablayout https://github.com/H07000223/FlycoTabLayout/blob/master/README_CN.md
+    implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
+
+    // 嵌套滚动容器：https://github.com/donkingliang/ConsecutiveScroller
+    implementation 'com.github.donkingliang:ConsecutiveScroller:4.6.3'
+
     //阿里百川 https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7629140.0.0.4652be48BPIATs&treeId=129&articleId=118885&docType=1#1.1
     // 多语种：https://github.com/getActivity/MultiLanguages
     // 悬浮窗：https://github.com/getActivity/XToast

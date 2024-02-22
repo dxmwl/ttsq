@@ -6,7 +6,7 @@ package com.ttsq.mobile.http.api
  * @author : clb
  * @time : 2022/6/23
  */
-class GoodsDetailApi : HaodankuBaseApi() {
+class GoodsDetailApi : HaodankuV2BaseApi() {
 
     //	单个商品ID
     //该参数支持全网所有淘宝客商品。
