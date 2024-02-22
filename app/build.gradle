@@ -41,6 +41,8 @@ android {
         buildConfigField('String', 'TBLM_PID', '"' + TBLM_PID + '"')
         //好单库请求地址
         buildConfigField('String', 'hak_baseUrl', '"' + hak_baseUrl + '"')
+        //存储桶
+        buildConfigField('String', 'BUCKET_NAME', '"' + BUCKET_NAME + '"')
     }
 
     // Apk 签名的那些事：https://www.jianshu.com/p/a1f8e5896aa2
@@ -289,6 +291,16 @@ dependencies {
 
 //    定位
     implementation 'com.amap.api:location:latest.integration'
+
+    //腾讯云COS https://cloud.tencent.com/document/product/436/12159
+    implementation 'com.qcloud.cos:cos-android:5.9.+'
+
+    // PictureSelector 基础 (必须) https://github.com/LuckSiege/PictureSelector/blob/version_component/README_CN.md
+    implementation 'io.github.lucksiege:pictureselector:v3.11.1'
+    // 图片压缩 (按需引入)
+    implementation 'io.github.lucksiege:compress:v3.11.1'
+    // 图片裁剪 (按需引入)
+    implementation 'io.github.lucksiege:ucrop:v3.11.1'
 
     //阿里百川 https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7629140.0.0.4652be48BPIATs&treeId=129&articleId=118885&docType=1#1.1
     // 多语种：https://github.com/getActivity/MultiLanguages

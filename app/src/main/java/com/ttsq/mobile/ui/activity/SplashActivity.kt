@@ -47,6 +47,7 @@ import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.app.AppApplication
 import com.ttsq.mobile.manager.ActivityManager
+import com.ttsq.mobile.manager.CosManager
 import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.AppConfig
 import org.json.JSONException
@@ -190,6 +191,8 @@ class SplashActivity : AppActivity() {
      * 初始化一些第三方框架
      */
     private fun checkLogin(application: Application) {
+        //初始化COS
+        CosManager.init(application)
         //高德地图
         AMapLocationClient.updatePrivacyShow(application,true,true)
         AMapLocationClient.updatePrivacyAgree(application,true)
