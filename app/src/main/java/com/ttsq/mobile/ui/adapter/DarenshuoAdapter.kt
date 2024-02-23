@@ -9,7 +9,6 @@ import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppAdapter
 import com.ttsq.mobile.http.api.DarenshuoApi
 import com.ttsq.mobile.ui.activity.ArticleDetailActivity
-import com.ttsq.mobile.ui.activity.GoodsListActivity
 
 /**
  * 朋友圈

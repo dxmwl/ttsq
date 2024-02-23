@@ -1,0 +1,69 @@
+apply plugin: 'com.android.library'
+apply from : '../../common.gradle'
+
+android {
+    defaultConfig {
+        // 模块混淆配置
+        consumerProguardFiles 'proguard-umeng.pro'
+    }
+}
+
+//友盟推送组件
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    api 'com.umeng.umsdk:common:9.6.5'
+    api 'com.umeng.umsdk:push:6.6.2'
+}
+
+//集成华为推送
+//apply plugin: 'com.huawei.agconnect'
+dependencies {
+    api 'com.umeng.umsdk:huawei-umengaccs:2.1.0'
+    api 'com.huawei.hms:push:6.12.0.300'
+}
+
+//集成小米推送
+dependencies {
+    api 'com.umeng.umsdk:xiaomi-umengaccs:2.1.0'
+    api 'com.umeng.umsdk:xiaomi-push:5.9.9'
+}
+
+//集成vivo推送
+dependencies {
+    api 'com.umeng.umsdk:vivo-umengaccs:2.1.0'
+    api 'com.umeng.umsdk:vivo-push:3.0.0.7'
+}
+
+//集成OPPO推送
+dependencies {
+    api 'com.umeng.umsdk:oppo-umengaccs:2.1.0'
+    api 'com.umeng.umsdk:oppo-push:3.4.0'
+
+    //如果编译过程中出现冲突，可通过exclude移除冲突的module
+//    api('com.umeng.umsdk:oppo-push:3.4.0') {
+//        exclude group: 'androidx.annotation', module: 'annotation'
+//        exclude group: 'commons-codec', module: 'commons-codec'
+//        exclude group: 'com.google.code.gson', module: 'gson'
+//    }
+}
+
+//集成魅族推送
+dependencies {
+    api 'com.umeng.umsdk:meizu-umengaccs:2.1.0'
+    api 'com.umeng.umsdk:meizu-push:4.2.7'
+}
+
+//集成荣耀推送
+dependencies {
+    api 'com.umeng.umsdk:honor-umengaccs:2.1.0'
+    api 'com.umeng.umsdk:honor-push:7.0.61.303'
+}
+
+////集成FCM推送
+//apply plugin: 'com.google.gms.google-services'
+//dependencies {
+//    api 'com.umeng.umsdk:fcm-umengaccs:2.1.0'
+//    api platform('com.google.firebase:firebase-bom:32.4.0')
+//    api 'com.google.firebase:firebase-analytics'
+//    api 'com.google.firebase:firebase-messaging'
+//}

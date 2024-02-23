@@ -1,11 +1,9 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
-
 /**
  * 榜单
  */
-class BangdanGoodsApi : HaodankuBaseApi() {
+class BangdanGoodsApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "sales_list"
     }

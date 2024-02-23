@@ -1,15 +1,13 @@
 package com.ttsq.mobile.http.api
 
 import android.os.Parcelable
-import com.hjq.http.config.IRequestApi
-import com.hjq.http.config.IRequestHost
 import com.ttsq.mobile.other.AppConfig
 import kotlinx.parcelize.Parcelize
 
 /**
  * 分类数据
  */
-class ClassApi : HaodankuBaseApi() {
+class ClassApi : HaodankuV2BaseApi() {
 
     override fun getHost(): String {
         return AppConfig.getHakBaseUrl()

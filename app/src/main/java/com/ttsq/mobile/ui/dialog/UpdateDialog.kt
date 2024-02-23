@@ -13,6 +13,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
+import com.blankj.utilcode.util.EncodeUtils
 import com.hjq.base.BaseDialog
 import com.hjq.base.action.AnimAction
 import com.ttsq.mobile.R
@@ -22,6 +23,7 @@ import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.other.AppConfig
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnDownloadListener
+import com.hjq.http.listener.OnHttpListener
 import com.hjq.http.model.HttpMethod
 import com.hjq.permissions.Permission
 import java.io.File
@@ -81,7 +83,7 @@ class UpdateDialog {
          * 设置更新日志
          */
         fun setUpdateLog(text: CharSequence?): Builder = apply {
-            detailsView?.text = text
+            detailsView?.text = EncodeUtils.htmlDecode(text.toString())
             detailsView?.visibility = if (text == null) View.GONE else View.VISIBLE
         }
 
@@ -133,7 +135,11 @@ class UpdateDialog {
          * 下载 Apk
          */
         @CheckNet
-        @Permissions(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.REQUEST_INSTALL_PACKAGES)
+        @Permissions(
+            Permission.READ_MEDIA_IMAGES,
+            Permission.WRITE_EXTERNAL_STORAGE,
+            Permission.REQUEST_INSTALL_PACKAGES
+        )
         private fun downloadApk() {
             // 设置对话框不能被取消
             setCancelable(false)
@@ -142,8 +148,11 @@ class UpdateDialog {
             var channelId = ""
             // 适配 Android 8.0 通知渠道新特性
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(getString(R.string.update_notification_channel_id),
-                    getString(R.string.update_notification_channel_name), NotificationManager.IMPORTANCE_LOW)
+                val channel = NotificationChannel(
+                    getString(R.string.update_notification_channel_id),
+                    getString(R.string.update_notification_channel_name),
+                    NotificationManager.IMPORTANCE_LOW
+                )
                 channel.enableLights(false)
                 channel.enableVibration(false)
                 channel.vibrationPattern = longArrayOf(0)
@@ -151,27 +160,35 @@ class UpdateDialog {
                 notificationManager.createNotificationChannel(channel)
                 channelId = channel.id
             }
-            val notificationBuilder: NotificationCompat.Builder = NotificationCompat.Builder(getContext(), channelId)
-                // 设置通知时间
-                .setWhen(System.currentTimeMillis())
-                // 设置通知标题
-                .setContentTitle(getString(R.string.app_name))
-                // 设置通知小图标
-                .setSmallIcon(R.mipmap.launcher_ic)
-                // 设置通知大图标
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.launcher_ic))
-                // 设置通知静音
-                .setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
-                // 设置震动频率
-                .setVibrate(longArrayOf(0))
-                // 设置声音文件
-                .setSound(null)
-                // 设置通知的优先级
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            val notificationBuilder: NotificationCompat.Builder =
+                NotificationCompat.Builder(getContext(), channelId)
+                    // 设置通知时间
+                    .setWhen(System.currentTimeMillis())
+                    // 设置通知标题
+                    .setContentTitle(getString(R.string.app_name))
+                    // 设置通知小图标
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    // 设置通知大图标
+                    .setLargeIcon(
+                        BitmapFactory.decodeResource(
+                            getResources(),
+                            R.mipmap.ic_launcher
+                        )
+                    )
+                    // 设置通知静音
+                    .setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
+                    // 设置震动频率
+                    .setVibrate(longArrayOf(0))
+                    // 设置声音文件
+                    .setSound(null)
+                    // 设置通知的优先级
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
             // 创建要下载的文件对象
-            apkFile = File(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
-                getString(R.string.app_name) + "_v" + nameView?.text.toString() + ".apk")
+            apkFile = File(
+                getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
+                getString(R.string.app_name) + "_v" + nameView?.text.toString() + ".apk"
+            )
 
             EasyHttp.download(getDialog())
                 .method(HttpMethod.GET)
@@ -192,13 +209,19 @@ class UpdateDialog {
                     }
 
                     override fun onProgress(file: File, progress: Int) {
-                        updateView?.text = String.format(getString(R.string.update_status_running)!!, progress)
+                        updateView?.text =
+                            String.format(getString(R.string.update_status_running)!!, progress)
                         progressView?.progress = progress
                         // 更新下载通知
                         notificationManager.notify(
                             notificationId, notificationBuilder
                                 // 设置通知的文本
-                                .setContentText(String.format(getString(R.string.update_status_running)!!, progress))
+                                .setContentText(
+                                    String.format(
+                                        getString(R.string.update_status_running)!!,
+                                        progress
+                                    )
+                                )
                                 // 设置下载的进度
                                 .setProgress(100, progress, false)
                                 // 设置点击通知后是否自动消失
@@ -211,16 +234,35 @@ class UpdateDialog {
                     }
 
                     override fun onComplete(file: File) {
+                        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            PendingIntent.getActivity(
+                                getContext(),
+                                1,
+                                getInstallIntent(),
+                                PendingIntent.FLAG_IMMUTABLE
+                            )
+                        } else {
+                            PendingIntent.getActivity(
+                                getContext(),
+                                1,
+                                getInstallIntent(),
+                                Intent.FILL_IN_ACTION
+                            )
+                        }
                         // 显示下载成功通知
                         notificationManager.notify(
                             notificationId, notificationBuilder
                                 // 设置通知的文本
-                                .setContentText(String.format(getString(R.string.update_status_successful)!!, 100))
+                                .setContentText(
+                                    String.format(
+                                        getString(R.string.update_status_successful)!!,
+                                        100
+                                    )
+                                )
                                 // 设置下载的进度
                                 .setProgress(100, 100, false)
                                 // 设置通知点击之后的意图
-                                .setContentIntent(PendingIntent.getActivity(getContext(), 1, getInstallIntent(),
-                                    Intent.FILL_IN_ACTION or PendingIntent.FLAG_IMMUTABLE))
+                                .setContentIntent(pendingIntent)
                                 // 设置点击通知后是否自动消失
                                 .setAutoCancel(true)
                                 // 是否正在交互中
@@ -272,7 +314,11 @@ class UpdateDialog {
             intent.action = Intent.ACTION_VIEW
             val uri: Uri?
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                uri = FileProvider.getUriForFile(getContext(), AppConfig.getPackageName() + ".provider", apkFile!!)
+                uri = FileProvider.getUriForFile(
+                    getContext(),
+                    AppConfig.getPackageName() + ".provider",
+                    apkFile!!
+                )
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             } else {
                 uri = Uri.fromFile(apkFile)

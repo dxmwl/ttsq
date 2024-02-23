@@ -37,6 +37,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/goods_sort"
             android:layout_width="0dp"
+            app:tabTextColor="#999"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tabIndicatorColor="@color/red"

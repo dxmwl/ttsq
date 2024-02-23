@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    android:paddingVertical="10dp"
+    app:shape_radius="10dp"
+    app:shape_solidColor="@color/white">
+
+    <TextView
+        android:id="@+id/tv_shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:drawableStart="@drawable/icon_shop"
+        android:drawablePadding="5dp"
+        android:text="店铺名称"
+        android:textColor="#838383"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:drawablePadding="5dp"
+        android:text="10km"
+        android:textColor="#838383"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view2"
+        style="@style/HorizontalLineStyle"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_shop_name" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/goods_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:riv_corner_radius="10dp" />
+
+    <TextView
+        android:id="@+id/goods_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/goods_img"
+        app:layout_constraintTop_toTopOf="@+id/goods_img" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/goods_title"
+        app:layout_constraintTop_toBottomOf="@+id/goods_title">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="团购价"
+        android:textColor="#FF1B1B"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/goods_title"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+    <TextView
+        android:id="@+id/currient_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="¥12.99"
+        android:textColor="#FF1B1B"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+        app:layout_constraintStart_toEndOf="@+id/textView26" />
+
+    <TextView
+        android:id="@+id/tv_original_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥12.99"
+        android:textColor="#707070"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+        app:layout_constraintStart_toEndOf="@+id/currient_price" />
+
+    <TextView
+        android:id="@+id/tv_sale_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="月售10万+"
+        android:textColor="#838383"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+        app:layout_constraintEnd_toEndOf="@+id/goods_title"
+        app:layout_constraintTop_toTopOf="@+id/textView26" />
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/btn_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
+        android:text="立即下单"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/goods_title"
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
+        app:shape_radius="15dp"
+        app:shape_solidColor="@color/red" />
+</com.hjq.shape.layout.ShapeConstraintLayout>

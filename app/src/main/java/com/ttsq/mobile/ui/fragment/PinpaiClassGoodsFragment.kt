@@ -3,7 +3,6 @@ package com.ttsq.mobile.ui.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hjq.base.BaseAdapter
@@ -14,7 +13,6 @@ import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.http.api.ClassApi
 import com.ttsq.mobile.http.api.ClassPinpaiListApi
-import com.ttsq.mobile.http.api.CommodityScreeningApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.ui.activity.PinpaiDetailActivity
 import com.ttsq.mobile.ui.activity.PinpaiGoodsActivity

@@ -1,9 +1,7 @@
 package com.ttsq.mobile.http.api
 
-import com.hjq.http.config.IRequestApi
 
-
-class ClassPinpaiListApi : HaodankuBaseApi()  {
+class ClassPinpaiListApi : HaodankuV2BaseApi()  {
     override fun getApi(): String {
         return "brand"
     }

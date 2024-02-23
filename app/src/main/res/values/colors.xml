@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primary_color">#F44336</color>
+
     <!-- App 样式中引用的颜色 -->
     <color name="common_primary_color">@color/white</color>
     <color name="common_primary_dark_color">@color/black</color>

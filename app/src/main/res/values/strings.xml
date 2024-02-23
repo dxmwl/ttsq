@@ -144,6 +144,7 @@
     <string name="home_exit_hint">再按一次退出</string>
     <string name="home_nav_index">首页</string>
     <string name="home_nav_fuli">福利</string>
+    <string name="home_nav_bdsh">周边优惠</string>
     <string name="home_nav_found">榜单</string>
     <string name="home_nav_message">快抢</string>
     <string name="home_nav_me">我的</string>
@@ -302,4 +303,8 @@
     <string name="common_permission_picture_in_picture">画中画权限</string>
     <string name="common_permission_vpn">\tVPN\t权限</string>
 
+    <string name="switch_msg">切换到短信登录页面</string>
+    <string name="custom_title">自定义标题</string>
+    <string name="custom_slogan">自定义Slogan</string>
+    <string name="custom_toast">同意服务条款才可以登录</string>
 </resources>

@@ -3,7 +3,6 @@ package com.ttsq.mobile.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
-import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -11,13 +10,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.alibaba.alibcprotocol.callback.AlibcTradeCallback
-import com.alibaba.alibcprotocol.param.AlibcTaokeParams
-import com.baichuan.nb_trade.AlibcTrade
-import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.TimeUtils
@@ -36,9 +30,7 @@ import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.http.api.GetLingquanUrlApi
 import com.ttsq.mobile.http.api.GoodsDetailApi
-import com.ttsq.mobile.http.api.HomeGoodsListApi
 import com.ttsq.mobile.http.api.SameClassGoodsApi
-import com.ttsq.mobile.http.glide.GlideApp
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.ui.adapter.GoodsDetailBannerAdapter
 import com.ttsq.mobile.ui.adapter.SearchGoodsListAdapter
@@ -46,7 +38,6 @@ import com.ttsq.mobile.ui.dialog.ShareDialog
 import com.ttsq.mobile.utils.FormatUtils
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
-import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.orhanobut.logger.Logger
@@ -453,47 +444,67 @@ class GoodsDetailActivity : AppActivity() {
             }
 
             override fun onFeedAdLoad(ads: List<TTFeedAd>) {
-                if (ads == null || ads.isEmpty()) {
+                if (ads.isEmpty()) {
                     Logger.d("on FeedAdLoaded: ad is null!")
                     return
                 }
                 for (ad in ads) {
-                    /** 5、加载成功后，添加到RecyclerView中展示广告  */
-                    if (ad != null) {
-                        val manager = ad.mediationManager
-                        if (manager != null && manager.isExpress) {
-                            ad.setExpressRenderListener(object : MediationExpressRenderListener {
-                                override fun onRenderFail(view: View, s: String, i: Int) {
-                                    Logger.d("feed express render fail, errCode: $i, errMsg: $s")
-                                }
+                    ad.setDislikeCallback(this@GoodsDetailActivity,
+                        object : TTAdDislike.DislikeInteractionCallback {
+                            override fun onShow() {
 
-                                override fun onAdClick() {
-                                    Logger.d("feed express click")
-                                }
+                            }
 
-                                override fun onAdShow() {
-                                    Logger.d("feed express show")
-                                }
-
-                                override fun onRenderSuccess(
-                                    view: View?,
-                                    v: Float,
-                                    v1: Float,
-                                    b: Boolean
-                                ) {
-                                    // 模板广告在renderSuccess后，添加到ListView中展示
-                                    Logger.d("onRenderSuccess: ${v} ${v1} ${b}}")
-                                    goodsListAdapter?.let {
-                                        var i = it.getCount() - 5
-                                        if (i < 0) {
-                                            i = it.getCount()
-                                        }
-                                        it.addItem(i, AdDto(DataType.AD, ads[0]))
+                            override fun onSelected(p0: Int, p1: String?, p2: Boolean) {
+                                // 用户点击dislike后回调
+                                Logger.d("onSelected: $p0, $p1, $p2")
+                                goodsListAdapter?.getData()?.forEach {
+                                    if (it.type == DataType.AD && it.data == ad) {
+//                                        goodsListAdapter?.removeItem(it)
+//                                        goodsListAdapter?.notifyDataSetChanged()
                                     }
                                 }
-                            })
-                            ad.render() // 调用render方法进行渲染
-                        }
+                            }
+
+                            override fun onCancel() {
+
+                            }
+
+                        })
+                    /** 5、加载成功后，添加到RecyclerView中展示广告  */
+                    val manager = ad.mediationManager
+                    if (manager != null && manager.isExpress) {
+                        ad.setExpressRenderListener(object : MediationExpressRenderListener {
+                            override fun onRenderFail(view: View, s: String, i: Int) {
+                                Logger.d("feed express render fail, errCode: $i, errMsg: $s")
+                            }
+
+                            override fun onAdClick() {
+                                Logger.d("feed express click")
+                            }
+
+                            override fun onAdShow() {
+                                Logger.d("feed express show")
+                            }
+
+                            override fun onRenderSuccess(
+                                view: View?,
+                                v: Float,
+                                v1: Float,
+                                b: Boolean
+                            ) {
+                                // 模板广告在renderSuccess后，添加到ListView中展示
+                                Logger.d("onRenderSuccess: ${v} ${v1} ${b}}")
+                                goodsListAdapter?.let {
+                                    var i = it.getCount() - 5
+                                    if (i < 0) {
+                                        i = it.getCount()
+                                    }
+                                    it.addItem(i, AdDto(DataType.AD, ads[0]))
+                                }
+                            }
+                        })
+                        ad.render() // 调用render方法进行渲染
                     }
                 }
             }

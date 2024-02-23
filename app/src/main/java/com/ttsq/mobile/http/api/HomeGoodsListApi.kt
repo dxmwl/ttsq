@@ -8,7 +8,7 @@ import com.ttsq.mobile.http.model.GoodsDetailDto
  * @author : clb
  * @time : 2022/6/23
  */
-class HomeGoodsListApi : HaodankuBaseApi() {
+class HomeGoodsListApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "api/maochao_items"
     }

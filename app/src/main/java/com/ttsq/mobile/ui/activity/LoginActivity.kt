@@ -22,25 +22,36 @@ import com.gyf.immersionbar.ImmersionBar
 import com.hjq.base.BaseDialog
 import com.hjq.http.EasyConfig
 import com.hjq.http.EasyHttp
+import com.hjq.http.listener.HttpCallback
 import com.hjq.http.listener.OnHttpListener
+import com.hjq.toast.ToastUtils
 import com.hjq.umeng.Platform
 import com.hjq.umeng.UmengClient
 import com.hjq.widget.view.CountdownView
 import com.hjq.widget.view.SubmitButton
+import com.orhanobut.logger.Logger
 import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.Log
 import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.http.api.GetCodeApi
 import com.ttsq.mobile.http.api.LoginApi
+import com.ttsq.mobile.http.api.OneClickLoginApi
 import com.ttsq.mobile.http.api.PwdLoginApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.manager.InputTextManager
 import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.other.KeyboardWatcher
+import com.ttsq.mobile.ui.config.AuthPageConfig
+import com.ttsq.mobile.ui.config.BaseUIConfig
 import com.ttsq.mobile.ui.dialog.MessageDialog
+import com.ttsq.mobile.ui.fragment.HomeFragment
 import com.ttsq.mobile.utils.livebus.LiveDataBus
+import com.umeng.umverify.UMResultCode
+import com.umeng.umverify.UMVerifyHelper
+import com.umeng.umverify.listener.UMTokenResultListener
+import com.umeng.umverify.model.UMTokenRet
 import okhttp3.Call
 
 /**
@@ -86,6 +97,9 @@ class LoginActivity : AppActivity(),
     private val login_type_pwd: LinearLayout? by lazy { findViewById(R.id.login_type_pwd) }
     private val login_type_code: LinearLayout? by lazy { findViewById(R.id.login_type_code) }
     private val et_login_password: EditText? by lazy { findViewById(R.id.et_login_password) }
+    private var mUIConfig: AuthPageConfig? = null
+    private var mPhoneNumberAuthHelper: UMVerifyHelper? = null
+    private var mTokenResultListener: UMTokenResultListener? = null
 
     /** logo 缩放比例 */
     private val logoScale: Float = 0.8f
@@ -123,7 +137,9 @@ class LoginActivity : AppActivity(),
             .setClickSpan(Color.parseColor("#43CF7C"), false) {
                 BrowserActivity.start(this, AppConfig.getPrivacyPolicyUrl())
             }.create()
-
+        sdkInit()
+        mUIConfig = BaseUIConfig.init(this, mPhoneNumberAuthHelper)
+        mUIConfig?.configAuthPage()
     }
 
     override fun initData() {
@@ -150,6 +166,80 @@ class LoginActivity : AppActivity(),
         // 自动填充手机号和密码
         phoneView?.setText(getString(INTENT_KEY_IN_PHONE))
         passwordView?.setText(getString(INTENT_KEY_IN_PASSWORD))
+    }
+
+    private fun sdkInit() {
+        mTokenResultListener = object : UMTokenResultListener {
+            override fun onTokenSuccess(s: String) {
+                Logger.d("onTokenSuccess:${s}")
+                hideDialog()
+                var tokenRet: UMTokenRet? = null
+                try {
+                    tokenRet = UMTokenRet.fromJson(s)
+                    if (UMResultCode.CODE_ERROR_ENV_CHECK_SUCCESS == tokenRet.code) {
+                        //终端支持认证,执行预取号
+                        mPhoneNumberAuthHelper?.accelerateLoginPage(1000 * 120, null)
+
+                        mPhoneNumberAuthHelper?.getLoginToken(this@LoginActivity, 1000 * 5)
+                    }
+                    if (UMResultCode.CODE_GET_TOKEN_SUCCESS == tokenRet.code) {
+                        mPhoneNumberAuthHelper?.hideLoginLoading()
+                        mPhoneNumberAuthHelper?.quitLoginPage()
+                        getResultWithToken(tokenRet.token)
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onTokenFailed(s: String) {
+                Logger.d("onTokenFailed:${s}")
+                hideDialog()
+                val tokenRet: UMTokenRet
+                try {
+                    tokenRet = UMTokenRet.fromJson(s)
+                    mPhoneNumberAuthHelper?.hideLoginLoading()
+                    mPhoneNumberAuthHelper?.quitLoginPage()
+                    ToastUtils.show(tokenRet.msg)
+                    mUIConfig?.release()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Logger.d("onTokenFailed:${e.message}")
+                }
+            }
+        }
+        mPhoneNumberAuthHelper = UMVerifyHelper.getInstance(this, mTokenResultListener)
+        //适配水滴屏
+        mPhoneNumberAuthHelper?.keepAuthPageLandscapeFullScreen(true)
+        //授权页扩大协议按钮选择范围至我已阅读并同意
+        mPhoneNumberAuthHelper?.expandAuthPageCheckedScope(true)
+        mPhoneNumberAuthHelper?.setAuthSDKInfo("gJU9DwMT2Gak08ts9cm5tPo0/wQIs6Gh2sF0Q+x7nbnpB29Vkn9PDk2JvCwm2fx+lMUUOD23zIkHL3a9ZU9/4bHbK5MmNiuORe8k1XniaNWAmMVAfe8yqx1ADMqc84VC+Q7tRf3rTugduOqzw+Zcq0THzUceL3/V1w+ZuYn3VFSS5TPQFhqzg0cobJ3gTUWBV8auTYPo+/YlLSWxKeBTqTK+Q7fYusV8w2e6K/CDbzwJxWTZjaxzNgZLZwuwxC96WMz+4CR9qr24gFltC7PWXUVmxPjklnPT8/+SehDINb8ZpEWUFUJpVQ==")
+        mPhoneNumberAuthHelper?.checkEnvAvailable(2)
+    }
+
+    fun getResultWithToken(token: String) {
+        Logger.d("友盟Token:${token}")
+        EasyHttp.post(this)
+            .api(OneClickLoginApi().apply {
+                umengToken = token
+            })
+            .request(object : HttpCallback<HttpData<LoginApi.TokenResult>>(this) {
+                override fun onSucceed(result: HttpData<LoginApi.TokenResult>?) {
+                    result?.getData()?.let {
+                        // 更新 Token
+                        EasyConfig.getInstance()
+                            .addHeader("Authorization", "Bearer ${it.getToken()}")
+                        //存储到SP中
+                        UserManager.saveToken(it)
+
+                        postDelayed({
+                            // 跳转到首页
+                            HomeActivity.start(getContext(), HomeFragment::class.java)
+                            finish()
+                        }, 1000)
+                    }
+                }
+            })
     }
 
     @SingleClick

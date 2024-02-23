@@ -41,6 +41,8 @@ android {
         buildConfigField('String', 'TBLM_PID', '"' + TBLM_PID + '"')
         //好单库请求地址
         buildConfigField('String', 'hak_baseUrl', '"' + hak_baseUrl + '"')
+        //存储桶
+        buildConfigField('String', 'BUCKET_NAME', '"' + BUCKET_NAME + '"')
     }
 
     // Apk 签名的那些事：https://www.jianshu.com/p/a1f8e5896aa2
@@ -58,7 +60,7 @@ android {
 
         debug {
             // 给包名添加后缀
-            applicationIdSuffix '.debug'
+//            applicationIdSuffix '.debug'
             // 调试模式开关
             debuggable true
             jniDebuggable true
@@ -142,7 +144,7 @@ mediationAutoAdapter {
     //如果autoUpdate设置成false，此项不生效，不会自动适配adn adapter
     //如果autoUpdate设置成true，autoUpdateAdn配置了adn，则生效配置的adn。
     //autoUpdateAdn没有配置adn，自动适配所有的adn
-    autoUpdateAdn = ["gdt","baidu","ks"]
+    autoUpdateAdn = ["gdt", "baidu", "ks"]
 }
 
 // 添加构建依赖项：https://developer.android.google.cn/studio/build/dependencies
@@ -192,10 +194,6 @@ dependencies {
     // 手势 ImageView：https://github.com/Baseflow/PhotoView
     implementation 'com.github.Baseflow:PhotoView:2.3.0'
 
-    // Bugly 异常捕捉：https://bugly.qq.com/docs/user-guide/instruction-manual-android/?v=20190418140644
-    implementation 'com.tencent.bugly:crashreport:3.4.4'
-    implementation 'com.tencent.bugly:nativecrashreport:3.9.2'
-
     // 动画解析库：https://github.com/airbnb/lottie-android
     // 动画资源：https://lottiefiles.com、https://icons8.com/animated-icons
     implementation 'com.airbnb.android:lottie:4.1.0'
@@ -220,9 +218,6 @@ dependencies {
     //轮播图 https://github.com/youth5201314/banner
     implementation 'io.github.youth5201314:banner:2.2.2'
 
-    //常用工具类
-    implementation 'com.blankj:utilcodex:1.31.0'
-
     //KTX https://developer.android.google.cn/kotlin/ktx
     implementation "androidx.core:core-ktx:1.6.0"
 
@@ -240,14 +235,12 @@ dependencies {
 
     implementation 'com.zzhoujay.richtext:richtext:3.0.7'
 
-    implementation 'com.blankj:utilcodex:1.31.1'
-
     def kitVer = "3.7.1"
 
     //核心模块
-    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
+//    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
     //no-op 模块
-    releaseImplementation "io.github.didi.dokit:dokitx-no-op:$kitVer"
+//    releaseImplementation "io.github.didi.dokit:dokitx-no-op:$kitVer"
 //    debugImplementation "io.github.didi.dokit:dokitx:$kitVer"
 //    debugImplementation "io.github.didi.dokit:dokitx-rpc:$kitVer"
 //    debugImplementation "io.github.didi.dokit:dokitx-mc:$kitVer"
@@ -274,6 +267,31 @@ dependencies {
     implementation 'com.alipay.sdk:alipaysdk-android:15.8.17@aar'
 
     implementation 'com.alibaba:fastjson:1.2.78'
+
+    //友盟一件登录 https://developer.umeng.com/docs/143070/detail/144780#h2-5-5-token-getverifytoken-11
+    implementation 'com.umeng.umsdk:uverify:2.5.9'// 必选
+    implementation 'com.umeng.umsdk:uverify-main:2.1.4'// 必选
+    implementation 'com.umeng.umsdk:uverify-logger:2.1.4'// 必选
+    implementation 'com.umeng.umsdk:uverify-crashshield:2.1.4'// 必选
+
+    //Tablayout https://github.com/H07000223/FlycoTabLayout/blob/master/README_CN.md
+    implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
+
+    // 嵌套滚动容器：https://github.com/donkingliang/ConsecutiveScroller
+    implementation 'com.github.donkingliang:ConsecutiveScroller:4.6.3'
+
+//    定位
+    implementation 'com.amap.api:location:latest.integration'
+
+    //腾讯云COS https://cloud.tencent.com/document/product/436/12159
+    implementation 'com.qcloud.cos:cos-android:5.9.+'
+
+    // PictureSelector 基础 (必须) https://github.com/LuckSiege/PictureSelector/blob/version_component/README_CN.md
+    implementation 'io.github.lucksiege:pictureselector:v3.11.1'
+    // 图片压缩 (按需引入)
+    implementation 'io.github.lucksiege:compress:v3.11.1'
+    // 图片裁剪 (按需引入)
+    implementation 'io.github.lucksiege:ucrop:v3.11.1'
 
     //阿里百川 https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7629140.0.0.4652be48BPIATs&treeId=129&articleId=118885&docType=1#1.1
     // 多语种：https://github.com/getActivity/MultiLanguages

@@ -25,6 +25,11 @@ open class HttpData<T> {
     private val data: T? = null
 
     /**
+     * 好单库字段
+     */
+    private val min_id:Int? = null
+
+    /**
      * 数据(折淘客联想词接口用)
      */
     private val result: T? = null
@@ -39,6 +44,9 @@ open class HttpData<T> {
      */
     private val content: T? = null
 
+    fun getMinId(): Int? {
+        return min_id
+    }
 
     fun getCode(): Int {
         return code

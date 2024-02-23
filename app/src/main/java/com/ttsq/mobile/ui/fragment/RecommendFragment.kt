@@ -3,7 +3,6 @@ package com.ttsq.mobile.ui.fragment
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,12 +12,12 @@ import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.bumptech.glide.Glide
 import com.bytedance.sdk.openadsdk.AdSlot
+import com.bytedance.sdk.openadsdk.TTAdDislike
 import com.bytedance.sdk.openadsdk.TTAdNative
 import com.bytedance.sdk.openadsdk.TTAdSdk
 import com.bytedance.sdk.openadsdk.TTFeedAd
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationExpressRenderListener
 import com.hjq.base.BaseAdapter
-import com.hjq.base.BaseDialog
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.orhanobut.logger.Logger
@@ -32,6 +31,7 @@ import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.app.Constants
 import com.ttsq.mobile.http.api.CheckUserFreeGoodsApi
 import com.ttsq.mobile.http.api.GetFreeGoodsListApi
+import com.ttsq.mobile.http.api.GetMenuListApi
 import com.ttsq.mobile.http.api.HomeBannerApi
 import com.ttsq.mobile.http.api.HomeGoodsListApi
 import com.ttsq.mobile.http.api.RecommendPinpaiApi
@@ -40,11 +40,9 @@ import com.ttsq.mobile.http.model.DataType
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.http.model.MenuDto
 import com.ttsq.mobile.other.AppConfig
-import com.ttsq.mobile.other.GridSpaceDecoration
 import com.ttsq.mobile.other.GridSpacingItemDecoration
 import com.ttsq.mobile.ui.activity.*
 import com.ttsq.mobile.ui.adapter.BannerAdapter
-import com.ttsq.mobile.ui.adapter.FreeGoodsListAdapter
 import com.ttsq.mobile.ui.adapter.HomeFreeGoodsListAdapter
 import com.ttsq.mobile.ui.adapter.HomeMenuListAdapter
 import com.ttsq.mobile.ui.adapter.PinpaiGoodsAdapter
@@ -55,6 +53,7 @@ import com.youth.banner.Banner
 
 class RecommendFragment : AppFragment<HomeActivity>() {
 
+    private lateinit var homeMenuListAdapter: HomeMenuListAdapter
     private lateinit var homFreeGoodsListAdapter: HomeFreeGoodsListAdapter
     private lateinit var pinpaiGoodsAdapter: PinpaiGoodsAdapter
     private val banner: Banner<HomeBannerApi.BannerBean, BannerAdapter>? by lazy { findViewById(R.id.banner) }
@@ -90,98 +89,9 @@ class RecommendFragment : AppFragment<HomeActivity>() {
             it.addBannerLifecycleObserver(this)
         }
         menuList?.let {
-            val arrayListOf = arrayListOf(
-                MenuDto(
-                    id = "1",
-                    resId = R.drawable.icon_zfbhb,
-                    title = "支付宝红包",
-                    value = "https://kurl03.cn/NXxbw"
-                ),
-                MenuDto(
-                    id = "2",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1639987106_638617",
-                    title = "抖音好货",
-                    value = "${Constants.URL_CMS}?cid=bBNmDymI#/inside-page/dylist"
-                ),
-                MenuDto(
-                    id = "3",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081152_7799",
-                    title = "福利线报",
-                    value = "${Constants.URL_CMS}?cid=cms&tmp=rt_xb&code=cms&from=2&sp=#/sp"
-                ),
-                MenuDto(
-                    id = "4",
-                    resId = R.drawable.icon_chwl,
-                    title = "吃喝玩乐",
-                    value = ""
-                ),
-                MenuDto(
-                    id = "5",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081228_51540",
-                    title = "聚划算",
-                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=juhuasuan&code=bBNmDymI&sp=#/sp"
-                ),
-                MenuDto(
-                    id = "6",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624203264_377314",
-                    title = "9.9包邮",
-                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=lowprice&code=bBNmDymI&sp=#/sp"
-                ),
-                MenuDto(
-                    id = "7",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1636017658_700397",
-                    title = "生活必需品",
-                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=activity125&code=bBNmDymI&sp=#/sp"
-                ),
-                MenuDto(
-                    id = "8",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624081329_908029",
-                    title = "热销专场",
-                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=hot_sale&code=bBNmDymI&sp=#/sp"
-                ),
-                MenuDto(id = "9", resId = R.drawable.icon_shengqianbao, title = "省钱宝"),
-                MenuDto(
-                    id = "10",
-                    resId = "https://img-haodanku-com.cdn.fudaiapp.com/0_1624203252_511524",
-                    title = "防疫专区",
-                    value = "${Constants.URL_CMS}?cid=bBNmDymI&tmp=fangyi&code=bBNmDymI&sp=#/sp"
-                )
-            )
             it.layoutManager = GridLayoutManager(context, 5)
-            val homeMenuListAdapter = context?.let { it1 -> HomeMenuListAdapter(it1) }
-            homeMenuListAdapter?.setOnItemClickListener(object : BaseAdapter.OnItemClickListener {
-                override fun onItemClick(
-                    recyclerView: RecyclerView?,
-                    itemView: View?,
-                    position: Int,
-                ) {
-                    val menuDto = arrayListOf[position]
-                    when (menuDto.id) {
-                        "4" -> {
-                            val appId = "wxdf96f973a6d3be68" // 填移动应用(App)的 AppId，非小程序的 AppID
-                            val api: IWXAPI = WXAPIFactory.createWXAPI(context, appId)
-                            val req = WXLaunchMiniProgram.Req()
-                            req.userName = "gh_8114d0d91764" // 填小程序原始id
-//                            req.path =
-//                                path ////拉起小程序页面的可带参路径，不填默认拉起小程序首页，对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"。
-                            req.miniprogramType =
-                                WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE // 可选打开 开发版，体验版和正式版
-                            api.sendReq(req)
-                        }
-
-                        "9" -> {
-                            startActivity(ShengqianbaoActivity::class.java)
-                        }
-
-                        else -> {
-                            BrowserActivity.start(requireContext(), menuDto.value.toString())
-                        }
-                    }
-                }
-
-            })
+            homeMenuListAdapter = HomeMenuListAdapter(requireContext())
             it.adapter = homeMenuListAdapter
-            homeMenuListAdapter?.setData(arrayListOf)
         }
 
         goodsList?.let {
@@ -239,6 +149,26 @@ class RecommendFragment : AppFragment<HomeActivity>() {
         getGoodsList()
         getFreeGoodsList()
         checkUserFreeGoods()
+        getMenuList(1)
+    }
+
+    private fun getMenuList(type: Int) {
+        EasyHttp.post(this)
+            .api(GetMenuListApi().apply {
+                this.type = type
+            })
+            .request(object :OnHttpListener<HttpData<ArrayList<GetMenuListApi.AppMenuDto>>>{
+                override fun onSucceed(result: HttpData<ArrayList<GetMenuListApi.AppMenuDto>>?) {
+                    result?.getData()?.let {
+                        homeMenuListAdapter.setData(it)
+                    }
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+
+                }
+
+            })
     }
 
 
@@ -449,47 +379,67 @@ class RecommendFragment : AppFragment<HomeActivity>() {
             }
 
             override fun onFeedAdLoad(ads: List<TTFeedAd>) {
-                if (ads == null || ads.isEmpty()) {
+                if (ads.isEmpty()) {
                     Logger.d("on FeedAdLoaded: ad is null!")
                     return
                 }
                 for (ad in ads) {
                     /** 5、加载成功后，添加到RecyclerView中展示广告  */
-                    if (ad != null) {
-                        val manager = ad.mediationManager
-                        if (manager != null && manager.isExpress) {
-                            ad.setExpressRenderListener(object : MediationExpressRenderListener {
-                                override fun onRenderFail(view: View, s: String, i: Int) {
-                                    Logger.d("feed express render fail, errCode: $i, errMsg: $s")
-                                }
+                    ad.setDislikeCallback(requireActivity(),
+                        object : TTAdDislike.DislikeInteractionCallback {
+                            override fun onShow() {
 
-                                override fun onAdClick() {
-                                    Logger.d("feed express click")
-                                }
+                            }
 
-                                override fun onAdShow() {
-                                    Logger.d("feed express show")
-                                }
-
-                                override fun onRenderSuccess(
-                                    view: View?,
-                                    v: Float,
-                                    v1: Float,
-                                    b: Boolean
-                                ) {
-                                    // 模板广告在renderSuccess后，添加到ListView中展示
-                                    Logger.d("onRenderSuccess: ${v} ${v1} ${b}}")
-                                    homeGoodsListAdapter?.let {
-                                        var i = it.getCount() - 5
-                                        if (i < 0) {
-                                            i = it.getCount()
-                                        }
-                                        it.addItem(i, AdDto(DataType.AD, ads[0]))
+                            override fun onSelected(p0: Int, p1: String?, p2: Boolean) {
+                                // 用户点击dislike后回调
+                                Logger.d("onSelected: $p0, $p1, $p2")
+                                homeGoodsListAdapter?.getData()?.forEach {
+                                    if (it.type == DataType.AD && it.data == ad) {
+//                                        homeGoodsListAdapter?.removeItem(it)
+//                                        homeGoodsListAdapter?.notifyDataSetChanged()
                                     }
                                 }
-                            })
-                            ad.render() // 调用render方法进行渲染
-                        }
+                            }
+
+                            override fun onCancel() {
+
+                            }
+
+                        })
+                    val manager = ad.mediationManager
+                    if (manager != null && manager.isExpress) {
+                        ad.setExpressRenderListener(object : MediationExpressRenderListener {
+                            override fun onRenderFail(view: View, s: String, i: Int) {
+                                Logger.d("feed express render fail, errCode: $i, errMsg: $s")
+                            }
+
+                            override fun onAdClick() {
+                                Logger.d("feed express click")
+                            }
+
+                            override fun onAdShow() {
+                                Logger.d("feed express show")
+                            }
+
+                            override fun onRenderSuccess(
+                                view: View?,
+                                v: Float,
+                                v1: Float,
+                                b: Boolean
+                            ) {
+                                // 模板广告在renderSuccess后，添加到ListView中展示
+                                Logger.d("onRenderSuccess: ${v} ${v1} ${b}}")
+                                homeGoodsListAdapter?.let {
+                                    var i = it.getCount() - 5
+                                    if (i < 0) {
+                                        i = it.getCount()
+                                    }
+                                    it.addItem(i, AdDto(DataType.AD, ads[0]))
+                                }
+                            }
+                        })
+                        ad.render() // 调用render方法进行渲染
                     }
                 }
             }

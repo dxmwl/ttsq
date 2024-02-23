@@ -129,4 +129,11 @@ object AppConfig {
      * 返利比例
      */
     var rebateRate:String = "0.70"
+
+    /**
+     * 获取存储桶
+     */
+    fun getBucketName(): String {
+        return BuildConfig.BUCKET_NAME
+    }
 }

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
+import com.hjq.push.helper.PushHelper
 import com.hjq.umeng.UmengLogin.LoginListenerWrapper
 import com.hjq.umeng.UmengLogin.OnLoginListener
 import com.hjq.umeng.UmengShare.OnShareListener
@@ -43,19 +44,11 @@ object UmengClient {
             "4f89d5d11630d0afe4db4f558dc5db0b"
         )
         // 获取设备的 oaid
-        UMConfigure.getOaid(application) { oaid: String? -> deviceOaid = oaid }
-
-        //初始化推送
-        PushAgent.getInstance(application).register(object :UPushRegisterCallback{
-            override fun onSuccess(p0: String?) {
-                Log.d(TAG,"推送注册成功:${p0}")
-            }
-
-            override fun onFailure(p0: String?, p1: String?) {
-                Log.d(TAG,"推送注册失败:${p0}******${p1}")
-            }
-
-        })
+        UMConfigure.getOaid(application) { oaid: String? ->
+            deviceOaid = oaid
+            Log.d(TAG, "deviceOaid:$deviceOaid")
+        }
+        PushHelper.init(application)
     }
 
     /**

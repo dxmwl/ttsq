@@ -3,7 +3,7 @@ package com.ttsq.mobile.http.api
 /**
  * 文章详情
  */
-class ArticleDetailApi : HaodankuBaseApi() {
+class ArticleDetailApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "talent_article"
     }

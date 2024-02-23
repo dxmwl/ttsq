@@ -12,7 +12,6 @@ import com.ttsq.mobile.http.api.DarenshuoApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.ui.activity.HomeActivity
 import com.ttsq.mobile.ui.adapter.DarenshuoAdapter
-import com.ttsq.mobile.ui.adapter.PqyGoodsAdapter
 import java.lang.Exception
 
 /**

@@ -3,7 +3,7 @@ package com.ttsq.mobile.http.api
 /**
  * 达人说
  */
-class DarenshuoApi : HaodankuBaseApi() {
+class DarenshuoApi : HaodankuV2BaseApi() {
     override fun getApi(): String {
         return "talent_info"
     }

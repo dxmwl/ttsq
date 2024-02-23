@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ConvertUtils
@@ -23,7 +22,6 @@ import com.ttsq.mobile.http.api.LianxiangApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.ui.adapter.LianxiangciAdapter
 import com.ttsq.mobile.ui.dialog.MessageDialog
-import com.ttsq.mobile.widget.FlowLayout
 import com.gyf.immersionbar.ImmersionBar
 import com.hjq.base.BaseAdapter
 import com.hjq.base.BaseDialog

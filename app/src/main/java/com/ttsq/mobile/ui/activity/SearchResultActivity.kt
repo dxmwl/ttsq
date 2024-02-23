@@ -4,12 +4,12 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.bytedance.sdk.openadsdk.AdSlot
+import com.bytedance.sdk.openadsdk.TTAdDislike
 import com.bytedance.sdk.openadsdk.TTAdNative
 import com.bytedance.sdk.openadsdk.TTAdSdk
 import com.bytedance.sdk.openadsdk.TTFeedAd
@@ -18,7 +18,6 @@ import com.ttsq.mobile.R
 import com.ttsq.mobile.aop.SingleClick
 import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.app.AppHelper
-import com.ttsq.mobile.http.api.HomeGoodsListApi
 import com.ttsq.mobile.http.api.SearchGoodsApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.http.model.MenuDto
@@ -256,6 +255,28 @@ class SearchResultActivity : AppActivity() {
                 for (ad in ads) {
                     /** 5、加载成功后，添加到RecyclerView中展示广告  */
                     if (ad != null) {
+                        ad.setDislikeCallback(this@SearchResultActivity,
+                            object : TTAdDislike.DislikeInteractionCallback {
+                                override fun onShow() {
+
+                                }
+
+                                override fun onSelected(p0: Int, p1: String?, p2: Boolean) {
+                                    // 用户点击dislike后回调
+                                    Logger.d("onSelected: $p0, $p1, $p2")
+                                    homeGoodsListAdapter?.getData()?.forEach {
+                                        if (it.type == DataType.AD && it.data == ad) {
+//                                            homeGoodsListAdapter?.removeItem(it)
+//                                            homeGoodsListAdapter?.notifyDataSetChanged()
+                                        }
+                                    }
+                                }
+
+                                override fun onCancel() {
+
+                                }
+
+                            })
                         val manager = ad.mediationManager
                         if (manager != null && manager.isExpress) {
                             ad.setExpressRenderListener(object : MediationExpressRenderListener {

@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppAdapter
 import com.ttsq.mobile.http.api.ClassPinpaiListApi
-import com.ttsq.mobile.http.api.ZhutiPinpaiApi
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
 
 class ClassPinpaiListAdapter(val mContext: Context) :

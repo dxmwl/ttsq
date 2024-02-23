@@ -9,7 +9,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.ttsq.mobile.http.api.HomeBannerApi
 import com.ttsq.mobile.http.glide.GlideApp
-import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.ui.activity.GoodsListActivity
 import com.ttsq.mobile.ui.adapter.BannerAdapter.BannerViewHolder
 import com.youth.banner.adapter.BannerAdapter

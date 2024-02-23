@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.hjq.push" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <application>
+        <activity
+            android:name=".mfr.MfrMessageActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="${applicationId}"
+                    android:path="/thirdpush"
+                    android:scheme="agoo" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".MyCustomMessageService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <activity
+            android:name=".MyCustomNotificationClickActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 魅族 start -->
+        <!--push应用定义消息receiver声明 -->
+        <receiver
+            android:name=".mfr.MfrMzMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <!-- 接收push消息 -->
+                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
+                <!-- 接收register消息 -->
+                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+                <!-- 接收unregister消息-->
+                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
+                <!-- 兼容低版本Flyme3推送服务配置 -->
+                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
+                <action android:name="com.meizu.c2dm.intent.RECEIVE" />
+
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+        <!-- 魅族 end -->
+
+        <!-- VIVO厂商通道 start -->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="5d013cc73b9b3b13c81d6627a89cbbc4" />
+        <!--            android:value="此处改为VIVO后台真实参数" />-->
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="105623811" />
+        <!--            android:value="此处改为VIVO后台真实参数" />-->
+        <!-- VIVO厂商通道 end -->
+
+        <!-- HUAWEI厂商通道 start -->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="appid=107642097" />
+        <!--            android:value="appid=此处改为HUAWEI后台真实参数" />-->
+
+        <meta-data
+            android:name="push_kit_auto_init_enabled"
+            android:value="false" />
+
+        <!-- HUAWEI厂商通道 end -->
+
+        <!-- Honor start-->
+        <meta-data
+            android:name="com.hihonor.push.app_id"
+            android:value="104424960" />
+        <!--            android:value="此处改为荣耀后台真实参数" />-->
+        <!-- Honor end -->
+
+
+        <!-- FCM 关闭自动初始化 start -->
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+        <!-- FCM end -->
+    </application>
+</manifest>

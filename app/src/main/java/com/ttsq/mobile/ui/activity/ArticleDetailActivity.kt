@@ -2,7 +2,6 @@ package com.ttsq.mobile.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import android.text.method.LinkMovementMethod
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.ImageView
@@ -22,9 +21,6 @@ import com.ttsq.mobile.app.AppActivity
 import com.ttsq.mobile.http.api.ArticleDetailApi
 import com.ttsq.mobile.http.model.HttpData
 import com.ttsq.mobile.ui.adapter.ArticelGoodsListAdapter
-import com.ttsq.mobile.utils.HtmlUtil
-import com.zzhoujay.richtext.RichText
-import com.zzhoujay.richtext.RichType
 
 class ArticleDetailActivity : AppActivity() {
 

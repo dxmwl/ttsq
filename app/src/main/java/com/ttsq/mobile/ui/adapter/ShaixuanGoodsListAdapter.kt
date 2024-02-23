@@ -16,11 +16,9 @@ import com.ttsq.mobile.http.api.CommodityScreeningApi
 import com.ttsq.mobile.http.glide.GlideApp
 import com.ttsq.mobile.http.model.AdDto
 import com.ttsq.mobile.http.model.DataType
-import com.ttsq.mobile.http.model.GoodsDetailDto
 import com.ttsq.mobile.ui.activity.GoodsDetailActivity
 import com.ttsq.mobile.utils.RebateUtils
 import com.ttsq.mobile.utils.UIUtils
-import java.math.BigDecimal
 
 /**
  * @project : EasyBuy_Android
