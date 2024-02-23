@@ -460,8 +460,8 @@ class GoodsDetailActivity : AppActivity() {
                                 Logger.d("onSelected: $p0, $p1, $p2")
                                 goodsListAdapter?.getData()?.forEach {
                                     if (it.type == DataType.AD && it.data == ad) {
-                                        goodsListAdapter?.removeItem(it)
-                                        goodsListAdapter?.notifyDataSetChanged()
+//                                        goodsListAdapter?.removeItem(it)
+//                                        goodsListAdapter?.notifyDataSetChanged()
                                     }
                                 }
                             }

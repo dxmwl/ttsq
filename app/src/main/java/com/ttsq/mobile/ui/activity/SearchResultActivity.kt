@@ -266,8 +266,8 @@ class SearchResultActivity : AppActivity() {
                                     Logger.d("onSelected: $p0, $p1, $p2")
                                     homeGoodsListAdapter?.getData()?.forEach {
                                         if (it.type == DataType.AD && it.data == ad) {
-                                            homeGoodsListAdapter?.removeItem(it)
-                                            homeGoodsListAdapter?.notifyDataSetChanged()
+//                                            homeGoodsListAdapter?.removeItem(it)
+//                                            homeGoodsListAdapter?.notifyDataSetChanged()
                                         }
                                     }
                                 }
