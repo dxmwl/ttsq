@@ -28,6 +28,9 @@ android {
 // 友盟统计集成文档：https://developer.umeng.com/docs/119267/detail/118584
 // 友盟社会化集成文档：https://developer.umeng.com/docs/128606/detail/193879
 dependencies {
+    //推送服务
+    api project(':library:push')
+
     // 友盟公共库
     api 'com.umeng.umsdk:common:9.6.5'
     api 'com.umeng.umsdk:asms:1.8.0'
@@ -42,6 +45,4 @@ dependencies {
     api 'com.tencent.tauth:qqopensdk:3.53.0'
     // 微信组件：https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/Android.html
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.7.9'
-    //推送
-    api 'com.umeng.umsdk:push:6.6.2'
 }

@@ -20,6 +20,7 @@ pluginManagement {
         maven {
             url "https://artifact.bytedance.com/repository/pangle"
         }
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 }
 dependencyResolutionManagement {
@@ -44,6 +45,7 @@ dependencyResolutionManagement {
         maven {
             url "https://artifact.bytedance.com/repository/pangle"
         }
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 }
 
@@ -51,3 +53,4 @@ include ':app'
 include ':library:base'
 include ':library:widget'
 include ':library:umeng'
+include ':library:push'

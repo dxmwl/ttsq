@@ -26,6 +26,7 @@ import com.hjq.widget.view.SwitchButton
 import com.ttsq.mobile.app.Constants
 import com.ttsq.mobile.http.api.GetNewAppInfoApi
 import com.ttsq.mobile.manager.UserManager
+import com.umeng.message.PushAgent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -163,6 +164,7 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
             R.id.sb_setting_exit -> {
 
                 if (true) {
+                    PushAgent.getInstance(this).deleteAlias("userId",UserManager.userInfo?.userId,null)
                     startActivity(LoginActivity::class.java)
                     // 进行内存优化，销毁除登录页之外的所有界面
                     ActivityManager.getInstance().finishAllActivities(
@@ -230,6 +232,11 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
                 SPUtils.getInstance("APP_CONFIG").put("GXTJ_SWITCH", gxtj_switch?.isChecked() == true)
             }
             autoSwitchView->{
+                if (checked) {
+                    PushAgent.getInstance(this).enable(null)
+                } else {
+                    PushAgent.getInstance(this).disable(null)
+                }
                 SPUtils.getInstance("APP_CONFIG").put("PUSH_SWITCH", autoSwitchView?.isChecked() == true)
             }
             else -> {}

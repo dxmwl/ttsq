@@ -2,9 +2,13 @@ package com.ttsq.mobile.ui.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AppOpsManager
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -24,12 +28,14 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 //import com.didichuxing.doraemonkit.DoKit
 import com.gyf.immersionbar.ImmersionBar
+import com.hjq.base.BaseDialog
 import com.hjq.base.FragmentPagerAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.orhanobut.logger.Logger
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppActivity
+import com.ttsq.mobile.app.AppApplication
 import com.ttsq.mobile.app.AppFragment
 import com.ttsq.mobile.app.AppHelper
 import com.ttsq.mobile.eventbus.RefreshClass
@@ -44,12 +50,15 @@ import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.other.DoubleClickHelper
 import com.ttsq.mobile.ui.adapter.NavigationAdapter
+import com.ttsq.mobile.ui.dialog.MessageDialog
 import com.ttsq.mobile.ui.dialog.UpdateDialog
 import com.ttsq.mobile.ui.fragment.*
 import com.ttsq.mobile.utils.livebus.LiveDataBus
 import com.umeng.message.PushAgent
 import com.umeng.message.inapp.InAppMessageManager
 import org.greenrobot.eventbus.EventBus
+import java.lang.reflect.Field
+import java.lang.reflect.InvocationTargetException
 
 
 /**
@@ -152,6 +161,77 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
         LiveDataBus.subscribe("refreshUserInfo", this) { data ->
             getUserInfo()
+        }
+        val notificationEnabled = isNotificationEnabled()
+        if (notificationEnabled.not()) {
+            MessageDialog.Builder(this)
+                .setTitle("通知开关")
+                .setMessage("开启通知开关，可以收到更多优惠信息哦！")
+                .setConfirm("开启")
+                .setListener(object :MessageDialog.OnListener{
+                    override fun onConfirm(dialog: BaseDialog?) {
+                        openNotificationSettings()
+                    }
+                })
+                .show()
+        }
+    }
+
+    // 打开通知权限设置页面
+    private fun openNotificationSettings() {
+        val intent = Intent()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Android 8.0 及以上版本
+            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName())
+        } else
+        // Android 5.0 及以上版本
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS")
+        intent.putExtra("app_package", getPackageName())
+        intent.putExtra("app_uid", AppApplication.getApp().applicationInfo.uid)
+        startActivity(intent)
+    }
+
+    // 检查通知权限状态
+    private fun isNotificationEnabled(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Android 8.0 及以上版本
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.areNotificationsEnabled()
+        } else {
+            // Android 7.1 及以下版本
+            val appOps = getSystemService(APP_OPS_SERVICE) as AppOpsManager
+            val appInfo = applicationInfo
+            val packageName = applicationContext.packageName
+            val uid = appInfo.uid
+            try {
+                val appOpsClass = Class.forName(AppOpsManager::class.java.name)
+                val checkOpNoThrowMethod = appOpsClass.getMethod(
+                    "checkOpNoThrow", Integer.TYPE,
+                    Integer.TYPE,
+                    String::class.java
+                )
+                val opPostNotificationValue: Field =
+                    appOpsClass.getDeclaredField("OP_POST_NOTIFICATION")
+                val value = opPostNotificationValue.get(Int::class.java) as Int
+                (checkOpNoThrowMethod.invoke(appOps, value, uid, packageName) as Int
+                        == AppOpsManager.MODE_ALLOWED)
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
+                true
+            } catch (e: NoSuchMethodException) {
+                e.printStackTrace()
+                true
+            } catch (e: NoSuchFieldException) {
+                e.printStackTrace()
+                true
+            } catch (e: InvocationTargetException) {
+                e.printStackTrace()
+                true
+            } catch (e: IllegalAccessException) {
+                e.printStackTrace()
+                true
+            }
         }
     }
 
@@ -410,6 +490,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             .request(object : OnHttpListener<HttpData<UserInfoApi.UserInfoDto>> {
                 override fun onSucceed(result: HttpData<UserInfoApi.UserInfoDto>?) {
                     result?.getData()?.let {
+                        PushAgent.getInstance(this@HomeActivity).setAlias(it.userId, "userId", null)
                         UserManager.initUserInfo(it)
                         LiveDataBus.postValue("upDateUserInfo", it)
                     }
