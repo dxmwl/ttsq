@@ -63,7 +63,7 @@ class DyGoodsFragment : AppFragment<HomeActivity>() {
             getGoodsList()
         }
         refresh?.setOnLoadMoreListener {
-            pageNum++
+//            pageNum++
             getGoodsList()
         }
     }
@@ -85,6 +85,7 @@ class DyGoodsFragment : AppFragment<HomeActivity>() {
                 override fun onSucceed(result: HttpData<ArrayList<GetDyGoodsListApi.DyGoodsDto>>?) {
                     refresh?.finishRefresh()
                     refresh?.finishLoadMore()
+                    pageNum = result?.getMinId() ?: 1
                     result?.getData()?.let {
                         if (pageNum == 1) {
                             goodsListDyAdapter.clearData()
