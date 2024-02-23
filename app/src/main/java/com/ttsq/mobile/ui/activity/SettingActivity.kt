@@ -20,9 +20,11 @@ import com.ttsq.mobile.ui.dialog.SafeDialog
 import com.ttsq.mobile.ui.dialog.UpdateDialog
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.HttpCallback
+import com.hjq.http.listener.OnHttpListener
 import com.hjq.widget.layout.SettingBar
 import com.hjq.widget.view.SwitchButton
 import com.ttsq.mobile.app.Constants
+import com.ttsq.mobile.http.api.GetNewAppInfoApi
 import com.ttsq.mobile.manager.UserManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -100,19 +102,19 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
                     .show()
             }
             R.id.sb_setting_update -> {
-
+                getNewAppInfo()
                 // 本地的版本码和服务器的进行比较
-                if (20 > AppConfig.getVersionCode()) {
-                    UpdateDialog.Builder(this)
-                        .setVersionName("2.0")
-                        .setForceUpdate(false)
-                        .setUpdateLog("修复Bug\n优化用户体验")
-                        .setDownloadUrl("https://down.qq.com/qqweb/QQ_1/android_apk/Android_8.5.0.5025_537066738.apk")
-                        .setFileMd5("560017dc94e8f9b65f4ca997c7feb326")
-                        .show()
-                } else {
-                    toast(R.string.update_no_update)
-                }
+//                if (20 > AppConfig.getVersionCode()) {
+//                    UpdateDialog.Builder(this)
+//                        .setVersionName("2.0")
+//                        .setForceUpdate(false)
+//                        .setUpdateLog("修复Bug\n优化用户体验")
+//                        .setDownloadUrl("https://down.qq.com/qqweb/QQ_1/android_apk/Android_8.5.0.5025_537066738.apk")
+//                        .setFileMd5("560017dc94e8f9b65f4ca997c7feb326")
+//                        .show()
+//                } else {
+//                    toast(R.string.update_no_update)
+//                }
             }
             R.id.sb_setting_phone -> {
 
@@ -188,6 +190,35 @@ class SettingActivity : AppActivity(), SwitchButton.OnCheckedChangeListener {
                 startActivity(CancelAccountActivity::class.java)
             }
         }
+    }
+
+    private fun getNewAppInfo() {
+        EasyHttp.post(this)
+            .api(GetNewAppInfoApi())
+            .request(object : OnHttpListener<HttpData<GetNewAppInfoApi.NewAppInfoDto>> {
+                override fun onSucceed(result: HttpData<GetNewAppInfoApi.NewAppInfoDto>?) {
+                    result?.getData()?.let {
+
+                        // 本地的版本码和服务器的进行比较
+                        if (it.versionCode > AppConfig.getVersionCode()) {
+                            UpdateDialog.Builder(this@SettingActivity)
+                                .setVersionName(it.versionName)
+                                .setForceUpdate(it.forceUpdate)
+                                .setUpdateLog(it.updateContent)
+                                .setDownloadUrl(it.downloadUrl)
+//                                .setFileMd5("560017dc94e8f9b65f4ca997c7feb326")
+                                .show()
+                        } else {
+                            toast(R.string.update_no_update)
+                        }
+                    }
+
+                }
+
+                override fun onFail(e: java.lang.Exception?) {
+                    toast(e?.message)
+                }
+            })
     }
 
     /**

@@ -35,6 +35,7 @@ import com.ttsq.mobile.app.AppHelper
 import com.ttsq.mobile.eventbus.RefreshClass
 import com.ttsq.mobile.http.api.ClassApi
 import com.ttsq.mobile.http.api.GetCommonConfigApi
+import com.ttsq.mobile.http.api.GetNewAppInfoApi
 import com.ttsq.mobile.http.api.GetYouhuiApi
 import com.ttsq.mobile.http.api.UserInfoApi
 import com.ttsq.mobile.http.model.HttpData
@@ -43,6 +44,7 @@ import com.ttsq.mobile.manager.UserManager
 import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.other.DoubleClickHelper
 import com.ttsq.mobile.ui.adapter.NavigationAdapter
+import com.ttsq.mobile.ui.dialog.UpdateDialog
 import com.ttsq.mobile.ui.fragment.*
 import com.ttsq.mobile.utils.livebus.LiveDataBus
 import com.umeng.message.PushAgent
@@ -144,13 +146,43 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
             viewPager?.adapter = this
         }
         onNewIntent(intent)
-
+        getNewAppInfo()
         getCommonConfig()
         getClassData()
 
         LiveDataBus.subscribe("refreshUserInfo", this) { data ->
             getUserInfo()
         }
+    }
+
+    private fun getNewAppInfo() {
+        EasyHttp.post(this)
+            .api(GetNewAppInfoApi())
+            .request(object : OnHttpListener<HttpData<GetNewAppInfoApi.NewAppInfoDto>> {
+                override fun onSucceed(result: HttpData<GetNewAppInfoApi.NewAppInfoDto>?) {
+                    result?.getData()?.let {
+
+                        // 本地的版本码和服务器的进行比较
+                        if (it.versionCode > AppConfig.getVersionCode()) {
+                            UpdateDialog.Builder(this@HomeActivity)
+                                .setVersionName(it.versionName)
+                                .setForceUpdate(it.forceUpdate)
+                                .setUpdateLog(it.updateContent)
+                                .setDownloadUrl(it.downloadUrl)
+//                                .setFileMd5("560017dc94e8f9b65f4ca997c7feb326")
+                                .show()
+                        }
+//                        else {
+//                            toast(R.string.update_no_update)
+//                        }
+                    }
+
+                }
+
+                override fun onFail(e: Exception?) {
+                    toast(e?.message)
+                }
+            })
     }
 
     /**
