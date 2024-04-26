@@ -213,7 +213,7 @@ class LoginActivity : AppActivity(),
         mPhoneNumberAuthHelper?.keepAuthPageLandscapeFullScreen(true)
         //授权页扩大协议按钮选择范围至我已阅读并同意
         mPhoneNumberAuthHelper?.expandAuthPageCheckedScope(true)
-        mPhoneNumberAuthHelper?.setAuthSDKInfo("gJU9DwMT2Gak08ts9cm5tPo0/wQIs6Gh2sF0Q+x7nbnpB29Vkn9PDk2JvCwm2fx+lMUUOD23zIkHL3a9ZU9/4bHbK5MmNiuORe8k1XniaNWAmMVAfe8yqx1ADMqc84VC+Q7tRf3rTugduOqzw+Zcq0THzUceL3/V1w+ZuYn3VFSS5TPQFhqzg0cobJ3gTUWBV8auTYPo+/YlLSWxKeBTqTK+Q7fYusV8w2e6K/CDbzwJxWTZjaxzNgZLZwuwxC96WMz+4CR9qr24gFltC7PWXUVmxPjklnPT8/+SehDINb8ZpEWUFUJpVQ==")
+        mPhoneNumberAuthHelper?.setAuthSDKInfo("gJU9DwMT2Gak08ts9cm5tPo0/wQIs6Gh2sF0Q+x7nbnpB29Vkn9PDj1PxgvD6O848vwnFQl8slvxKTy+9i+RKWVZ7/40tfDia7SchDB9cHL29jmlXDs5lvIU5NxS+b2+K3aC2D9Bw3lN4dm0Kl/hF1UWxsSBh+KKP3KYuZDGEuj1PvkOmd8Hswl92OL3GxO9sFVjUUMNYLL5cHBfBKRCmnwlN6KXAWJqEtcCwj3n5Qe0Zm6sGQx17+FcQON3JDhqyNn4DAr/mIWcEeYK9AvHN7RqInVbGHiW4u/aqtRKJUI=")
         mPhoneNumberAuthHelper?.checkEnvAvailable(2)
     }
 
