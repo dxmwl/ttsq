@@ -8,6 +8,7 @@ plugins {
 }
 
 apply from: '../common.gradle'
+apply from: 'channel.gradle'
 //apply from: '../productFlavors.gradle'
 //apply plugin: 'com.didi.dokit.debug'
 
@@ -78,7 +79,8 @@ android {
             ])
             // 调试模式下只保留一种架构的 so 库，提升打包速度
             ndk {
-                abiFilters 'armeabi-v7a', 'x86_64'
+//                abiFilters 'armeabi-v7a', 'x86_64'
+                abiFilters 'arm64-v8a'
             }
         }
 
@@ -269,10 +271,10 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.78'
 
     //友盟一件登录 https://developer.umeng.com/docs/143070/detail/144780#h2-5-5-token-getverifytoken-11
-    implementation 'com.umeng.umsdk:uverify:2.5.9'// 必选
-    implementation 'com.umeng.umsdk:uverify-main:2.1.4'// 必选
-    implementation 'com.umeng.umsdk:uverify-logger:2.1.4'// 必选
-    implementation 'com.umeng.umsdk:uverify-crashshield:2.1.4'// 必选
+    implementation 'com.umeng.umsdk:uverify:2.6.1'// 必选
+    implementation 'com.umeng.umsdk:uverify-main:2.2.3'// 必选
+    implementation 'com.umeng.umsdk:uverify-logger:2.2.2'// 必选
+//    implementation 'com.umeng.umsdk:uverify-crashshield:2.2.3'// 必选
 
     //Tablayout https://github.com/H07000223/FlycoTabLayout/blob/master/README_CN.md
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'

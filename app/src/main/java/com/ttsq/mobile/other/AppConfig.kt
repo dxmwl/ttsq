@@ -1,6 +1,8 @@
 package com.ttsq.mobile.other
 
+import android.content.pm.PackageManager
 import com.ttsq.mobile.BuildConfig
+import com.ttsq.mobile.app.AppApplication
 import com.ttsq.mobile.app.Constants
 import com.ttsq.mobile.app.Constants.URL_DOWNLOAD
 
@@ -93,7 +95,23 @@ object AppConfig {
      * 获取渠道标记
      */
     fun getChannelTag(): String {
-        return "umeng"
+        var channelName = "guanfang"
+        try {
+            val packageManager = AppApplication.getApp().packageManager;
+            if (packageManager != null) {
+                //注意此处为ApplicationInfo 而不是 ActivityInfo,因为友盟设置的meta-data是在application标签中，而不是某activity标签中，所以用ApplicationInfo
+                val applicationInfo = packageManager.getApplicationInfo(
+                    AppApplication.getApp().packageName,
+                    PackageManager.GET_META_DATA
+                );
+                if (applicationInfo.metaData != null) {
+                    channelName = applicationInfo.metaData.getString("UMENG_CHANNEL") ?: "guanfang"
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace();
+        }
+        return channelName;
     }
 
     /**
