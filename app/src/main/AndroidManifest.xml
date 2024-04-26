@@ -55,6 +55,10 @@
         tools:targetApi="n">
 
         <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL}" />
+
+        <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="87ec22e5641d75e5857bf34148d3a1e6"/>
 
