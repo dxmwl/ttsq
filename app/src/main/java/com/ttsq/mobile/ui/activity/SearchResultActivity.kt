@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
@@ -97,7 +98,7 @@ class SearchResultActivity : AppActivity() {
         })
 
         goodsList?.let {
-            it.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            it.layoutManager = GridLayoutManager(this,2)
             homeGoodsListAdapter = SearchGoodsListAdapter(this)
             it.adapter = homeGoodsListAdapter
             it.addItemDecoration(
@@ -224,7 +225,7 @@ class SearchResultActivity : AppActivity() {
     private fun loadFeedAd() {
         /** 1、创建AdSlot对象  */
         val adSlot = AdSlot.Builder()
-            .setCodeId("102650196")
+            .setCodeId("102970150")
             .setExpressViewAcceptedSize(
                 ConvertUtils.px2dp((ScreenUtils.getScreenWidth() / 2).toFloat()).toFloat(),
                 0f

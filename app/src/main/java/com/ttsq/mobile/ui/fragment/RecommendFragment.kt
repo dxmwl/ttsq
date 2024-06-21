@@ -95,7 +95,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
         }
 
         goodsList?.let {
-            it.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            it.layoutManager = GridLayoutManager(requireContext(),2)
             homeGoodsListAdapter = context?.let { it1 -> SearchGoodsListAdapter(it1) }
             it.adapter = homeGoodsListAdapter
             it.addItemDecoration(
@@ -355,7 +355,7 @@ class RecommendFragment : AppFragment<HomeActivity>() {
     private fun loadFeedAd() {
         /** 1、创建AdSlot对象  */
         val adSlot = AdSlot.Builder()
-            .setCodeId("102650196")
+            .setCodeId("102970150")
             .setExpressViewAcceptedSize(
                 ConvertUtils.px2dp((ScreenUtils.getScreenWidth() / 2).toFloat()).toFloat(),
                 0f
@@ -396,8 +396,8 @@ class RecommendFragment : AppFragment<HomeActivity>() {
                                 Logger.d("onSelected: $p0, $p1, $p2")
                                 homeGoodsListAdapter?.getData()?.forEach {
                                     if (it.type == DataType.AD && it.data == ad) {
-//                                        homeGoodsListAdapter?.removeItem(it)
-//                                        homeGoodsListAdapter?.notifyDataSetChanged()
+                                        homeGoodsListAdapter?.removeItem(it)
+                                        homeGoodsListAdapter?.notifyDataSetChanged()
                                     }
                                 }
                             }

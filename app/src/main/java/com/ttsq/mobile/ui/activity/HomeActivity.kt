@@ -168,7 +168,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
                 .setTitle("通知开关")
                 .setMessage("开启通知开关，可以收到更多优惠信息哦！")
                 .setConfirm("开启")
-                .setListener(object :MessageDialog.OnListener{
+                .setListener(object : MessageDialog.OnListener {
                     override fun onConfirm(dialog: BaseDialog?) {
                         openNotificationSettings()
                     }
@@ -324,6 +324,9 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     override fun onNavigationItemSelected(position: Int): Boolean {
         return when (position) {
             0, 1, 2, 3, 4 -> {
+                if (position == 2) {
+                    LiveDataBus.postValue("getLocation", 2)
+                }
                 viewPager?.currentItem = position
                 true
             }
