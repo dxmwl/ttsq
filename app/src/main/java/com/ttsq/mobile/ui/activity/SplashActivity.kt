@@ -31,6 +31,7 @@ import com.bytedance.sdk.openadsdk.CSJSplashCloseType
 import com.bytedance.sdk.openadsdk.TTAdConfig
 import com.bytedance.sdk.openadsdk.TTAdNative
 import com.bytedance.sdk.openadsdk.TTAdSdk
+import com.bytedance.sdk.openadsdk.TTCustomController
 import com.bytedance.sdk.openadsdk.mediation.init.MediationConfig
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonToken
@@ -287,6 +288,19 @@ class SplashActivity : AppActivity() {
                         .setCustomLocalConfig(configJsonObj)
                         .build()
                 )
+                .customController(object : TTCustomController() {
+                    override fun alist(): Boolean {
+                        return false
+                    }
+
+                    override fun isCanUseWifiState(): Boolean {
+                        return false
+                    }
+
+                    override fun isCanUseLocation(): Boolean {
+                        return false
+                    }
+                })
                 .build()
         )
         TTAdSdk.start(object : TTAdSdk.Callback {

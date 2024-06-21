@@ -2,6 +2,7 @@ package com.ttsq.mobile.http.api
 
 import com.hjq.http.config.IRequestApi
 import com.hjq.http.config.IRequestHost
+import com.ttsq.mobile.manager.UserManager
 
 /**
  * 淘口令识别
