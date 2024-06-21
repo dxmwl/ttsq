@@ -76,8 +76,6 @@ class BdshFragment : TitleBarFragment<HomeActivity>(), AMapLocationListener {
 
     override fun initView() {
 
-        requestLocation()
-
         setOnClickListener(R.id.btn_meituan, R.id.btn_elm)
 
         banner?.let {
@@ -102,6 +100,11 @@ class BdshFragment : TitleBarFragment<HomeActivity>(), AMapLocationListener {
         getBannerList()
         getMenuList(0)
         getElmList()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requestLocation()
     }
 
     private fun getGoodsClassify() {
