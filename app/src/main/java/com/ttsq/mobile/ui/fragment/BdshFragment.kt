@@ -39,6 +39,7 @@ import com.ttsq.mobile.ui.activity.BrowserActivity
 import com.ttsq.mobile.ui.activity.HomeActivity
 import com.ttsq.mobile.ui.adapter.BannerBdshAdapter
 import com.ttsq.mobile.ui.adapter.HomeMenuListAdapter
+import com.ttsq.mobile.utils.livebus.LiveDataBus
 import com.youth.banner.Banner
 
 
@@ -94,17 +95,16 @@ class BdshFragment : TitleBarFragment<HomeActivity>(), AMapLocationListener {
             homeMenuListAdapter = HomeMenuListAdapter(requireContext())
             it.adapter = homeMenuListAdapter
         }
+
+        LiveDataBus.subscribe("getLocation", this) { data ->
+            requestLocation()
+        }
     }
 
     override fun initData() {
         getBannerList()
         getMenuList(0)
         getElmList()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requestLocation()
     }
 
     private fun getGoodsClassify() {

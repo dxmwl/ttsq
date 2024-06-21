@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
@@ -159,7 +160,7 @@ class GoodsDetailActivity : AppActivity() {
         }
 
         goodsList?.let {
-            it.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            it.layoutManager = GridLayoutManager(this,2)
             goodsListAdapter = SearchGoodsListAdapter(this)
             it.adapter = goodsListAdapter
             it.addItemDecoration(
@@ -460,8 +461,8 @@ class GoodsDetailActivity : AppActivity() {
                                 Logger.d("onSelected: $p0, $p1, $p2")
                                 goodsListAdapter?.getData()?.forEach {
                                     if (it.type == DataType.AD && it.data == ad) {
-//                                        goodsListAdapter?.removeItem(it)
-//                                        goodsListAdapter?.notifyDataSetChanged()
+                                        goodsListAdapter?.removeItem(it)
+                                        goodsListAdapter?.notifyDataSetChanged()
                                     }
                                 }
                             }
@@ -578,7 +579,7 @@ class GoodsDetailActivity : AppActivity() {
     private fun loadFeedAd() {
         /** 1、创建AdSlot对象  */
         val adSlot = AdSlot.Builder()
-            .setCodeId("102650196")
+            .setCodeId("102970150")
             .setExpressViewAcceptedSize(
                 ConvertUtils.px2dp((ScreenUtils.getScreenWidth() / 2).toFloat()).toFloat(),
                 0f
