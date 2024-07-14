@@ -324,7 +324,7 @@ class SplashActivity : AppActivity() {
         /** 1、创建AdSlot对象 */
         //@[classname]
         val adslot = AdSlot.Builder()
-            .setCodeId("102635665")
+            .setCodeId("103021090")
             .setImageAcceptedSize(
                 appScreenWidth,
                 appScreenHeight

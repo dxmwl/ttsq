@@ -54,7 +54,7 @@ class GoodsListDyAdapter(val mContext: Context) :
                 val view =
                     LayoutInflater.from(mContext).inflate(R.layout.layout_goods_label, null)
                 val tvLabel = view.findViewById<TextView>(R.id.tv_goods_label)
-                tvLabel?.text = it.content
+                tvLabel?.text = it
                 linearLayout5?.addView(view)
             }
             goods_img?.let { Glide.with(mContext).load(item.item_img).into(it) }
