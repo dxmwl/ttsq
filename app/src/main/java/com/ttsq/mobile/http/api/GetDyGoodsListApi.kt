@@ -21,7 +21,7 @@ class GetDyGoodsListApi : HaodankuV3BaseApi() {
         val distance: String,
         val id: String,
         val item_img: String,
-        val item_tag: List<ItemTag>?,
+        val item_tag: List<String>?,
         val item_title: String,
         val origin_money: String,
         val origin_price: String,
@@ -31,7 +31,4 @@ class GetDyGoodsListApi : HaodankuV3BaseApi() {
         val sold: String
     )
 
-    data class ItemTag(
-        val content: String
-    )
 }
