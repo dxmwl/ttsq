@@ -154,4 +154,10 @@ object AppConfig {
     fun getBucketName(): String {
         return BuildConfig.BUCKET_NAME
     }
+
+    //拼多多PID
+    val pdd_pid = "36828723_264496591"
+
+    //唯品会Pid
+    val vip_pid = ""
 }

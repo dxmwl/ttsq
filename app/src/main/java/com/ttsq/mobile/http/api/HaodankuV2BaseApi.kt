@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
  */
 abstract class HaodankuV2BaseApi : IRequestApi, IRequestServer {
 
-    val pid = AppConfig.getTblmPid()
+    var pid = AppConfig.getTblmPid()
     var tb_name: String = "魅影天利时代"
 
     override fun getHost(): String {

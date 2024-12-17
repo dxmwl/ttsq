@@ -49,7 +49,7 @@ ext {
         case SERVER_TYPE_TEST:
             LOG_ENABLE = true
             BUGLY_ID = "1ff4582555"
-            HOST_URL = "http://192.168.0.194:20236/"
+            HOST_URL = "http://192.168.0.196:20236/"
             //存储桶
             BUCKET_NAME = "ttsq-dev-1316145532"
             break

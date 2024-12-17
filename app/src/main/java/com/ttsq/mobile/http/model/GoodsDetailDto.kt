@@ -73,6 +73,9 @@ data class GoodsDetailDto(
     val xid: String,
     val grab_type: Int,
     val virtual_sum: Int,
+    val goods_id: String,
+    val goods_sign: String,
+    val goodsid: String,
 )
 
 data class ShopScore(
