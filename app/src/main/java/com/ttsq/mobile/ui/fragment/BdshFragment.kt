@@ -59,7 +59,7 @@ class BdshFragment : TitleBarFragment<HomeActivity>(), AMapLocationListener {
 
     private lateinit var homeMenuListAdapter: HomeMenuListAdapter
     private var bannerBdshAdapter: BannerBdshAdapter? = null
-    private val banner: Banner<GetBdshBannerApi.TimeActivity, BannerBdshAdapter>? by lazy {
+    private val banner: Banner<GetBdshBannerApi.ActivityDto, BannerBdshAdapter>? by lazy {
         findViewById(
             R.id.banner
         )
@@ -68,8 +68,8 @@ class BdshFragment : TitleBarFragment<HomeActivity>(), AMapLocationListener {
     private val home_vp: ViewPager? by lazy { findViewById(R.id.vp) }
     private val menuList: RecyclerView? by lazy { findViewById(R.id.menu_list) }
     private val tv_location: TextView? by lazy { findViewById(R.id.tv_location) }
-    private var meituanWmDto: ArrayList<GetBdshBannerApi.RedActivity>? = null
-    private var elmWmDto: ArrayList<GetBdshBannerApi.RedActivity>? = null
+    private var meituanWmDto: ArrayList<GetBdshBannerApi.ActivityDto>? = null
+    private var elmWmDto: ArrayList<GetBdshBannerApi.ActivityDto>? = null
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_bdsh
@@ -86,7 +86,7 @@ class BdshFragment : TitleBarFragment<HomeActivity>(), AMapLocationListener {
         bannerBdshAdapter = BannerBdshAdapter(ArrayList())
         banner?.setAdapter(bannerBdshAdapter)
         bannerBdshAdapter?.setOnItemClickListener(object : BannerBdshAdapter.OnItemClick {
-            override fun clickItem(data: GetBdshBannerApi.TimeActivity?) {
+            override fun clickItem(data: GetBdshBannerApi.ActivityDto?) {
                 switchActivityLinkMeituan(data?.activity_id)
             }
         })
@@ -197,7 +197,10 @@ class BdshFragment : TitleBarFragment<HomeActivity>(), AMapLocationListener {
                 override fun onSucceed(result: HttpData<GetBdshBannerApi.BdshBannerDto>?) {
                     result?.getData()?.let {
                         meituanWmDto = it.red_activity
-                        bannerBdshAdapter?.setDatas(it.time_activity)
+                        val bannerList = ArrayList<GetBdshBannerApi.ActivityDto>()
+                        bannerList.addAll(it.time_activity)
+                        bannerList.addAll(it.red_activity)
+                        bannerBdshAdapter?.setDatas(bannerList)
                     }
                 }
 

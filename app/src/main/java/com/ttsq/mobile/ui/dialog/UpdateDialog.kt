@@ -83,7 +83,7 @@ class UpdateDialog {
          * 设置更新日志
          */
         fun setUpdateLog(text: CharSequence?): Builder = apply {
-            detailsView?.text = EncodeUtils.htmlDecode(text.toString())
+            detailsView?.text = text?.toString()?.replace("\\n","\n")
             detailsView?.visibility = if (text == null) View.GONE else View.VISIBLE
         }
 

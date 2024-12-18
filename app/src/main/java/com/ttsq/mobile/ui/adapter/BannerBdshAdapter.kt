@@ -19,8 +19,8 @@ import com.youth.banner.adapter.BannerAdapter
  * @author : clb
  * @time : 2022/5/31
  */
-class BannerBdshAdapter(bannerList: ArrayList<GetBdshBannerApi.TimeActivity>?) :
-    BannerAdapter<GetBdshBannerApi.TimeActivity, BannerViewHolder>(bannerList) {
+class BannerBdshAdapter(bannerList: ArrayList<GetBdshBannerApi.ActivityDto>?) :
+    BannerAdapter<GetBdshBannerApi.ActivityDto, BannerViewHolder>(bannerList) {
 
     inner class BannerViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)
 
@@ -38,7 +38,7 @@ class BannerBdshAdapter(bannerList: ArrayList<GetBdshBannerApi.TimeActivity>?) :
 
     override fun onBindView(
         holder: BannerViewHolder?,
-        data: GetBdshBannerApi.TimeActivity?,
+        data: GetBdshBannerApi.ActivityDto?,
         position: Int,
         size: Int
     ) {
@@ -58,7 +58,7 @@ class BannerBdshAdapter(bannerList: ArrayList<GetBdshBannerApi.TimeActivity>?) :
     private var listener: OnItemClick? = null
 
     interface OnItemClick {
-        fun clickItem(data: GetBdshBannerApi.TimeActivity?)
+        fun clickItem(data: GetBdshBannerApi.ActivityDto?)
     }
 
     fun setOnItemClickListener(listener: OnItemClick) {

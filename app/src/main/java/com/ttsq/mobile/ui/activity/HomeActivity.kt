@@ -32,6 +32,7 @@ import com.hjq.base.BaseDialog
 import com.hjq.base.FragmentPagerAdapter
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
+import com.kwad.sdk.core.b.a.it
 import com.orhanobut.logger.Logger
 import com.ttsq.mobile.R
 import com.ttsq.mobile.app.AppActivity
@@ -53,6 +54,7 @@ import com.ttsq.mobile.ui.adapter.NavigationAdapter
 import com.ttsq.mobile.ui.dialog.MessageDialog
 import com.ttsq.mobile.ui.dialog.UpdateDialog
 import com.ttsq.mobile.ui.fragment.*
+import com.ttsq.mobile.utils.UpdateChecker
 import com.ttsq.mobile.utils.livebus.LiveDataBus
 import com.umeng.message.PushAgent
 import com.umeng.message.inapp.InAppMessageManager
@@ -236,35 +238,27 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     }
 
     private fun getNewAppInfo() {
-        EasyHttp.post(this)
-            .api(GetNewAppInfoApi())
-            .request(object : OnHttpListener<HttpData<GetNewAppInfoApi.NewAppInfoDto>> {
-                override fun onSucceed(result: HttpData<GetNewAppInfoApi.NewAppInfoDto>?) {
-                    result?.getData()?.let {
-
-                        // 本地的版本码和服务器的进行比较
-                        if (it.versionCode > AppConfig.getVersionCode()) {
+        UpdateChecker.check(object : UpdateChecker.Callback {
+            override fun result(updateInfo: UpdateChecker.UpdateInfo?) {
+                runOnUiThread {
+                    updateInfo?.let {
+                        if (it.buildVersionNo.toInt() > AppConfig.getVersionCode()) {
                             UpdateDialog.Builder(this@HomeActivity)
-                                .setVersionName(it.versionName)
-                                .setForceUpdate(it.forceUpdate)
-                                .setUpdateLog(it.updateContent)
-                                .setDownloadUrl(it.downloadUrl)
-//                                .setFileMd5("560017dc94e8f9b65f4ca997c7feb326")
+                                .setVersionName(it.buildVersion)
+                                .setForceUpdate(it.needForceUpdate)
+                                .setUpdateLog(it.buildUpdateDescription)
+                                .setDownloadUrl(it.downloadURL)
                                 .show()
                         }
-//                        else {
-//                            toast(R.string.update_no_update)
-//                        }
                     }
-
                 }
+            }
 
-                override fun onFail(e: Exception?) {
-                    toast(e?.message)
-                }
-            })
+            override fun error(message: String?) {
+                Logger.d("获取系统配置失败：$message")
+            }
+        })
     }
-
     /**
      * 获取系统配置
      */

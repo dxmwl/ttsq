@@ -12,20 +12,11 @@ class GetBdshBannerApi : HaodankuV3BaseApi() {
     }
 
     data class BdshBannerDto(
-        val red_activity: ArrayList<RedActivity>,
-        val time_activity: ArrayList<TimeActivity>
+        val red_activity: ArrayList<ActivityDto>,
+        val time_activity: ArrayList<ActivityDto>
     )
 
-    data class RedActivity(
-        val activity_desc_private: String,
-        val activity_id: String,
-        val activity_image: String,
-        val activity_name: String,
-        val end_time: String,
-        val start_time: String
-    )
-
-    data class TimeActivity(
+    data class ActivityDto(
         val activity_desc_private: String,
         val activity_id: String,
         val activity_image: String,

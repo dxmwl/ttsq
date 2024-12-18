@@ -14,13 +14,19 @@ import android.webkit.*
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import com.blankj.utilcode.util.ActivityUtils
 import com.hjq.base.BaseActivity
 import com.hjq.base.BaseActivity.OnActivityCallback
 import com.hjq.base.BaseDialog
 import com.hjq.base.action.ActivityAction
+import com.hjq.permissions.Permission
+import com.hjq.permissions.XXPermissions
+import com.hjq.widget.layout.NestedScrollWebView
+import com.orhanobut.logger.Logger
 import com.ttsq.mobile.R
 import com.ttsq.mobile.other.AppConfig
 import com.ttsq.mobile.other.PermissionCallback
+import com.ttsq.mobile.other.PermissionInterceptor
 import com.ttsq.mobile.ui.activity.ImageSelectActivity
 import com.ttsq.mobile.ui.activity.ImageSelectActivity.OnPhotoSelectListener
 import com.ttsq.mobile.ui.activity.VideoSelectActivity
@@ -29,15 +35,11 @@ import com.ttsq.mobile.ui.activity.VideoSelectActivity.VideoBean
 import com.ttsq.mobile.ui.dialog.InputDialog
 import com.ttsq.mobile.ui.dialog.MessageDialog
 import com.ttsq.mobile.ui.dialog.TipsDialog
-import com.hjq.permissions.Permission
-import com.hjq.permissions.XXPermissions
-import com.hjq.widget.layout.NestedScrollWebView
-import com.orhanobut.logger.Logger
-import com.ttsq.mobile.other.PermissionInterceptor
 import timber.log.Timber
 import java.io.File
 import java.net.URISyntaxException
 import java.util.*
+
 
 /**
  *    author : Android 轮子哥
@@ -220,6 +222,35 @@ class BrowserView  @JvmOverloads constructor(
          */
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             Timber.i("WebView shouldOverrideUrlLoading：%s", url)
+            val referer = "https://ot.jfshou.cn"
+//            try {
+//                if (url.startsWith("weixin://") || url.startsWith("alipays://")) {
+//                    //打开支付
+//
+//                    val intent = Intent()
+//
+//                    intent.setAction(Intent.ACTION_VIEW)
+//
+//                    intent.setData(Uri.parse(url))
+//
+//                    ActivityUtils.startActivity(intent)
+//
+//                    return true
+//                }
+//            } catch (e: Exception) {
+//                return false
+//            }
+            if (url.contains("https://wx.tenpay.com")) {
+                //微信支付要用，不然说"商家参数格式有误"
+
+                val extraHeaders: MutableMap<String, String> = HashMap()
+
+                extraHeaders["Referer"] = referer
+
+                view.loadUrl(url, extraHeaders)
+
+                return true
+            }
             val scheme1 = Uri.parse(url).scheme
             Logger.d("scheme1：%s", scheme1)
             val scheme: String = scheme1 ?: return false
